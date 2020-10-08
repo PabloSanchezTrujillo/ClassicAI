@@ -14,7 +14,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private float fadeInTime;
     [SerializeField] private float fadeOutTime;
 
-    [Space]
+    [Header("Player parameters")]
     [SerializeField] private GameObject bulletSpawner;
 
     [SerializeField] private GameObject bullet;
