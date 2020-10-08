@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/MainMenu.unity
+    guid: 5e8733f1bcdc15f46818c6c0beaaead0
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Interludio1.unity
+    guid: d356651b34062f941b458a33ebb14d81
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Skele.unity
+    guid: ac9f746cca39b4c4c924bea0020c55af
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Interludio2.unity
+    guid: b57bc626bd1bb8f4b894d377886610c3
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Demon.unity
+    guid: 2ab909e78c8bc4a4dacfd6762eeaff8b
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Interludio3.unity
+    guid: c831e373f71ce7548ae9f5e0949b3761
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Bujero.unity
+    guid: 973ea00ccedd2534eb7bcdfcfde6c2dd
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Interludio4.unity
+    guid: 3a95e4d1a223000448b076d634170686
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Angel.unity
+    guid: e3c2d525e605ea24c826845a348df0d8
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Final.unity
+    guid: 8834fa63f0eef3245a30fa76577109e5
+  - enabled: 1
+    path: Assets/Scenes/EscenasFinales/Thanks.unity
+    guid: 7dbde6b5e8d78a54da2d9fb1916a1513
+  m_configObjects: {}

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5fb6a09f-9459-4ac2-9493-cab7a16c243c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SpanishGameJam2020/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SpanishGameJam2020/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EscenasFinales/Skele.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/EscenasFinales/Skele.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/SoundsForAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/SoundsForAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Skeleton/Anims/Laugh.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Skeleton/Anims/Laugh.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/Skeleton/Anims/Mouth Attack.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/Skeleton/Anims/Mouth Attack.anim" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/BulletCursorInstatiator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/Yaw.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/RestartScene.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TriggerCameraShake.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/TintPlayerWhite.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/ActivateObjectOnCollision.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LoadLevelOnCollision.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CameraShakerListener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PressAnyKey.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/BulletSkelleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bosses/TriggerStartBattle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bosses/FinishAnimCheck.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CheckPassFirstTuto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/DisableOnBulletHit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/SoundsForAnimation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TriggerText.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlaySoundsOverTime.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/RestartScreenListener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bullet/PickableBullet.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CheckPassSecondTuto.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/BulletCursorInstatiator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/LerpMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/Yaw.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/BulletSpawner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/BulletSkelletonSpawner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/FinishAnimCheck.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/BulletSkelleton.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/DestroyOnBulletHit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/DestroyOnLimits.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/DisableOnBulletHit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/DisableOnLimits.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EventSystemGame.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Dissolver.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LevelLoader.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/HandAttack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/Bullet.cs" />
+        <option value="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShaker.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/RestartScene.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LevelLoaderWithMultipleTexts.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BackgoundMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/LookAtTarget.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/PickableBullet.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/TintPlayerWhite.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TriggerText.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bullet/ActivateObjectOnCollision.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CheckPassFirstTuto.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CheckPassSecondTuto.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LoadLevelOnCollision.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Demon/DemonBoss.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CameraShakerListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ExitGameOnEscape.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PressAnyKey.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/Hand.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/RestartScreenListener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LookAtDummy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/RandomAudioPlay.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/TriggerStartBattle.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameEventSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FadeAudio.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Boss.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TriggerCameraShake.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/SkelletonBehaviour.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlaySoundsOverTime.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Bosses/Skeletton/SoundsForAnimation.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hpp6ozjc9srMVo8a3UzrFAUO7g" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3497758" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.2998879" />
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Desktop/build\SpanishGameJam2020.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Mercado\Desktop\build" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5fb6a09f-9459-4ac2-9493-cab7a16c243c" name="Default Changelist" comment="" />
+      <created>1600717717810</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600717717810</updated>
+      <workItem from="1600717731348" duration="7362000" />
+      <workItem from="1600785560217" duration="18648000" />
+      <workItem from="1600876292291" duration="4000" />
+      <workItem from="1600876481756" duration="11889000" />
+      <workItem from="1600966293045" duration="2539000" />
+      <workItem from="1601039985341" duration="11777000" />
+      <workItem from="1601054219698" duration="256000" />
+      <workItem from="1601107204558" duration="36000" />
+      <workItem from="1601110290251" duration="9752000" />
+      <workItem from="1601126799261" duration="9212000" />
+      <workItem from="1601156756521" duration="5798000" />
+      <workItem from="1601197518178" duration="5430000" />
+      <workItem from="1601221435297" duration="409000" />
+      <workItem from="1601225282612" duration="5131000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1815" height="99" key="GridCell.Tab.0.bottom" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.0.center" timestamp="1600810677643">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677643" />
+    <state width="1815" height="99" key="GridCell.Tab.0.left" timestamp="1600810677643">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677643" />
+    <state width="1815" height="99" key="GridCell.Tab.0.right" timestamp="1600810677643">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677643" />
+    <state width="1815" height="99" key="GridCell.Tab.1.bottom" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.1.center" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.1.left" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.1.right" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.2.bottom" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.2.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.2.center" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.2.center/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.2.left" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.2.left/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.2.right" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.2.right/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.3.bottom" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.3.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.3.center" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.3.center/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.3.left" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.3.left/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state width="1815" height="99" key="GridCell.Tab.3.right" timestamp="1600810677644">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1815" height="99" key="GridCell.Tab.3.right/0.0.1858.1080@0.0.1858.1080" timestamp="1600810677644" />
+    <state x="92" y="92" width="1674" height="896" key="VCS.FileHistoryDialog" timestamp="1600967141310">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="92" y="92" width="1674" height="896" key="VCS.FileHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1600967141310" />
+    <state x="585" y="250" key="run.anything.popup" timestamp="1600788651660">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="585" y="250" key="run.anything.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1600788651660" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Bosses/Demon/DemonBoss.cs</url>
+          <line>147</line>
+          <properties documentPath="C:\Users\Mercado\Documents\GitHub\SpanishGameJam2020\SpanishGameJam2020\Assets\Scripts\Bosses\Demon\DemonBoss.cs" initialLine="131">
+            <startOffsets>
+              <option value="4453" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4583" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
