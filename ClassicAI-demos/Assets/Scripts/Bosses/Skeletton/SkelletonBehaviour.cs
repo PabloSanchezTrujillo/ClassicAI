@@ -22,8 +22,6 @@ public class SkelletonBehaviour : MonoBehaviour
     [SerializeField] private float attackJawTreshold;
     [SerializeField] private float attackHandsTreshold;
 
-    [SerializeField] private float timeBtwAttacks = 4.0f;
-
     [SerializeField] private GameObject projectilesSpawnerPrefab;
     [SerializeField] private GameObject handsAttackPrefab;
 
@@ -69,6 +67,7 @@ public class SkelletonBehaviour : MonoBehaviour
         }
     }
 
+    /*
     private IEnumerator AttackLoop()
     {
         yield return new WaitForSeconds(1);
@@ -100,10 +99,11 @@ public class SkelletonBehaviour : MonoBehaviour
             yield return new WaitForSeconds(timeBtwAttacks);
         }
     }
+    */
 
     public IEnumerator ProjectilesAttack()
     {
-        animator.SetTrigger("projectilesAttack");
+        //animator.SetTrigger("projectilesAttack");
         yield return new WaitForSeconds(1.0f);
         GameObject bulletSpawner = Instantiate(projectilesSpawnerPrefab, projectilesSpawnPoint.position,
             Quaternion.identity);
@@ -111,7 +111,7 @@ public class SkelletonBehaviour : MonoBehaviour
 
     public void JawAttack()
     {
-        animator.SetTrigger("mouthAttack");
+        //animator.SetTrigger("mouthAttack");
     }
 
     public void HandsAttack()

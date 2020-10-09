@@ -2790,6 +2790,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonBehaviour: {fileID: 1537089450}
+  timeBetweenAttacks: 4.5
+  leftLimit: -8
+  rightLimit: 8
 --- !u!60 &1442187549
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3329,7 +3332,6 @@ MonoBehaviour:
   attackProjectilesTreshold: 0
   attackJawTreshold: 35
   attackHandsTreshold: 70
-  timeBtwAttacks: 3.25
   projectilesSpawnerPrefab: {fileID: 3381602676039606315, guid: e97539434387d6d4c9fcecb7bc2e132d,
     type: 3}
   handsAttackPrefab: {fileID: 7336084968665542111, guid: 2e13fcd238c86574baa04d8aaa55e603,
