@@ -58,7 +58,7 @@ public class DemonBoss : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        InvokeRepeating("ThrowDice", timeForFirstAttack, timeBetweenAttacks);
+        //InvokeRepeating("ThrowDice", timeForFirstAttack, timeBetweenAttacks);
     }
 
     private void Update()
@@ -76,6 +76,7 @@ public class DemonBoss : MonoBehaviour
         }
     }
 
+    /*
     private void ThrowDice()
     {
         if(GetComponent<Boss>().currentHealth <= 0)
@@ -93,10 +94,11 @@ public class DemonBoss : MonoBehaviour
             StartCoroutine(VBulletAttack());
         }
     }
+    */
 
-    private IEnumerator TridentAttack()
+    public IEnumerator TridentAttack()
     {
-        animator.SetTrigger("Attack1");
+        //animator.SetTrigger("Attack1");
         demonSoundManager.Attack1Sound();
         List<GameObject> tridentsList = tridents.ToList();
         List<Transform> positionsList = tridentStartPosition.ToList();
@@ -115,9 +117,9 @@ public class DemonBoss : MonoBehaviour
         }
     }
 
-    private IEnumerator DeathBallAttack()
+    public IEnumerator DeathBallAttack()
     {
-        animator.SetTrigger("Attack2");
+        //animator.SetTrigger("Attack2");
         demonSoundManager.Attack2Sound();
 
         for(int i = 0; i < deathBalls.Length; i++) {
@@ -139,9 +141,9 @@ public class DemonBoss : MonoBehaviour
         }
     }
 
-    private IEnumerator VBulletAttack()
+    public IEnumerator VBulletAttack()
     {
-        animator.SetTrigger("Attack3");
+        //animator.SetTrigger("Attack3");
         demonSoundManager.Attack3Sound();
 
         for(int i = 0; i < vBulletNumber; i++) {
