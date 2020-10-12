@@ -103,7 +103,7 @@ public class SkelletonBehaviour : MonoBehaviour
 
     public IEnumerator ProjectilesAttack()
     {
-        //animator.SetTrigger("projectilesAttack");
+        animator.SetTrigger("projectilesAttack");
         yield return new WaitForSeconds(1.0f);
         GameObject bulletSpawner = Instantiate(projectilesSpawnerPrefab, projectilesSpawnPoint.position,
             Quaternion.identity);
@@ -111,7 +111,7 @@ public class SkelletonBehaviour : MonoBehaviour
 
     public void JawAttack()
     {
-        //animator.SetTrigger("mouthAttack");
+        animator.SetTrigger("mouthAttack");
     }
 
     public void HandsAttack()

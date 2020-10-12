@@ -2303,6 +2303,66 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1284786305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1284786306}
+  - component: {fileID: 1284786307}
+  m_Layer: 0
+  m_Name: Trigger jaw
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1284786306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284786305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1537089448}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1284786307
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284786305}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 66.4, y: 75.4}
+    newSize: {x: 4.4266667, y: 5.0266666}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -40.54908, y: -182.28485}
+      - {x: -22.44571, y: -56.451813}
+      - {x: 25.295496, y: -55.718533}
+      - {x: 46.203575, y: -182.19977}
 --- !u!1 &1381879899
 GameObject:
   m_ObjectHideFlags: 3
@@ -2558,9 +2618,6 @@ GameObject:
   - component: {fileID: 1442187545}
   - component: {fileID: 1442187547}
   - component: {fileID: 1442187546}
-  - component: {fileID: 1442187549}
-  - component: {fileID: 1442187548}
-  - component: {fileID: 1442187550}
   m_Layer: 0
   m_Name: Cabeza
   m_TagString: Untagged
@@ -2777,64 +2834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6cdfaa44a4b534c9f1c8522bf17ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1442187548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442187541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f379cbc2e568ca4591a9ac8aaf91a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonBehaviour: {fileID: 1537089450}
-  timeBetweenAttacks: 4.5
-  leftLimit: -8
-  rightLimit: 8
---- !u!60 &1442187549
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442187541}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 66.4, y: 75.4}
-    newSize: {x: 4.4266667, y: 5.0266666}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -40.54908, y: -182.28485}
-      - {x: -22.44571, y: -56.451813}
-      - {x: 25.295496, y: -55.718533}
-      - {x: 46.203575, y: -182.19977}
---- !u!114 &1442187550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442187541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327e20ab41075482dbf73cf04b78920a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoUpdate: 1
 --- !u!1 &1458572612
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,13 +3274,16 @@ GameObject:
   - component: {fileID: 1537089449}
   - component: {fileID: 1537089452}
   - component: {fileID: 1537089453}
+  - component: {fileID: 1537089456}
+  - component: {fileID: 1537089455}
+  - component: {fileID: 1537089454}
   m_Layer: 9
   m_Name: SkeletonBoss
   m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1537089448
 Transform:
   m_ObjectHideFlags: 0
@@ -3294,6 +3296,7 @@ Transform:
   m_LocalScale: {x: 0.078944, y: 0.078944, z: 0.078944}
   m_Children:
   - {fileID: 1442187542}
+  - {fileID: 1284786306}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3558,6 +3561,54 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1537089454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537089447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327e20ab41075482dbf73cf04b78920a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+--- !u!114 &1537089455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537089447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f379cbc2e568ca4591a9ac8aaf91a5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonBehaviour: {fileID: 1537089450}
+  timeBetweenAttacks: 4.5
+  leftLimit: -8
+  rightLimit: 8
+--- !u!95 &1537089456
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537089447}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aabc1f18b082e6b429a57fa47c35dae5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1561096171
 GameObject:
   m_ObjectHideFlags: 0
