@@ -12,15 +12,12 @@ public class Sucker : MonoBehaviour
     [SerializeField] private Transform center;
 
     [Header("Sucking Attack")]
-
     [SerializeField] private float proyectilesSuckingSpeed = 3;
 
     [Space]
-
     [SerializeField] private float suckingAttackDuration = 6;
 
     [Header("Orbits Attack")]
-
     [SerializeField] private float blackholeOffset = 5;
 
     [SerializeField] private float blackholeScalingDuration = 1f;
@@ -28,21 +25,17 @@ public class Sucker : MonoBehaviour
     [SerializeField] private float blackholeScalingFactor = 10;
 
     [Space]
-
     [SerializeField] private List<float> orbitsRadius = new List<float>() { 12, 15.5f, 19 };
 
     [SerializeField] private List<float> orbitalsSpeed = new List<float>() { 0.5f, 0.4f, 0.3f };
 
     [Space]
-
     [SerializeField] private float orbitsAttackDuration = 20;
 
     [Header("Bouncers Attack")]
-
     [SerializeField] private float proyectilesBouncersSpeed = 10;
 
     [Space]
-
     [SerializeField] private float bouncersAttackDuration = 15;
 
     private Vector3 initPos;
@@ -58,9 +51,15 @@ public class Sucker : MonoBehaviour
     private float invertingFactor = 1;
 
     private List<Boulder> orbitingBoulders = new List<Boulder>();
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         currentScale = this.transform.localScale.x;
 
@@ -68,29 +67,23 @@ public class Sucker : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (player)
-        {
-            if (player.transform.position.x > center.position.x)
-            {
+        if(player) {
+            if(player.transform.position.x > center.position.x) {
                 adjustedOffset = -blackholeOffset;
             }
-            else
-            {
+            else {
                 adjustedOffset = blackholeOffset;
             }
         }
 
-        if (scalingActive)
-        {
-            if (invertingFactor == 1 ? currentScale < targetScale : currentScale > targetScale)
-            {
+        if(scalingActive) {
+            if(invertingFactor == 1 ? currentScale < targetScale : currentScale > targetScale) {
                 currentScale += invertingFactor * Time.deltaTime * blackholeScalingFactor / blackholeScalingDuration;
                 center.localScale = new Vector3(currentScale, currentScale, 1);
             }
-            else
-            {
+            else {
                 center.localScale = new Vector3(targetScale, targetScale, 1);
                 scalingActive = false;
             }
@@ -116,6 +109,8 @@ public class Sucker : MonoBehaviour
 
     public IEnumerator SuckingAttackWithWait()
     {
+        animator.SetTrigger("suckingAttack");
+
         SpawnCircle(15, 6, proyectilesSuckingSpeed);
 
         yield return new WaitForSeconds(suckingAttackDuration / 30);
@@ -139,6 +134,7 @@ public class Sucker : MonoBehaviour
 
     public IEnumerator OrbitalsAttackWithWait()
     {
+        animator.SetTrigger("orbitsAttack");
         float degrees90 = Mathf.PI / 2;
 
         // Scale up and move to the left or right
@@ -150,8 +146,7 @@ public class Sucker : MonoBehaviour
         // Spawn orbitals
         int NWaves = 3;
 
-        for (int i = 0; i < NWaves - 1; i++)
-        {
+        for(int i = 0; i < NWaves - 1; i++) {
             // First, second ... and n waves
             SpawnOrbit(orbitsRadius[0], 1, -orbitalsSpeed[0] * -Mathf.Sign(adjustedOffset), degrees90);
             yield return new WaitForSeconds(0.5f);
@@ -183,8 +178,7 @@ public class Sucker : MonoBehaviour
         BlackHoleTransition(1, -1, true, initPos);
 
         // Destroy boulders
-        foreach (Boulder boulder in orbitingBoulders)
-        {
+        foreach(Boulder boulder in orbitingBoulders) {
             boulder.DestroyWithFade();
         }
 
@@ -193,11 +187,11 @@ public class Sucker : MonoBehaviour
 
     public IEnumerator BouncersAttackWithWait()
     {
+        animator.SetTrigger("bouncersAttack");
         // Throw Bouncers
         int NWaves = 3;
 
-        for (int i = 0; i < NWaves - 1; i++)
-        {
+        for(int i = 0; i < NWaves - 1; i++) {
             SpawnBouncer(UnityEngine.Random.Range(-25, 25), proyectilesBouncersSpeed);
 
             yield return new WaitForSeconds(0.2f);
@@ -220,22 +214,20 @@ public class Sucker : MonoBehaviour
         yield return new WaitForSeconds(bouncersAttackDuration / NWaves);
 
         // Destroy boulders
-        foreach (Boulder boulder in orbitingBoulders)
-        {
+        foreach(Boulder boulder in orbitingBoulders) {
             boulder.DestroyWithFade();
         }
     }
 
     private void SpawnCircle(float radius, int NBoulders, float boulderSpeed, float initialAngleOffset = 0f)
     {
-        if (NBoulders == 0)
+        if(NBoulders == 0)
             return;
 
         // Radianes
         float angle = 2 * Mathf.PI / NBoulders;
 
-        for (int i = 0; i < NBoulders; i++)
-        {
+        for(int i = 0; i < NBoulders; i++) {
             float singleAngle = angle * i + initialAngleOffset;
             Vector3 position = new Vector3(center.position.x + Mathf.Cos(singleAngle) * radius, center.position.y + Mathf.Sin(singleAngle) * radius, center.position.z);
 
@@ -256,14 +248,13 @@ public class Sucker : MonoBehaviour
 
     private void SpawnOrbit(float radius, int NBoulders, float boulderSpeed, float initialAngleOffset = 0f)
     {
-        if (NBoulders == 0)
+        if(NBoulders == 0)
             return;
 
         // Radianes
         float angle = 2 * Mathf.PI / NBoulders;
 
-        for (int i = 0; i < NBoulders; i++)
-        {
+        for(int i = 0; i < NBoulders; i++) {
             float singleAngle = angle * i + initialAngleOffset;
             Vector3 position = new Vector3(center.position.x + Mathf.Cos(singleAngle) * radius, center.position.y + Mathf.Sin(singleAngle) * radius, center.position.z);
 

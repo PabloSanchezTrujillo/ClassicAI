@@ -72,18 +72,12 @@ public class HoleBehaviour : MonoBehaviour
             float value = Random.Range(0.0f, maxPercentageRandomAttack);
 
             if(value >= attackSuckingTreshold && value < attackOrbitsTreshold) {
-                animator.SetTrigger("suckingAttack");
-
                 yield return suckerBoss.SuckingAttackWithWait();
             }
             else if(value >= attackOrbitsTreshold && value < attackBouncersTreshold) {
-                animator.SetTrigger("orbitsAttack");
-
                 yield return suckerBoss.OrbitalsAttackWithWait();
             }
             else if(value >= attackBouncersTreshold) {
-                animator.SetTrigger("bouncersAttack");
-
                 yield return suckerBoss.BouncersAttackWithWait();
             }
 

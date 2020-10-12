@@ -1315,6 +1315,9 @@ GameObject:
   m_Component:
   - component: {fileID: 378807779}
   - component: {fileID: 378807780}
+  - component: {fileID: 378807783}
+  - component: {fileID: 378807782}
+  - component: {fileID: 378807781}
   m_Layer: 9
   m_Name: BossRoot
   m_TagString: Damage
@@ -1350,6 +1353,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFinishedLerping: 0
+--- !u!114 &378807781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378807778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327e20ab41075482dbf73cf04b78920a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoUpdate: 1
+--- !u!114 &378807782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378807778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5589312c772b56d4faabb02318d954ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holeBehaviour: {fileID: 1891335620}
+  shortDistance: 7.6
+  longDistance: 11.2
+  distanceText: {fileID: 690464045}
+  timeBetweenAttacks: 9
+--- !u!95 &378807783
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378807778}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d88c9b677312cd94a9cebfa8e0e4d711, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &383356391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,8 +4350,6 @@ GameObject:
   - component: {fileID: 1891335619}
   - component: {fileID: 1891335626}
   - component: {fileID: 1891335625}
-  - component: {fileID: 1891335628}
-  - component: {fileID: 1891335627}
   m_Layer: 9
   m_Name: The Big Sad
   m_TagString: Damage
@@ -4653,36 +4703,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1891335627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891335617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327e20ab41075482dbf73cf04b78920a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoUpdate: 1
---- !u!114 &1891335628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891335617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5589312c772b56d4faabb02318d954ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holeBehaviour: {fileID: 1891335620}
-  shortDistance: 7.6
-  longDistance: 11.2
-  distanceText: {fileID: 690464045}
-  timeBetweenAttacks: 6
 --- !u!4 &1925992550 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8432073998469720287, guid: 4b819edd83464f34987f89c7c1e642ae,
