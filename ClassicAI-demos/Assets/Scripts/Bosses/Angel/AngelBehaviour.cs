@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class AngelBehaviour : MonoBehaviour
 {
-
     [SerializeField] private GameObject bossGameObject;
 
     [SerializeField] private Animator animator;
@@ -38,37 +37,35 @@ public class AngelBehaviour : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         player = GameManager.instance.player;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         isAlive = boss.currentHealth > 0.0f;
         isIdle = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && isAlive;
 
-        if (isIdle)
-        {
+        if(isIdle) {
             FollowPlayer();
-            if (!firstTime)
-            {
+            if(!firstTime) {
                 firstTime = true;
-                StartCoroutine(AttackLoop());
+                //StartCoroutine(AttackLoop());
             }
         }
     }
 
     private void FollowPlayer()
     {
-        if (player)
-        {
+        if(player) {
             float deltaX = player.transform.position.x - bossGameObject.transform.position.x;
             transform.position = Vector3.Lerp(transform.position, transform.position + Vector3.right * deltaX, 0.01f);
         }
     }
 
+    /*
     IEnumerator AttackLoop()
     {
         yield return new WaitForSeconds(1);
@@ -76,7 +73,6 @@ public class AngelBehaviour : MonoBehaviour
         {
             //tirar dado
             float value = Random.Range(0.0f, maxPorcentageRandomAttack);
-
 
             if (value >= attackLasersTreshold && value < attackFeathersTreshold)
             {
@@ -96,9 +92,25 @@ public class AngelBehaviour : MonoBehaviour
                 yield return new WaitForSeconds(5);
             }
 
-
             yield return new WaitForSeconds(timeBtwAttacks);
         }
     }
-}
+    */
 
+    public void TriggerLaserAttack()
+    {
+        Instantiate(LaserAttack, new Vector3(0, transform.position.y + 1, transform.position.z), Quaternion.identity);
+    }
+
+    public void TriggerBallsAttack()
+    {
+        animator.SetTrigger("BallsAttack");
+        Instantiate(DiscAttack, new Vector3(0, transform.position.y, transform.position.z), Quaternion.identity);
+    }
+
+    public void TriggersFeathersAttack()
+    {
+        animator.SetTrigger("FeathersAttack");
+        Instantiate(FeatherAttack, new Vector3(-0.5f, transform.position.y + 1, transform.position.z), Quaternion.identity);
+    }
+}

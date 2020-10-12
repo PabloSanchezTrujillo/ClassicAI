@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class HoleBehaviour : MonoBehaviour
 {
-
     [SerializeField] private Sucker suckerBoss;
 
     [SerializeField] private Animator animator;
@@ -41,24 +40,22 @@ public class HoleBehaviour : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        StartCoroutine(AttackLoop());
+        //StartCoroutine(AttackLoop());
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         isAlive = boss.currentHealth > 0.0f;
         isIdle = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && isAlive;
         isDying = animator.GetCurrentAnimatorStateInfo(0).IsName("Muerte");
 
-        if (isDying && !rocksDestroyed)
-        {
+        if(isDying && !rocksDestroyed) {
             StopAllCoroutines();
 
-            foreach (Boulder rock in FindObjectsOfType<Boulder>())
-            {
+            foreach(Boulder rock in FindObjectsOfType<Boulder>()) {
                 rock.DestroyWithFade();
             }
 
@@ -66,29 +63,25 @@ public class HoleBehaviour : MonoBehaviour
         }
     }
 
-    IEnumerator AttackLoop()
+    private IEnumerator AttackLoop()
     {
         yield return new WaitUntil(() => isIdle);
 
-        while (isAlive)
-        {
+        while(isAlive) {
             //tirar dado
             float value = Random.Range(0.0f, maxPercentageRandomAttack);
 
-            if (value >= attackSuckingTreshold && value < attackOrbitsTreshold)
-            {
+            if(value >= attackSuckingTreshold && value < attackOrbitsTreshold) {
                 animator.SetTrigger("suckingAttack");
 
                 yield return suckerBoss.SuckingAttackWithWait();
             }
-            else if (value >= attackOrbitsTreshold && value < attackBouncersTreshold)
-            {
+            else if(value >= attackOrbitsTreshold && value < attackBouncersTreshold) {
                 animator.SetTrigger("orbitsAttack");
 
                 yield return suckerBoss.OrbitalsAttackWithWait();
             }
-            else if (value >= attackBouncersTreshold)
-            {
+            else if(value >= attackBouncersTreshold) {
                 animator.SetTrigger("bouncersAttack");
 
                 yield return suckerBoss.BouncersAttackWithWait();
@@ -102,25 +95,25 @@ public class HoleBehaviour : MonoBehaviour
         rocksDestroyed = false;
     }
 
-    void PlayAttack1Sound()
+    private void PlayAttack1Sound()
     {
-        if (soundsPlayer.isPlaying)
+        if(soundsPlayer.isPlaying)
             return;
 
         soundsPlayer.clip = attack1Sound;
         soundsPlayer.Play();
     }
 
-    void PlayAttack2Sound()
+    private void PlayAttack2Sound()
     {
-        if (soundsPlayer.isPlaying)
+        if(soundsPlayer.isPlaying)
             return;
 
         soundsPlayer.clip = attack2Sound;
         soundsPlayer.Play();
     }
 
-    void PlayDeathSound()
+    private void PlayDeathSound()
     {
         soundsPlayer.clip = deathSound;
         soundsPlayer.Play();
