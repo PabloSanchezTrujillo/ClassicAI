@@ -41,8 +41,8 @@ public class DemonBoss : MonoBehaviour
     [SerializeField] private Transform[] vBulletsPositions;
     [SerializeField] private int vBulletNumber;
     [SerializeField] private float timeBetweenVBullets;
+    [SerializeField] private Animator animator;
 
-    private Animator animator;
     private Boss boss;
     private bool died;
 
@@ -50,7 +50,7 @@ public class DemonBoss : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         boss = GetComponent<Boss>();
         died = false;
     }
@@ -98,7 +98,7 @@ public class DemonBoss : MonoBehaviour
 
     public IEnumerator TridentAttack()
     {
-        //animator.SetTrigger("Attack1");
+        animator.SetTrigger("Attack1");
         demonSoundManager.Attack1Sound();
         List<GameObject> tridentsList = tridents.ToList();
         List<Transform> positionsList = tridentStartPosition.ToList();
@@ -119,7 +119,7 @@ public class DemonBoss : MonoBehaviour
 
     public IEnumerator DeathBallAttack()
     {
-        //animator.SetTrigger("Attack2");
+        animator.SetTrigger("Attack2");
         demonSoundManager.Attack2Sound();
 
         for(int i = 0; i < deathBalls.Length; i++) {
@@ -143,7 +143,7 @@ public class DemonBoss : MonoBehaviour
 
     public IEnumerator VBulletAttack()
     {
-        //animator.SetTrigger("Attack3");
+        animator.SetTrigger("Attack3");
         demonSoundManager.Attack3Sound();
 
         for(int i = 0; i < vBulletNumber; i++) {

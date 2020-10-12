@@ -31,18 +31,18 @@ public class FSM_Demon : MonoBehaviour
     private void Update()
     {
         playerPosition = GameManager.instance.player.transform.position;
-        float distance = Vector3.Distance(transform.position, playerPosition);
+        float distance = Vector3.Distance(playerPosition, transform.position);
         distanceText.text = distance.ToString();
 
         if(!attacking) {
             if(distance < shortDistance) {
-                animator.SetTrigger("Attack2");
+                animator.SetTrigger("ballsAttack");
             }
             else if(distance > longDistance) {
-                animator.SetTrigger("Attack1");
+                animator.SetTrigger("tridentAttack");
             }
             else {
-                animator.SetTrigger("Attack3");
+                animator.SetTrigger("vAttack");
             }
         }
     }
@@ -57,9 +57,9 @@ public class FSM_Demon : MonoBehaviour
     [StateEnterMethod("Base.Idle")]
     public void EnterIdle()
     {
-        animator.ResetTrigger("Attack1");
-        animator.ResetTrigger("Attack2");
-        animator.ResetTrigger("Attack3");
+        animator.ResetTrigger("ballsAttack");
+        animator.ResetTrigger("tridentAttack");
+        animator.ResetTrigger("vAttack");
         attacking = false;
     }
 
