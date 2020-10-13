@@ -7,6 +7,8 @@ public class FSM_Skeleton : MonoBehaviour
 {
     #region variables
 
+    public bool JawAttack { get; set; }
+
     [SerializeField] private SkelletonBehaviour skeletonBehaviour;
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float leftLimit;
@@ -15,7 +17,6 @@ public class FSM_Skeleton : MonoBehaviour
     private Animator animator;
     private Vector3 playerPosition;
     private bool attacking;
-    private bool jawAttack;
 
     #endregion variables
 
@@ -24,7 +25,7 @@ public class FSM_Skeleton : MonoBehaviour
         animator = GetComponent<Animator>();
 
         attacking = false;
-        jawAttack = false;
+        JawAttack = false;
     }
 
     private void Update()
@@ -34,19 +35,12 @@ public class FSM_Skeleton : MonoBehaviour
             if(playerPosition.x < leftLimit || playerPosition.x > rightLimit) {
                 animator.SetTrigger("handsAttack");
             }
-            else if(jawAttack) {
+            else if(JawAttack) {
                 animator.SetTrigger("mouthAttack");
             }
             else {
                 animator.SetTrigger("projectilesAttack");
             }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.GetComponent<PlayerActions>() && !attacking) {
-            jawAttack = true;
         }
     }
 
@@ -70,13 +64,14 @@ public class FSM_Skeleton : MonoBehaviour
     public void EnterJawAttack()
     {
         attacking = true;
+        skeletonBehaviour.JawAttack();
         StartCoroutine(BackToIdle());
     }
 
     [StateExitMethod("Base.Jaw attack")]
     public void ExitJawAttack()
     {
-        jawAttack = false;
+        JawAttack = false;
     }
 
     [StateEnterMethod("Base.Hands attack")]

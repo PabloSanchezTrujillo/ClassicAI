@@ -1644,6 +1644,7 @@ Transform:
   m_LocalScale: {x: 1.1531633, y: 1.1531633, z: 1.1531633}
   m_Children:
   - {fileID: 1414817264}
+  - {fileID: 1284786306}
   m_Father: {fileID: 1442187542}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2313,6 +2314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1284786306}
   - component: {fileID: 1284786307}
+  - component: {fileID: 1284786308}
   m_Layer: 0
   m_Name: Trigger jaw
   m_TagString: Untagged
@@ -2327,11 +2329,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284786305}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1537089448}
+  m_Father: {fileID: 1018826506}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1284786307
@@ -2347,7 +2349,7 @@ PolygonCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 40.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2359,10 +2361,23 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -40.54908, y: -182.28485}
-      - {x: -22.44571, y: -56.451813}
-      - {x: 25.295496, y: -55.718533}
-      - {x: 46.203575, y: -182.19977}
+    - - {x: -27.315315, y: -147.39398}
+      - {x: -17.225824, y: -56.17707}
+      - {x: 15.415829, y: -56.185646}
+      - {x: 25.15783, y: -147.43344}
+--- !u!114 &1284786308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284786305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339a2d6362e647443843c4ceb26347df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FSMskeleton: {fileID: 1537089455}
 --- !u!1 &1381879899
 GameObject:
   m_ObjectHideFlags: 3
@@ -3283,7 +3298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1537089448
 Transform:
   m_ObjectHideFlags: 0
@@ -3296,7 +3311,6 @@ Transform:
   m_LocalScale: {x: 0.078944, y: 0.078944, z: 0.078944}
   m_Children:
   - {fileID: 1442187542}
-  - {fileID: 1284786306}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3587,7 +3601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonBehaviour: {fileID: 1537089450}
-  timeBetweenAttacks: 4.5
+  timeBetweenAttacks: 6.5
   leftLimit: -8
   rightLimit: 8
 --- !u!95 &1537089456

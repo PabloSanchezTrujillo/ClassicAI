@@ -16,6 +16,7 @@ public class FSM_BlackHole : MonoBehaviour
 
     private Animator animator;
     private bool attacking;
+    private bool orbitsAttack;
 
     #endregion variables
 
@@ -24,6 +25,7 @@ public class FSM_BlackHole : MonoBehaviour
         animator = GetComponent<Animator>();
 
         attacking = false;
+        orbitsAttack = false;
     }
 
     // Update is called once per frame
@@ -36,7 +38,7 @@ public class FSM_BlackHole : MonoBehaviour
             if(distance < shortDistance) {
                 animator.SetTrigger("bouncersAttack");
             }
-            else if(distance > longDistance) {
+            else if(distance > longDistance && !orbitsAttack) {
                 animator.SetTrigger("orbitsAttack");
             }
             else {
@@ -55,6 +57,16 @@ public class FSM_BlackHole : MonoBehaviour
         animator.SetTrigger("backToIdle");
     }
 
+    private IEnumerator BackToIdleFixed()
+    {
+        yield return new WaitForSeconds(27);
+
+        animator.ResetTrigger("suckingAttack");
+        animator.ResetTrigger("orbitsAttack");
+        animator.ResetTrigger("bouncersAttack");
+        animator.SetTrigger("backToIdle");
+    }
+
     [StateEnterMethod("Base.Idle")]
     public void EnterIdle()
     {
@@ -65,6 +77,7 @@ public class FSM_BlackHole : MonoBehaviour
     public void EnterBallsCenter()
     {
         attacking = true;
+        orbitsAttack = false;
         holeBehaviour.SuckingAttack();
 
         StartCoroutine(BackToIdle());
@@ -74,6 +87,7 @@ public class FSM_BlackHole : MonoBehaviour
     public void EnterBouncingBalls()
     {
         attacking = true;
+        orbitsAttack = false;
         holeBehaviour.BouncesAttack();
 
         StartCoroutine(BackToIdle());
@@ -83,8 +97,9 @@ public class FSM_BlackHole : MonoBehaviour
     public void EnterBigAttack()
     {
         attacking = true;
+        orbitsAttack = true;
         holeBehaviour.OrbitsAttack();
 
-        StartCoroutine(BackToIdle());
+        StartCoroutine(BackToIdleFixed());
     }
 }

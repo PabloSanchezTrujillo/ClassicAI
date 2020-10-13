@@ -140,6 +140,7 @@ public class Sucker : MonoBehaviour
         // Scale up and move to the left or right
         BlackHoleTransition(blackholeScalingFactor, 1, true, center.position + new Vector3(adjustedOffset, 0, 0));
 
+        float firstTime = Time.time;
         // Wait for the sucker to be big and offset
         yield return new WaitForSeconds(blackholeScalingDuration);
 
@@ -183,6 +184,9 @@ public class Sucker : MonoBehaviour
         }
 
         yield return new WaitForSeconds(blackholeScalingDuration);
+
+        float lastTime = Time.time;
+        print("Tiempo: " + (lastTime - firstTime));
     }
 
     public IEnumerator BouncersAttackWithWait()

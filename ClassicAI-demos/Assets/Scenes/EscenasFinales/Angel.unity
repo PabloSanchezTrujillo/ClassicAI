@@ -3492,7 +3492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angelBehaviour: {fileID: 1537089450}
-  timeBetweenAttacks: 6.5
+  timeBetweenAttacks: 7.5
   shortDistance: 4.6
   longDistance: 9
   distanceText: {fileID: 686482366}
