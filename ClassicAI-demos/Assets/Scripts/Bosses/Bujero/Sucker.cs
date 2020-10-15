@@ -182,6 +182,7 @@ public class Sucker : MonoBehaviour
         foreach(Boulder boulder in orbitingBoulders) {
             boulder.DestroyWithFade();
         }
+        orbitingBoulders.Clear();
 
         yield return new WaitForSeconds(blackholeScalingDuration);
 
@@ -221,6 +222,7 @@ public class Sucker : MonoBehaviour
         foreach(Boulder boulder in orbitingBoulders) {
             boulder.DestroyWithFade();
         }
+        orbitingBoulders.Clear();
     }
 
     private void SpawnCircle(float radius, int NBoulders, float boulderSpeed, float initialAngleOffset = 0f)
