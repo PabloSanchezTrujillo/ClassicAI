@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Panda;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private ParticleSystem reloadSubParticles;
     [SerializeField] private ParticleSystem hasBulletParticles;
     [SerializeField] private CircleCollider2D circleCollider;
+    [SerializeField] private Boss boss;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip getDamageClip;
@@ -142,6 +144,46 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    [Task]
+    private void DummyTask()
+    {
+        print("Dummy task");
+        Task.current.Fail();
+    }
+
+    [Task]
+    private void SameColor()
+    {
+        print("Condition");
+        if(currentColor != boss.GetCurrentColor()) {
+            Task.current.Succeed();
+        }
+    }
+
+    [Task]
+    private void ChangeColor()
+    {
+        print("Change color task");
+        hasBulletParticles.Stop();
+        hasBulletParticles.Clear();
+        audioSource.clip = changeColorClip;
+        audioSource.Play();
+
+        currentColor++;
+        if((int)currentColor > maxColorIndex) {
+            currentColor = 0;
+        }
+
+        Tint((int)currentColor);
+        Task.current.Succeed();
+    }
+
+    [Task]
+    private void Dodge()
+    {
+        print("Dodge task");
+    }
+
     private void Shoot()
     {
         hasBulletParticles.Stop();
@@ -170,21 +212,6 @@ public class PlayerActions : MonoBehaviour
         playerMovement.enabled = false;
         Invoke("ReactivateMovement", reloadParticles.main.duration);
         Invoke("ReloadFinished", reloadParticles.main.duration);
-    }
-
-    private void ChangeColor()
-    {
-        hasBulletParticles.Stop();
-        hasBulletParticles.Clear();
-        audioSource.clip = changeColorClip;
-        audioSource.Play();
-
-        currentColor++;
-        if((int)currentColor > maxColorIndex) {
-            currentColor = 0;
-        }
-
-        Tint((int)currentColor);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

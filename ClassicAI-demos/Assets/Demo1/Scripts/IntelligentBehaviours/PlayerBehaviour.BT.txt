@@ -1,0 +1,7 @@
+tree("Root")
+	fallback
+		sequence
+			while
+				SameColor
+				ChangeColor
+		Dodge
