@@ -8,6 +8,9 @@ public class PlayerActions : MonoBehaviour
 {
     #region variables
 
+    public bool AttackIncoming { get; set; }
+    public GameObject AttackingObject { get; set; }
+
     [Header("Camera shaking parameters")]
     [SerializeField] private float magnitude;
 
@@ -73,6 +76,7 @@ public class PlayerActions : MonoBehaviour
         reloadFinished = false;
         //currentColor = (int) currentColor;
         inmortalityMode = false;
+        AttackIncoming = false;
     }
 
     public void GetWhite()
@@ -113,9 +117,7 @@ public class PlayerActions : MonoBehaviour
         // [Space] - Shoot
         if(Input.GetKeyDown(KeyCode.Space)) {
             if(hasBullet && bulletReloaded) {
-                Shoot();
-                hasBullet = false;
-                bulletReloaded = false;
+                Fire();
             }
         }
 
@@ -148,22 +150,26 @@ public class PlayerActions : MonoBehaviour
     private void DummyTask()
     {
         print("Dummy task");
-        Task.current.Fail();
+        Task.current.Succeed();
     }
 
     [Task]
     private void SameColor()
     {
-        print("Condition");
-        if(currentColor != boss.GetCurrentColor()) {
+        if(AttackIncoming) {
+            Task.current.Fail();
+        }
+
+        if(currentColor == boss.GetCurrentColor()) {
             Task.current.Succeed();
+        }
+        else {
+            ChangeColor();
         }
     }
 
-    [Task]
     private void ChangeColor()
     {
-        print("Change color task");
         hasBulletParticles.Stop();
         hasBulletParticles.Clear();
         audioSource.clip = changeColorClip;
@@ -179,39 +185,75 @@ public class PlayerActions : MonoBehaviour
     }
 
     [Task]
-    private void Dodge()
+    private void Reload()
     {
-        print("Dodge task");
+        if(AttackIncoming) {
+            reloadParticles.Stop();
+            reloadParticles.Clear();
+            audioSource.Stop();
+            CancelInvoke();
+            ReactivateMovement();
+            bulletReloaded = false;
+            Task.current.Fail();
+        }
+        if(hasBullet) {
+            Task.current.Succeed();
+        }
+
+        if(Task.current.isStarting) {
+            audioSource.clip = reloadClip;
+            audioSource.Play();
+            reloading = true;
+            reloadFinished = false;
+            reloadParticles.Play();
+            playerMovement.enabled = false;
+            Invoke("ReactivateMovement", reloadParticles.main.duration);
+            Invoke("ReloadFinished", reloadParticles.main.duration);
+        }
     }
 
-    private void Shoot()
+    [Task]
+    private void Fire()
     {
-        hasBulletParticles.Stop();
-        hasBulletParticles.Clear();
-        audioSource.clip = shootClip;
-        audioSource.Play();
+        if(!hasBullet) {
+            Task.current.Succeed();
+        }
 
-        if(currentColor >= 0) {
-            GameObject bulletObject =
-                Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
+        if(Task.current.isStarting) {
+            hasBulletParticles.Stop();
+            hasBulletParticles.Clear();
+            audioSource.clip = shootClip;
+            audioSource.Play();
 
-            if(bulletObject.GetComponent<Bullet>() != null) {
-                Vector3 direction = (playerMovement.GetLookAtPosition() - bulletObject.transform.position).normalized;
-                bulletObject.GetComponent<Bullet>().Init(direction, currentColor);
+            if(currentColor >= 0) {
+                GameObject bulletObject =
+                    Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
+                hasBullet = false;
+                bulletReloaded = false;
+
+                if(bulletObject.GetComponent<Bullet>() != null) {
+                    Vector3 direction = (playerMovement.GetLookAtPosition() - bulletObject.transform.position).normalized;
+                    bulletObject.GetComponent<Bullet>().Init(direction, currentColor);
+                }
             }
         }
     }
 
-    private void Reload()
+    [Task]
+    private void Dodge()
     {
-        audioSource.clip = reloadClip;
-        audioSource.Play();
-        reloading = true;
-        reloadFinished = false;
-        reloadParticles.Play();
-        playerMovement.enabled = false;
-        Invoke("ReactivateMovement", reloadParticles.main.duration);
-        Invoke("ReloadFinished", reloadParticles.main.duration);
+        print("Dodge task");
+        CalculateDodge();
+
+        if(!AttackIncoming) {
+            Task.current.Succeed();
+        }
+    }
+
+    private void CalculateDodge()
+    {
+        Vector2 direction = (AttackingObject.transform.position - transform.position).normalized;
+        playerMovement.MovementVector = direction;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -267,7 +309,7 @@ public class PlayerActions : MonoBehaviour
         currentHealth--;
         if(currentHealth < 0)
             currentHealth = 0;
-        healthIcons[currentHealth].SetActive(false);
+        //healthIcons[currentHealth].SetActive(false);
 
         if(currentHealth == 0) {
             audioSource.Stop();
@@ -286,6 +328,8 @@ public class PlayerActions : MonoBehaviour
             audioSource.clip = getDamageClip;
             audioSource.Play();
         }
+
+        print("Health: " + currentHealth);
     }
 
     public void PassToNextLevel()

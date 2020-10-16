@@ -77,6 +77,67 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.5}
   serializedVersion: 2
   m_Radius: 1.7
+--- !u!1 &3283917113262308893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8141358346239348621}
+  - component: {fileID: 4891580771299872572}
+  - component: {fileID: 5216189725404052773}
+  m_Layer: 0
+  m_Name: Danger perception
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8141358346239348621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283917113262308893}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7221205316127452436}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &4891580771299872572
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283917113262308893}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 17
+--- !u!114 &5216189725404052773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3283917113262308893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c275eedce6a142e4bbfa63ce3647a767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerActions: {fileID: 7221205316127452432}
 --- !u!1 &7221205316127452438
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +180,7 @@ Transform:
   - {fileID: 7221807420690310671}
   - {fileID: 8576336647218089737}
   - {fileID: 858288227}
+  - {fileID: 8141358346239348621}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -341,13 +403,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7221205316127452438}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scripts:
-  - {fileID: 0}
+  - {fileID: 4900000, guid: 84f9467ae3e3296438198c88ff900053, type: 3}
   autoReset: 1
   tickOn: 0
   sourceInfos:
@@ -403,6 +465,7 @@ MonoBehaviour:
   reloadSubParticles: {fileID: 7221205315770944674}
   hasBulletParticles: {fileID: 7419362861041251593}
   circleCollider: {fileID: 2523214140751903347}
+  boss: {fileID: 0}
   getDamageClip: {fileID: 8300000, guid: 76079bcca631a76438f1c912b749f720, type: 3}
   shootClip: {fileID: 8300000, guid: 3c0c40b70ca41d246be9b581c0615ed2, type: 3}
   reloadClip: {fileID: 8300000, guid: 82761a766b1c5314eb0d71a041198094, type: 3}

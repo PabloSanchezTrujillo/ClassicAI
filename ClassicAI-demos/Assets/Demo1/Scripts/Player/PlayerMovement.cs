@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     #region variables
 
+    public Vector2 MovementVector { get; set; }
+
     [SerializeField] private Transform lookAtTarget;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
@@ -26,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         float Y = Input.GetAxis("Vertical");
         float X = Input.GetAxis("Horizontal");
 
-        rigidbody.velocity += new Vector2(X, Y) * movementSpeed * Time.deltaTime;
+        rigidbody.velocity += MovementVector * movementSpeed * Time.deltaTime;
     }
 
     public Vector3 GetLookAtPosition()

@@ -3,5 +3,6 @@ tree("Root")
 		sequence
 			while
 				SameColor
-				ChangeColor
+				Reload
+			Fire
 		Dodge
