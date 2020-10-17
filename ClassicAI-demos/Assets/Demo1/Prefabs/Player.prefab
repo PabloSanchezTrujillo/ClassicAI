@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8576336647218089737}
   - component: {fileID: 2523214140751903347}
+  - component: {fileID: 8415594523022037300}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -77,6 +78,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.5}
   serializedVersion: 2
   m_Radius: 1.7
+--- !u!114 &8415594523022037300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2559790428704029389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6aa5fedb9a6d040bb183574974312e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerActions: {fileID: 7221205316127452432}
+  damagedAnimation: {fileID: 7400000, guid: 4683ed4a59e65b043a073aa2ab38a2b2, type: 2}
 --- !u!1 &3283917113262308893
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +103,7 @@ GameObject:
   - component: {fileID: 8141358346239348621}
   - component: {fileID: 4891580771299872572}
   - component: {fileID: 5216189725404052773}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Danger perception
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,6 +448,7 @@ MonoBehaviour:
   lookAtTarget: {fileID: 858288227}
   movementSpeed: 100
   rotationSpeed: 4
+  timeToStartBattle: 0
 --- !u!114 &7221205316127452432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,15 +680,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
---- !u!1 &7221205315821689786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871,
-    type: 3}
-  m_PrefabInstance: {fileID: 7221205315821528090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7221205315821391338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 403952, guid: 6586ff0f14125534cae2f5d8f04b7871,
+    type: 3}
+  m_PrefabInstance: {fileID: 7221205315821528090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7221205315821689786 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 180128, guid: 6586ff0f14125534cae2f5d8f04b7871,
     type: 3}
   m_PrefabInstance: {fileID: 7221205315821528090}
   m_PrefabAsset: {fileID: 0}
@@ -776,15 +792,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 114960206652300638, guid: 9e4577abe56a95f4a91d29a0473cd30c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9e4577abe56a95f4a91d29a0473cd30c, type: 3}
---- !u!4 &7221807420690310671 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4464497929771776, guid: 9e4577abe56a95f4a91d29a0473cd30c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7221205317230722319}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &7419362861041251593 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198159274938206214, guid: 9e4577abe56a95f4a91d29a0473cd30c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7221205317230722319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7221807420690310671 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4464497929771776, guid: 9e4577abe56a95f4a91d29a0473cd30c,
     type: 3}
   m_PrefabInstance: {fileID: 7221205317230722319}
   m_PrefabAsset: {fileID: 0}

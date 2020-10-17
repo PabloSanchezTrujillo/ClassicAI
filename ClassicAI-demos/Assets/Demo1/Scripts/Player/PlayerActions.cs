@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Panda;
+using System.Configuration;
 
 public class PlayerActions : MonoBehaviour
 {
@@ -160,6 +161,8 @@ public class PlayerActions : MonoBehaviour
             Task.current.Fail();
         }
 
+        playerMovement.MovementVector = Vector2.zero;
+
         if(currentColor == boss.GetCurrentColor()) {
             Task.current.Succeed();
         }
@@ -253,15 +256,24 @@ public class PlayerActions : MonoBehaviour
     private void CalculateDodge()
     {
         Vector2 direction = (AttackingObject.transform.position - transform.position).normalized;
-        playerMovement.MovementVector = direction;
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag.Equals("Damage")) {
-            GetDamage();
-            StartCoroutine(ReactivateCollider());
+        if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y)) { // Comes from LEFT or RIGHT
+            if(Task.current.isStarting) {
+                //direction.y += (Random.value > 0.7) ? 0.7f : -0.7f;
+                direction.y += 0.7f;
+                direction = direction.normalized;
+            }
         }
+        else { // Comes from TOP or BOTTOM
+            if(Task.current.isStarting) {
+                //direction.x += (Random.value > 0.7) ? 0.7f : -0.7f;
+                direction.x += 0.7f;
+                direction = direction.normalized;
+            }
+        }
+
+        print("Direction: " + (-direction));
+        playerMovement.MovementVector = -direction;
     }
 
     private void Tint(int colorIndex)
@@ -281,12 +293,6 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public IEnumerator ReactivateCollider()
-    {
-        yield return new WaitForSeconds(damagedAnimation.length + 0.2f);
-        circleCollider.enabled = true;
-    }
-
     private void ReactivateMovement()
     {
         playerMovement.enabled = true;
@@ -301,7 +307,7 @@ public class PlayerActions : MonoBehaviour
         hasBullet = true;
     }
 
-    private void GetDamage()
+    public void GetDamage()
     {
         circleCollider.enabled = false;
         mainCameraShake.ShakeOnce(magnitude, roughness, fadeInTime, fadeOutTime);

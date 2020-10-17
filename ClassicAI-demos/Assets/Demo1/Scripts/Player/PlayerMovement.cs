@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Panda;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,8 +12,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform lookAtTarget;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float timeToStartBattle;
 
     private Rigidbody2D rigidbody;
+    private PandaBehaviour playerBehaviour;
+    private PlayerActions playerActions;
 
     #endregion variables
 
@@ -20,6 +24,21 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        playerActions = GetComponent<PlayerActions>();
+        playerBehaviour = GetComponent<PandaBehaviour>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(StartBattle());
+    }
+
+    private IEnumerator StartBattle()
+    {
+        yield return new WaitForSeconds(timeToStartBattle);
+
+        playerBehaviour.enabled = true;
+        playerActions.enabled = true;
     }
 
     // Update is called once per frame
