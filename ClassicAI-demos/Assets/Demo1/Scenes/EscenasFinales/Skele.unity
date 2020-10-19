@@ -3839,9 +3839,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonBehaviour: {fileID: 1537089450}
-  timeBetweenAttacks: 8
-  leftLimit: -2.5
-  rightLimit: 2.5
+  timeBetweenAttacks: 6
+  leftLimit: -12.5
+  rightLimit: 12.5
   jawCollider: {fileID: 1018826508}
 --- !u!95 &1537089456
 Animator:
