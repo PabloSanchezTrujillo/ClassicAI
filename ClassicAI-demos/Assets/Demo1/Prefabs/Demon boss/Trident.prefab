@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.84, y: 3.29}
+  m_Size: {x: 0.42, y: 3.29}
   m_EdgeRadius: 0
 --- !u!82 &6558044112992638753
 AudioSource:
@@ -244,7 +244,7 @@ MonoBehaviour:
   strengthOfShaking: 5
   rangeOfShaking: 5
   speedOfShaking: 0.2
-  movementSpeed: 5000
+  movementSpeed: 2300
   timeToShoot: 3
   shootingParticles: {fileID: 4499841494368491319}
 --- !u!1001 &4499841494350017059

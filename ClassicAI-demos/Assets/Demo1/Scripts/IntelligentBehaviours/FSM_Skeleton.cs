@@ -13,6 +13,7 @@ public class FSM_Skeleton : MonoBehaviour
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
+    [SerializeField] private EdgeCollider2D jawCollider;
 
     private Animator animator;
     private Vector3 playerPosition;
@@ -51,6 +52,13 @@ public class FSM_Skeleton : MonoBehaviour
         animator.SetTrigger("backIdle");
     }
 
+    private IEnumerator BackToIdleFixed()
+    {
+        yield return new WaitForSeconds(2);
+
+        animator.SetTrigger("backIdle");
+    }
+
     [StateEnterMethod("Base.Idle")]
     public void EnterIdle()
     {
@@ -64,14 +72,16 @@ public class FSM_Skeleton : MonoBehaviour
     public void EnterJawAttack()
     {
         attacking = true;
+        jawCollider.enabled = true;
         skeletonBehaviour.JawAttack();
-        StartCoroutine(BackToIdle());
+        StartCoroutine(BackToIdleFixed());
     }
 
     [StateExitMethod("Base.Jaw attack")]
     public void ExitJawAttack()
     {
         JawAttack = false;
+        jawCollider.enabled = false;
     }
 
     [StateEnterMethod("Base.Hands attack")]

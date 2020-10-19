@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3058823294749417057}
   - component: {fileID: 3058823294749417058}
   - component: {fileID: 3058823294749416863}
-  m_Layer: 0
+  - component: {fileID: 3502613455835030287}
+  m_Layer: 9
   m_Name: cannon_1
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,6 +68,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFinishedLerping: 0
+--- !u!58 &3502613455835030287
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058823294749417059}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.5
 --- !u!1 &3058823294771066410
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,9 +95,10 @@ GameObject:
   - component: {fileID: 3058823294771066409}
   - component: {fileID: 3058823294771066406}
   - component: {fileID: 3058823294771066407}
-  m_Layer: 0
+  - component: {fileID: 1654178015137035240}
+  m_Layer: 9
   m_Name: cannon_3
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +152,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFinishedLerping: 0
+--- !u!58 &1654178015137035240
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058823294771066410}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.5
 --- !u!1 &3058823294994823373
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,9 +836,10 @@ GameObject:
   - component: {fileID: 3058823295362315543}
   - component: {fileID: 3058823295362315540}
   - component: {fileID: 3058823295362315541}
-  m_Layer: 0
+  - component: {fileID: 5626173910722310230}
+  m_Layer: 9
   m_Name: cannon_4
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -858,6 +893,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFinishedLerping: 0
+--- !u!58 &5626173910722310230
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058823295362315544}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.5
 --- !u!1 &3058823295375354972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,9 +2808,10 @@ GameObject:
   - component: {fileID: 3058823296323350153}
   - component: {fileID: 3058823296323350150}
   - component: {fileID: 3058823296323350151}
-  m_Layer: 0
+  - component: {fileID: 1204910140027928651}
+  m_Layer: 9
   m_Name: cannon_2
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2813,6 +2865,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFinishedLerping: 0
+--- !u!58 &1204910140027928651
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058823296323350154}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.5
 --- !u!1 &3058823296412403392
 GameObject:
   m_ObjectHideFlags: 0

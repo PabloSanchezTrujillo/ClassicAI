@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  movementSpeed: 3.5
+  movementSpeed: 2
   rotationSpeed: 2
   trailParticles: {fileID: 4022620781996017434}
   spawnPoint: {fileID: 0}

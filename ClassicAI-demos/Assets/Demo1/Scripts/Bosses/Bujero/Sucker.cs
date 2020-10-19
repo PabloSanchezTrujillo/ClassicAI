@@ -14,8 +14,8 @@ public class Sucker : MonoBehaviour
     [Header("Sucking Attack")]
     [SerializeField] private float proyectilesSuckingSpeed = 3;
 
-    [Space]
     [SerializeField] private float suckingAttackDuration = 6;
+    [SerializeField] private int numberOfProjectiles;
 
     [Header("Orbits Attack")]
     [SerializeField] private float blackholeOffset = 5;
@@ -111,23 +111,23 @@ public class Sucker : MonoBehaviour
     {
         animator.SetTrigger("suckingAttack");
 
-        SpawnCircle(15, 6, proyectilesSuckingSpeed);
+        SpawnCircle(15, numberOfProjectiles, proyectilesSuckingSpeed);
 
         yield return new WaitForSeconds(suckingAttackDuration / 30);
 
-        SpawnCircle(15, 6, proyectilesSuckingSpeed, 0.6f);
+        SpawnCircle(15, numberOfProjectiles, proyectilesSuckingSpeed, 0.6f);
 
         yield return new WaitForSeconds(suckingAttackDuration / 15);
 
-        SpawnCircle(15, 6, proyectilesSuckingSpeed + 2);
+        SpawnCircle(15, numberOfProjectiles, proyectilesSuckingSpeed + 2);
 
         yield return new WaitForSeconds(suckingAttackDuration / 15);
 
-        SpawnCircle(15, 6, proyectilesSuckingSpeed, 0.3f);
+        SpawnCircle(15, numberOfProjectiles, proyectilesSuckingSpeed, 0.3f);
 
         yield return new WaitForSeconds(suckingAttackDuration / 30);
 
-        SpawnCircle(15, 8, proyectilesSuckingSpeed);
+        SpawnCircle(15, numberOfProjectiles, proyectilesSuckingSpeed);
 
         yield return new WaitForSeconds(4 * suckingAttackDuration / 5);
     }

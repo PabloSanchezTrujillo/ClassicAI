@@ -5,4 +5,7 @@ tree("Root")
 				SameColor
 				Reload
 			Fire
-		Dodge
+		sequence
+			Dodge
+			Wait 0.5
+			ReturnToCenter

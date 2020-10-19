@@ -36,6 +36,8 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private ParticleSystem hasBulletParticles;
     [SerializeField] private CircleCollider2D circleCollider;
     [SerializeField] private Boss boss;
+    [SerializeField] private Transform centerPoint;
+    [SerializeField] private float safeZone;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip getDamageClip;
@@ -58,6 +60,8 @@ public class PlayerActions : MonoBehaviour
     private bool reloadFinished;
     private SpriteRenderer sprite;
     private bool inmortalityMode;
+    private float savedDirectionY;
+    private float savedDirectionX;
 
     #endregion variables
 
@@ -245,7 +249,6 @@ public class PlayerActions : MonoBehaviour
     [Task]
     private void Dodge()
     {
-        print("Dodge task");
         CalculateDodge();
 
         if(!AttackIncoming) {
@@ -253,26 +256,55 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    [Task]
+    private void ReturnToCenter()
+    {
+        if(AttackIncoming) {
+            Task.current.Fail();
+            //print("FAIL");
+        }
+        if(Vector2.Distance(centerPoint.position, transform.position) < safeZone) {
+            Task.current.Succeed();
+            //print("SUCEED");
+        }
+
+        print("Distancia: " + Vector2.Distance(centerPoint.position, transform.position));
+        Vector2 direction = (centerPoint.position - transform.position).normalized;
+        playerMovement.MovementVector = direction;
+    }
+
     private void CalculateDodge()
     {
         Vector2 direction = (AttackingObject.transform.position - transform.position).normalized;
+        float randomValue = -1;
+
+        if(Task.current.isStarting) {
+            randomValue = Random.value;
+        }
 
         if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y)) { // Comes from LEFT or RIGHT
-            if(Task.current.isStarting) {
-                //direction.y += (Random.value > 0.7) ? 0.7f : -0.7f;
-                direction.y += 0.7f;
-                direction = direction.normalized;
+            if(randomValue != -1) {
+                direction.y = (Random.value > 0.5) ? 0.7f : -0.7f;
+                savedDirectionY = direction.y;
             }
+            else {
+                direction.y = savedDirectionY;
+            }
+            //direction.y -= 0.7f;
         }
         else { // Comes from TOP or BOTTOM
-            if(Task.current.isStarting) {
-                //direction.x += (Random.value > 0.7) ? 0.7f : -0.7f;
-                direction.x += 0.7f;
-                direction = direction.normalized;
+            if(randomValue != -1) {
+                direction.x = (Random.value > 0.5) ? 0.7f : -0.7f;
+                savedDirectionX = direction.x;
             }
+            else {
+                direction.x = savedDirectionX;
+            }
+            //direction.x += 0.7f;
         }
 
-        print("Direction: " + (-direction));
+        //print("Random value: " + randomValue);
+        //print("Direction: " + (-direction));
         playerMovement.MovementVector = -direction;
     }
 
@@ -315,7 +347,7 @@ public class PlayerActions : MonoBehaviour
         currentHealth--;
         if(currentHealth < 0)
             currentHealth = 0;
-        //healthIcons[currentHealth].SetActive(false);
+        healthIcons[currentHealth].SetActive(false);
 
         if(currentHealth == 0) {
             audioSource.Stop();
@@ -334,8 +366,6 @@ public class PlayerActions : MonoBehaviour
             audioSource.clip = getDamageClip;
             audioSource.Play();
         }
-
-        print("Health: " + currentHealth);
     }
 
     public void PassToNextLevel()

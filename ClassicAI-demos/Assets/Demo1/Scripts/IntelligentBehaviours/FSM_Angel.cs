@@ -40,7 +40,8 @@ public class FSM_Angel : MonoBehaviour
                 animator.SetTrigger("FeathersAttack");
             }
             else {
-                animator.SetTrigger("LaserAttack");
+                animator.SetTrigger("BallsAttack");
+                //animator.SetTrigger("LaserAttack");
             }
         }
     }

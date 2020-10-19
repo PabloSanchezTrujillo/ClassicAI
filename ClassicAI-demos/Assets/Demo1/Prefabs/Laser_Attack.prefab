@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 4425326076132284375}
   - component: {fileID: 4425326076132284374}
   - component: {fileID: 6577869932414314332}
+  - component: {fileID: 1601685409254337629}
   m_Layer: 9
   m_Name: Cannon_4
   m_TagString: Damage
@@ -379,6 +380,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveTime: 1
+--- !u!58 &1601685409254337629
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425326076132284329}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.035719395, y: 0.61169684}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &4425326076193111491
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +860,7 @@ GameObject:
   - component: {fileID: 4425326076464559032}
   - component: {fileID: 4425326076464559015}
   - component: {fileID: 7092113467695900962}
+  - component: {fileID: 1711144569072464725}
   m_Layer: 9
   m_Name: Cannon_3
   m_TagString: Damage
@@ -941,6 +959,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveTime: 1
+--- !u!58 &1711144569072464725
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425326076464559034}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.035719395, y: 0.61169684}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &4425326076476326615
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,6 +987,7 @@ GameObject:
   - component: {fileID: 4425326076476326613}
   - component: {fileID: 4425326076476326612}
   - component: {fileID: 8774567657845045055}
+  - component: {fileID: 3719582251264277353}
   m_Layer: 9
   m_Name: Cannon_1
   m_TagString: Damage
@@ -1051,6 +1086,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveTime: 1
+--- !u!58 &3719582251264277353
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425326076476326615}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.035719395, y: 0.61169684}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &4425326076552522589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1449,7 @@ GameObject:
   - component: {fileID: 4425326077263373985}
   - component: {fileID: 4425326077263373984}
   - component: {fileID: 2927314231588684915}
+  - component: {fileID: 7161613449660759553}
   m_Layer: 9
   m_Name: Cannon_2
   m_TagString: Damage
@@ -1496,3 +1548,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dissolveTime: 1
+--- !u!58 &7161613449660759553
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425326077263373987}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.035719395, y: 0.61169684}
+  serializedVersion: 2
+  m_Radius: 3
