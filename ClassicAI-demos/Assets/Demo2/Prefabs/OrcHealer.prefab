@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 388476416}
   - component: {fileID: 388476415}
   - component: {fileID: 8840027742102014693}
+  - component: {fileID: 1977115440}
   m_Layer: 0
   m_Name: OrcHealer
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7616a8d264ad50439d4f76465f502bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemy: 0
   health: 200
   healthBar: {fileID: 2029998566}
   healthColor: {fileID: 892930925}
@@ -136,7 +138,31 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.5, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &1977115440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388476414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60596e68ad680c479e228623c01e361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   actionsMenu: {fileID: 0}
+  enemyToAttackText: {fileID: 0}
+  allyToHelpText: {fileID: 0}
+  action1Name: Heal
+  action1Description: Heal up 20 health to himself or an ally
+  action1: {fileID: 0}
+  heals: 20
+  action2Name: Axe attack
+  action2Description: Deals 15 damage to one enemy
+  action2: {fileID: 0}
+  action3Name: "\uF0A7Inspiration"
+  action3Description: Deals 20% more damage in his next attack
+  action3: {fileID: 0}
 --- !u!1 &408409025
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +599,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8840027742102014693}
+        m_MethodName: ClickOnCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1977115440}
         m_MethodName: SelectCharacter
         m_Mode: 1
         m_Arguments:

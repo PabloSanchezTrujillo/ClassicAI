@@ -7,15 +7,26 @@ public class Character : MonoBehaviour
 {
     #region variables
 
+    public GameObject EnemySelected { get; set; }
+    public GameObject AllySelected { get; set; }
+    public CharacterStates.States SelfState { get; set; }
+    public CharacterStates.States ThirdState { get; set; }
+    public bool isEnemy;
+
     [SerializeField] private int health;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Image healthColor;
     [SerializeField] private Text healthText;
     [SerializeField] private Color[] healthColors;
-    [SerializeField] private GameObject actionsMenu;
-    [SerializeField] private bool isEnemy;
+
+    private CharactersPool charactersPool;
 
     #endregion variables
+
+    private void Awake()
+    {
+        charactersPool = FindObjectOfType<CharactersPool>();
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -23,6 +34,8 @@ public class Character : MonoBehaviour
         healthBar.value = healthBar.maxValue = health;
         healthColor.color = healthColors[0];
         healthText.text = health.ToString();
+        SelfState = CharacterStates.States.Normal;
+        ThirdState = CharacterStates.States.Normal;
     }
 
     public void UpdateHealth()
@@ -41,16 +54,46 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SelectCharacter()
+    public void ClickOnCharacter()
     {
-        if(!isEnemy) {
-            actionsMenu.SetActive(true);
+        if(isEnemy) {
+            foreach(GameObject ally in charactersPool.allies) {
+                ally.GetComponent<Character>().EnemySelected = this.gameObject;
+            }
+        }
+        else {
+            foreach(GameObject ally in charactersPool.allies) {
+                ally.GetComponent<Character>().AllySelected = this.gameObject;
+            }
         }
     }
 
     public void GetDamage(int damage)
     {
-        health -= damage;
+        switch(SelfState) {
+            case CharacterStates.States.Normal:
+                health -= damage;
+                break;
+
+            case CharacterStates.States.Shielded:
+                health -= (damage / 2);
+                break;
+        }
+
         healthBar.value = health;
+    }
+
+    public void HealUp(int heal)
+    {
+        health += heal;
+        if(health > 200) {
+            health = 200;
+        }
+        healthBar.value = health;
+    }
+
+    public CharactersPool GetCharactersPool()
+    {
+        return charactersPool;
     }
 }
