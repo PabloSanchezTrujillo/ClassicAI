@@ -157,12 +157,16 @@ MonoBehaviour:
   action1Description: Heal up 20 health to himself or an ally
   action1: {fileID: 0}
   heals: 20
+  healingParticles: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   action2Name: Axe attack
   action2Description: Deals 15 damage to one enemy
   action2: {fileID: 0}
+  damage: 15
+  damageParticles: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   action3Name: "\uF0A7Inspiration"
-  action3Description: Deals 20% more damage in his next attack
+  action3Description: Deals 30% more damage in his next attack
   action3: {fileID: 0}
+  inspirationParticles: {fileID: 100006, guid: 8fc06027b01064e4f885fd8dd2929310, type: 3}
 --- !u!1 &408409025
 GameObject:
   m_ObjectHideFlags: 0

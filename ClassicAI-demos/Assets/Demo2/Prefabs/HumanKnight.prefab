@@ -2745,7 +2745,7 @@ MonoBehaviour:
   action1Damage: 30
   hitParticles: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   action2Name: "\uF0A7Shield up"
-  action2Description: Protects himself and receives one-third of the damage
+  action2Description: Protects himself and receives half of the damage
   action2: {fileID: 0}
   shieldParticles: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
   action3Name: "\uF0A7Sword sweep"

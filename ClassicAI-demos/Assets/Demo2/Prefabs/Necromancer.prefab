@@ -245,6 +245,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 890958616}
+        m_MethodName: SelectCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &688964549
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +282,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688964549}
-  m_LocalRotation: {x: 0, y: 0.9396927, z: 0, w: 0.34202018}
+  m_LocalRotation: {x: 0, y: -0.258819, z: 0, w: 0.9659259}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2500002, y: 1.25, z: 1.2500002}
   m_Children:
@@ -280,7 +291,7 @@ RectTransform:
   - {fileID: 507291143}
   m_Father: {fileID: 3478025250975259355}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 140, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0.16}
@@ -770,6 +781,7 @@ GameObject:
   - component: {fileID: 3478025250975259355}
   - component: {fileID: 8735932539965035658}
   - component: {fileID: 651316683153201678}
+  - component: {fileID: 890958616}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Untagged
@@ -834,6 +846,36 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.5, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &890958616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839304754744059133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f98fde8b1dc06a48928bd41468dc30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionsMenu: {fileID: 0}
+  enemyToAttackText: {fileID: 0}
+  allyToHelpText: {fileID: 0}
+  action1Name: "\uF0A7Magic area"
+  action1Description: Deals 12 damage to all enemies
+  action1: {fileID: 0}
+  action1Damage: 12
+  magicalDamage: {fileID: 100000, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
+  action2Name: Revive
+  action2Description: Revive an ally. It will revive with half of its health
+  action2: {fileID: 0}
+  reviveParticles: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0, type: 3}
+  action3Name: Death explosion
+  action3Description: If he dies with the next attack, he deals 30 damage to all
+    enemies
+  action3: {fileID: 0}
+  action3Damage: 30
+  deathParticles: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
 --- !u!1 &1860493697606966921
 GameObject:
   m_ObjectHideFlags: 0

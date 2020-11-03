@@ -32,6 +32,7 @@ public class Healer : MonoBehaviour
 
     [SerializeField] private string action3Description;
     [SerializeField] private GameObject action3;
+    [SerializeField] private GameObject inspirationParticles;
 
     private Character character;
     private Text action1TextName;
@@ -50,6 +51,7 @@ public class Healer : MonoBehaviour
     {
         character = GetComponent<Character>();
 
+        FindObjects();
         action1TextName = action1.transform.GetChild(0).GetComponent<Text>();
         action1TextDescription = action1.transform.GetChild(1).GetComponent<Text>();
         action1Button = action1.GetComponent<Button>();
@@ -59,6 +61,17 @@ public class Healer : MonoBehaviour
         action3TextName = action3.transform.GetChild(0).GetComponent<Text>();
         action3TextDescription = action3.transform.GetChild(1).GetComponent<Text>();
         action3Button = action3.GetComponent<Button>();
+    }
+
+    private void FindObjects()
+    {
+        GameObject actionsUI = GameObject.FindGameObjectWithTag("ActionsMenu");
+        actionsMenu = actionsUI.transform.GetChild(0).gameObject;
+        enemyToAttackText = actionsUI.transform.GetChild(1).gameObject;
+        allyToHelpText = actionsUI.transform.GetChild(2).gameObject;
+        action1 = actionsMenu.transform.GetChild(0).gameObject;
+        action2 = actionsMenu.transform.GetChild(1).gameObject;
+        action3 = actionsMenu.transform.GetChild(2).gameObject;
     }
 
     public void SelectCharacter()
@@ -100,10 +113,10 @@ public class Healer : MonoBehaviour
         enemyToAttackText.SetActive(true);
 
         yield return new WaitUntil(() => character.EnemySelected != null);
-        if(character.ThirdState == CharacterStates.States.DamageBuffed) {
+        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(damage * 0.3f);
             character.EnemySelected.GetComponent<Character>().GetDamage(damage + damageExtra);
-            character.ThirdState = CharacterStates.States.Normal;
+            character.AttackingState = CharacterStates.States.Normal;
         }
         else {
             character.EnemySelected.GetComponent<Character>().GetDamage(damage);
@@ -119,7 +132,8 @@ public class Healer : MonoBehaviour
         allyToHelpText.SetActive(true);
 
         yield return new WaitUntil(() => character.AllySelected != null);
-        character.AllySelected.GetComponent<Character>().ThirdState = CharacterStates.States.DamageBuffed;
+        character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
+        Instantiate(inspirationParticles, character.AllySelected.transform);
         allyToHelpText.SetActive(false);
     }
 }

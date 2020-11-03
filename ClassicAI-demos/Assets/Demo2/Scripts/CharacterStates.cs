@@ -8,6 +8,8 @@ public class CharacterStates : MonoBehaviour
     {
         Normal,
         Shielded,
-        DamageBuffed
+        DamageBuffed,
+        Guarded,
+        DeathExplosive
     }
 }

@@ -9,8 +9,8 @@ public class Character : MonoBehaviour
 
     public GameObject EnemySelected { get; set; }
     public GameObject AllySelected { get; set; }
-    public CharacterStates.States SelfState { get; set; }
-    public CharacterStates.States ThirdState { get; set; }
+    public CharacterStates.States DefensiveState { get; set; }
+    public CharacterStates.States AttackingState { get; set; }
     public bool isEnemy;
 
     [SerializeField] private int health;
@@ -34,8 +34,8 @@ public class Character : MonoBehaviour
         healthBar.value = healthBar.maxValue = health;
         healthColor.color = healthColors[0];
         healthText.text = health.ToString();
-        SelfState = CharacterStates.States.Normal;
-        ThirdState = CharacterStates.States.Normal;
+        DefensiveState = CharacterStates.States.Normal;
+        AttackingState = CharacterStates.States.Normal;
     }
 
     public void UpdateHealth()
@@ -70,13 +70,44 @@ public class Character : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-        switch(SelfState) {
+        switch(DefensiveState) {
             case CharacterStates.States.Normal:
                 health -= damage;
                 break;
 
             case CharacterStates.States.Shielded:
-                health -= (damage / 2);
+                health -= Mathf.RoundToInt(damage / 2);
+                DefensiveState = CharacterStates.States.Normal;
+                break;
+
+            case CharacterStates.States.Guarded:
+                if(isEnemy) {
+                    foreach(GameObject enemy in charactersPool.enemies) {
+                        if(enemy != this.gameObject) {
+                            int reducedDamage = Mathf.RoundToInt(damage * 0.7f);
+                            enemy.GetComponent<Character>().GetDamage(reducedDamage);
+                        }
+                    }
+                }
+                else {
+                    foreach(GameObject ally in charactersPool.allies) {
+                        if(ally != this.gameObject) {
+                            int reducedDamage = Mathf.RoundToInt(damage * 0.7f);
+                            ally.GetComponent<Character>().GetDamage(reducedDamage);
+                        }
+                    }
+                }
+                DefensiveState = CharacterStates.States.Normal;
+                break;
+
+            case CharacterStates.States.DeathExplosive:
+                health -= damage;
+                if(health <= 0) {
+                    if(GetComponent<Necromancer>() != null) {
+                        GetComponent<Necromancer>().DeathExplosion();
+                    }
+                }
+                DefensiveState = CharacterStates.States.Normal;
                 break;
         }
 
@@ -86,8 +117,8 @@ public class Character : MonoBehaviour
     public void HealUp(int heal)
     {
         health += heal;
-        if(health > 200) {
-            health = 200;
+        if(health > healthBar.maxValue) {
+            health = (int)healthBar.maxValue;
         }
         healthBar.value = health;
     }
@@ -95,5 +126,16 @@ public class Character : MonoBehaviour
     public CharactersPool GetCharactersPool()
     {
         return charactersPool;
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public void Revive()
+    {
+        health = Mathf.RoundToInt(healthBar.maxValue / 2);
+        healthBar.value = health;
     }
 }

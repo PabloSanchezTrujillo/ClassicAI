@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Knight : MonoBehaviour
+public class Necromancer : MonoBehaviour
 {
     #region variables
 
@@ -18,14 +17,14 @@ public class Knight : MonoBehaviour
     [SerializeField] private string action1Description;
     [SerializeField] private GameObject action1;
     [SerializeField] private int action1Damage;
-    [SerializeField] private GameObject hitParticles;
+    [SerializeField] private GameObject magicalDamage;
 
     [Header("Action 2")]
     [SerializeField] private string action2Name;
 
     [SerializeField] private string action2Description;
     [SerializeField] private GameObject action2;
-    [SerializeField] private GameObject shieldParticles;
+    [SerializeField] private GameObject reviveParticles;
 
     [Header("Action 3")]
     [SerializeField] private string action3Name;
@@ -33,7 +32,7 @@ public class Knight : MonoBehaviour
     [SerializeField] private string action3Description;
     [SerializeField] private GameObject action3;
     [SerializeField] private int action3Damage;
-    [SerializeField] private GameObject sweepParticles;
+    [SerializeField] private GameObject deathParticles;
 
     private Character character;
     private Text action1TextName;
@@ -62,8 +61,6 @@ public class Knight : MonoBehaviour
         action3TextName = action3.transform.GetChild(0).GetComponent<Text>();
         action3TextDescription = action3.transform.GetChild(1).GetComponent<Text>();
         action3Button = action3.GetComponent<Button>();
-
-        //InvokeRepeating("AttackTest", 5, 3);
     }
 
     private void FindObjects()
@@ -75,13 +72,6 @@ public class Knight : MonoBehaviour
         action1 = actionsMenu.transform.GetChild(0).gameObject;
         action2 = actionsMenu.transform.GetChild(1).gameObject;
         action3 = actionsMenu.transform.GetChild(2).gameObject;
-    }
-
-    public void AttackTest()
-    {
-        CharactersPool charactersPool = character.GetCharactersPool();
-        character.EnemySelected = charactersPool.allies[0];
-        character.EnemySelected.GetComponent<Character>().GetDamage(30);
     }
 
     public void SelectCharacter()
@@ -96,7 +86,7 @@ public class Knight : MonoBehaviour
             action3TextDescription.text = action3Description;
 
             action1Button.onClick.RemoveAllListeners();
-            action1Button.onClick.AddListener(() => StartCoroutine(Action1()));
+            action1Button.onClick.AddListener(Action1);
             action2Button.onClick.RemoveAllListeners();
             action2Button.onClick.AddListener(Action2);
             action3Button.onClick.RemoveAllListeners();
@@ -104,45 +94,44 @@ public class Knight : MonoBehaviour
         }
     }
 
-    private IEnumerator Action1()
+    private void Action1()
     {
-        character.EnemySelected = null;
         actionsMenu.SetActive(false);
-        enemyToAttackText.SetActive(true);
-
-        yield return new WaitUntil(() => character.EnemySelected != null);
-        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
-            int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
-            character.EnemySelected.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
-            character.AttackingState = CharacterStates.States.Normal;
+        foreach(GameObject enemy in character.GetCharactersPool().enemies) {
+            if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
+                enemy.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
+                character.AttackingState = CharacterStates.States.Normal;
+            }
+            else {
+                enemy.GetComponent<Character>().GetDamage(action1Damage);
+            }
+            Instantiate(magicalDamage, enemy.transform);
         }
-        else {
-            character.EnemySelected.GetComponent<Character>().GetDamage(action1Damage);
-        }
-        Instantiate(hitParticles, character.EnemySelected.transform);
-        enemyToAttackText.SetActive(false);
     }
 
     private void Action2()
     {
         actionsMenu.SetActive(false);
-        character.DefensiveState = CharacterStates.States.Shielded;
-        Instantiate(shieldParticles, transform);
+        foreach(GameObject ally in character.GetCharactersPool().allies) {
+            if(ally.GetComponent<Character>().GetHealth() <= 0) {
+                ally.GetComponent<Character>().Revive();
+                Instantiate(reviveParticles, ally.transform);
+            }
+        }
     }
 
     private void Action3()
     {
         actionsMenu.SetActive(false);
+        character.DefensiveState = CharacterStates.States.DeathExplosive;
+    }
+
+    public void DeathExplosion()
+    {
         foreach(GameObject enemy in character.GetCharactersPool().enemies) {
-            if(character.AttackingState == CharacterStates.States.DamageBuffed) {
-                int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
-                enemy.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
-                character.AttackingState = CharacterStates.States.Normal;
-            }
-            else {
-                enemy.GetComponent<Character>().GetDamage(action3Damage);
-            }
-            Instantiate(sweepParticles, enemy.transform);
+            enemy.GetComponent<Character>().GetDamage(action3Damage);
+            Instantiate(deathParticles, enemy.transform);
         }
     }
 }
