@@ -1778,8 +1778,7 @@ MonoBehaviour:
   damage: 12
   damageParticles: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   action2Name: "\uF0A7Defend"
-  action2Description: Protects himself or a teammate so he only receives half of
-    the damage
+  action2Description: Protects an ally so it only receives half of the damage
   action2: {fileID: 0}
   shieldParticles: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
   action3Name: "\uF0A7Bodyguard"
