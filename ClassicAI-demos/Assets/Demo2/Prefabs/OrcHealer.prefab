@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 388476415}
   - component: {fileID: 8840027742102014693}
   - component: {fileID: 1977115440}
+  - component: {fileID: 7153101771327732353}
   m_Layer: 0
   m_Name: OrcHealer
   m_TagString: Untagged
@@ -129,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7616a8d264ad50439d4f76465f502bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  role: 1
   isEnemy: 0
   health: 200
   healthBar: {fileID: 2029998566}
@@ -167,6 +169,18 @@ MonoBehaviour:
   action3Description: Deals 30% more damage in his next attack
   action3: {fileID: 0}
   inspirationParticles: {fileID: 100006, guid: 8fc06027b01064e4f885fd8dd2929310, type: 3}
+--- !u!114 &7153101771327732353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388476414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e1a53bf8824b24b9c788dcba4f78a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &408409025
 GameObject:
   m_ObjectHideFlags: 0

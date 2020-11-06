@@ -9,6 +9,7 @@ public class CharactersPool : MonoBehaviour
 {
     #region variables
 
+    public int Turn { get; set; }
     public GameObject[] allies;
     public GameObject[] enemies;
 
@@ -31,9 +32,26 @@ public class CharactersPool : MonoBehaviour
 
     private void Start()
     {
+        Turn = 1;
         selection = 0;
         positionUI = new Vector3(0, 0, 0);
         rotationUI = Quaternion.Euler(0, 140, 0);
+    }
+
+    public void AlliesTurn()
+    {
+        Turn = 1;
+        foreach(GameObject ally in allies) {
+            ally.GetComponent<Character>().CanAttack = true;
+        }
+    }
+
+    public void EnemiesTurn()
+    {
+        foreach(GameObject enemy in enemies) {
+            enemy.GetComponent<Character>().CanAttack = true;
+            enemy.GetComponent<MonteCarloTreeSearch>().EnemyChoose();
+        }
     }
 
     public void SelectKnight()
@@ -42,10 +60,12 @@ public class CharactersPool : MonoBehaviour
         switch(selection) {
             case 0:
                 allies[0] = knightObject;
+                knightObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 1:
                 allies[1] = knightObject;
+                knightObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 2:
@@ -75,10 +95,12 @@ public class CharactersPool : MonoBehaviour
         switch(selection) {
             case 0:
                 allies[0] = healerObject;
+                healerObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 1:
                 allies[1] = healerObject;
+                healerObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 2:
@@ -108,10 +130,12 @@ public class CharactersPool : MonoBehaviour
         switch(selection) {
             case 0:
                 allies[0] = guardObject;
+                guardObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 1:
                 allies[1] = guardObject;
+                guardObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 2:
@@ -141,10 +165,12 @@ public class CharactersPool : MonoBehaviour
         switch(selection) {
             case 0:
                 allies[0] = necromancerObject;
+                necromancerObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 1:
                 allies[1] = necromancerObject;
+                necromancerObject.GetComponent<MonteCarloTreeSearch>().enabled = false;
                 break;
 
             case 2:

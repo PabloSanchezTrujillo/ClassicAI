@@ -75,7 +75,7 @@ public class Guard : MonoBehaviour
 
     public void SelectCharacter()
     {
-        if(!character.isEnemy) {
+        if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack) {
             actionsMenu.SetActive(true);
             action1TextName.text = action1Name;
             action1TextDescription.text = action1Description;
@@ -93,13 +93,21 @@ public class Guard : MonoBehaviour
         }
     }
 
-    private IEnumerator Action1()
+    public IEnumerator Action1()
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
-        enemyToAttackText.SetActive(true);
 
-        yield return new WaitUntil(() => character.EnemySelected != null);
+        if(!character.isEnemy) {
+            enemyToAttackText.SetActive(true);
+            yield return new WaitUntil(() => character.EnemySelected != null);
+            enemyToAttackText.SetActive(false);
+        }
+        else {
+            int randomEnemy = Random.Range(0, 2);
+            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+        }
+
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(damage * 0.3f);
             character.EnemySelected.GetComponent<Character>().GetDamage(damage + damageExtra);
@@ -109,30 +117,60 @@ public class Guard : MonoBehaviour
             character.EnemySelected.GetComponent<Character>().GetDamage(damage);
         }
         Instantiate(damageParticles, character.EnemySelected.transform);
-        enemyToAttackText.SetActive(false);
+        EndTurn();
     }
 
     private IEnumerator Action2()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
-        allyToHelpText.SetActive(true);
 
-        yield return new WaitUntil(() => character.AllySelected != null);
+        if(!character.isEnemy) {
+            allyToHelpText.SetActive(true);
+            yield return new WaitUntil(() => character.AllySelected != null);
+            allyToHelpText.SetActive(false);
+        }
+        else {
+            int randomAlly = Random.Range(0, 2);
+            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+        }
         character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Shielded;
         Instantiate(shieldParticles, character.AllySelected.transform);
-        allyToHelpText.SetActive(false);
+        EndTurn();
     }
 
     private IEnumerator Action3()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
-        allyToHelpText.SetActive(true);
 
-        yield return new WaitUntil(() => character.AllySelected != null);
+        if(!character.isEnemy) {
+            allyToHelpText.SetActive(true);
+            yield return new WaitUntil(() => character.AllySelected != null);
+            allyToHelpText.SetActive(false);
+        }
+        else {
+            int randomAlly = Random.Range(0, 2);
+            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+        }
         character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Guarded;
         Instantiate(guardedParticles, character.AllySelected.transform);
-        allyToHelpText.SetActive(false);
+        EndTurn();
+    }
+
+    private void EndTurn()
+    {
+        CharactersPool charactersPool = character.GetCharactersPool();
+        character.CanAttack = false;
+        charactersPool.Turn++;
+
+        if(charactersPool.Turn == 3) {
+            print("Enemies turn");
+            charactersPool.EnemiesTurn();
+        }
+        else if(charactersPool.Turn == 5) {
+            print("Allies turn");
+            charactersPool.AlliesTurn();
+        }
     }
 }

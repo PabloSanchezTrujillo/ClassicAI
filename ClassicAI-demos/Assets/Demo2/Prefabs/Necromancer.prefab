@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 8735932539965035658}
   - component: {fileID: 651316683153201678}
   - component: {fileID: 890958616}
+  - component: {fileID: 2811189997514002512}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Untagged
@@ -837,6 +838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7616a8d264ad50439d4f76465f502bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  role: 3
   isEnemy: 0
   health: 200
   healthBar: {fileID: 1261340628}
@@ -861,7 +863,7 @@ MonoBehaviour:
   actionsMenu: {fileID: 0}
   enemyToAttackText: {fileID: 0}
   allyToHelpText: {fileID: 0}
-  action1Name: "\uF0A7Magic area"
+  action1Name: Dark vortex
   action1Description: Deals 12 damage to all enemies
   action1: {fileID: 0}
   action1Damage: 12
@@ -876,6 +878,18 @@ MonoBehaviour:
   action3: {fileID: 0}
   action3Damage: 30
   deathParticles: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
+--- !u!114 &2811189997514002512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839304754744059133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e1a53bf8824b24b9c788dcba4f78a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1860493697606966921
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class Character : MonoBehaviour
     public GameObject AllySelected { get; set; }
     public CharacterStates.States DefensiveState { get; set; }
     public CharacterStates.States AttackingState { get; set; }
+    public bool CanAttack { get; set; }
+    public Roles.Role role;
     public bool isEnemy;
 
     [SerializeField] private int health;
@@ -36,6 +38,7 @@ public class Character : MonoBehaviour
         healthText.text = health.ToString();
         DefensiveState = CharacterStates.States.Normal;
         AttackingState = CharacterStates.States.Normal;
+        CanAttack = true;
     }
 
     public void UpdateHealth()

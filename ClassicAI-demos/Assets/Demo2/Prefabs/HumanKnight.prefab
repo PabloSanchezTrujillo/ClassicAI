@@ -2660,6 +2660,7 @@ GameObject:
   - component: {fileID: 95905397883882224}
   - component: {fileID: 7923615396863532340}
   - component: {fileID: 633334543}
+  - component: {fileID: 3560684091506468081}
   m_Layer: 0
   m_Name: HumanKnight
   m_TagString: Untagged
@@ -2715,6 +2716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7616a8d264ad50439d4f76465f502bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  role: 0
   isEnemy: 0
   health: 200
   healthBar: {fileID: 1955279897}
@@ -2753,6 +2755,18 @@ MonoBehaviour:
   action3: {fileID: 0}
   action3Damage: 15
   sweepParticles: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+--- !u!114 &3560684091506468081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835885862194036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e1a53bf8824b24b9c788dcba4f78a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1907504620384056
 GameObject:
   m_ObjectHideFlags: 0

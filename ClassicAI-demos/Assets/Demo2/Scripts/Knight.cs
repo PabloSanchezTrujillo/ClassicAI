@@ -86,7 +86,7 @@ public class Knight : MonoBehaviour
 
     public void SelectCharacter()
     {
-        if(!character.isEnemy) {
+        if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack) {
             actionsMenu.SetActive(true);
             action1TextName.text = action1Name;
             action1TextDescription.text = action1Description;
@@ -108,9 +108,17 @@ public class Knight : MonoBehaviour
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
-        enemyToAttackText.SetActive(true);
 
-        yield return new WaitUntil(() => character.EnemySelected != null);
+        if(!character.isEnemy) {
+            enemyToAttackText.SetActive(true);
+            yield return new WaitUntil(() => character.EnemySelected != null);
+            enemyToAttackText.SetActive(false);
+        }
+        else {
+            int randomEnemy = Random.Range(0, 2);
+            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+        }
+
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
             character.EnemySelected.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
@@ -120,7 +128,7 @@ public class Knight : MonoBehaviour
             character.EnemySelected.GetComponent<Character>().GetDamage(action1Damage);
         }
         Instantiate(hitParticles, character.EnemySelected.transform);
-        enemyToAttackText.SetActive(false);
+        EndTurn();
     }
 
     private void Action2()
@@ -128,21 +136,55 @@ public class Knight : MonoBehaviour
         actionsMenu.SetActive(false);
         character.DefensiveState = CharacterStates.States.Shielded;
         Instantiate(shieldParticles, transform);
+        EndTurn();
     }
 
-    private void Action3()
+    public void Action3()
     {
         actionsMenu.SetActive(false);
-        foreach(GameObject enemy in character.GetCharactersPool().enemies) {
-            if(character.AttackingState == CharacterStates.States.DamageBuffed) {
-                int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
-                enemy.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
-                character.AttackingState = CharacterStates.States.Normal;
+
+        if(!character.isEnemy) {
+            foreach(GameObject enemy in character.GetCharactersPool().enemies) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                    int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
+                    enemy.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
+                    character.AttackingState = CharacterStates.States.Normal;
+                }
+                else {
+                    enemy.GetComponent<Character>().GetDamage(action3Damage);
+                }
+                Instantiate(sweepParticles, enemy.transform);
             }
-            else {
-                enemy.GetComponent<Character>().GetDamage(action3Damage);
+        }
+        else {
+            foreach(GameObject ally in character.GetCharactersPool().allies) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                    int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
+                    ally.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
+                    character.AttackingState = CharacterStates.States.Normal;
+                }
+                else {
+                    ally.GetComponent<Character>().GetDamage(action3Damage);
+                }
+                Instantiate(sweepParticles, ally.transform);
             }
-            Instantiate(sweepParticles, enemy.transform);
+        }
+        EndTurn();
+    }
+
+    private void EndTurn()
+    {
+        CharactersPool charactersPool = character.GetCharactersPool();
+        character.CanAttack = false;
+        charactersPool.Turn++;
+
+        if(charactersPool.Turn == 3) {
+            print("Enemies turn");
+            charactersPool.EnemiesTurn();
+        }
+        else if(charactersPool.Turn == 5) {
+            print("Allies turn");
+            charactersPool.AlliesTurn();
         }
     }
 }
