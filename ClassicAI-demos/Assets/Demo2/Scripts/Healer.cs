@@ -94,7 +94,7 @@ public class Healer : MonoBehaviour
         }
     }
 
-    private IEnumerator Action1()
+    public IEnumerator Action1()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -105,6 +105,7 @@ public class Healer : MonoBehaviour
             allyToHelpText.SetActive(false);
         }
         else {
+            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
             int randomAlly = Random.Range(0, 2);
             character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
         }
@@ -140,7 +141,7 @@ public class Healer : MonoBehaviour
         EndTurn();
     }
 
-    private IEnumerator Action3()
+    public IEnumerator Action3()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -173,5 +174,21 @@ public class Healer : MonoBehaviour
             print("Allies turn");
             charactersPool.AlliesTurn();
         }
+    }
+
+    // Actions for NO Monobehaviours
+    public void FireAction1()
+    {
+        StartCoroutine(Action1());
+    }
+
+    public void FireAction2()
+    {
+        StartCoroutine(Action2());
+    }
+
+    public void FireAction3()
+    {
+        StartCoroutine(Action3());
     }
 }

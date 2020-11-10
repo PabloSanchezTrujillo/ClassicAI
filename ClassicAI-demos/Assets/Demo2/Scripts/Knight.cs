@@ -104,7 +104,7 @@ public class Knight : MonoBehaviour
         }
     }
 
-    private IEnumerator Action1()
+    public IEnumerator Action1()
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
@@ -115,6 +115,7 @@ public class Knight : MonoBehaviour
             enemyToAttackText.SetActive(false);
         }
         else {
+            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
             int randomEnemy = Random.Range(0, 2);
             character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
         }
@@ -131,7 +132,7 @@ public class Knight : MonoBehaviour
         EndTurn();
     }
 
-    private void Action2()
+    public void Action2()
     {
         actionsMenu.SetActive(false);
         character.DefensiveState = CharacterStates.States.Shielded;
@@ -186,5 +187,21 @@ public class Knight : MonoBehaviour
             print("Allies turn");
             charactersPool.AlliesTurn();
         }
+    }
+
+    // Actions for NO Monobehaviours
+    public void FireAction1()
+    {
+        StartCoroutine(Action1());
+    }
+
+    public void FireAction2()
+    {
+        Action2();
+    }
+
+    public void FireAction3()
+    {
+        Action3();
     }
 }

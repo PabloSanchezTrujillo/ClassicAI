@@ -104,6 +104,7 @@ public class Guard : MonoBehaviour
             enemyToAttackText.SetActive(false);
         }
         else {
+            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
             int randomEnemy = Random.Range(0, 2);
             character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
         }
@@ -120,7 +121,7 @@ public class Guard : MonoBehaviour
         EndTurn();
     }
 
-    private IEnumerator Action2()
+    public IEnumerator Action2()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -139,7 +140,7 @@ public class Guard : MonoBehaviour
         EndTurn();
     }
 
-    private IEnumerator Action3()
+    public IEnumerator Action3()
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -172,5 +173,21 @@ public class Guard : MonoBehaviour
             print("Allies turn");
             charactersPool.AlliesTurn();
         }
+    }
+
+    // Actions for NO Monobehaviours
+    public void FireAction1()
+    {
+        StartCoroutine(Action1());
+    }
+
+    public void FireAction2()
+    {
+        StartCoroutine(Action2());
+    }
+
+    public void FireAction3()
+    {
+        StartCoroutine(Action3());
     }
 }

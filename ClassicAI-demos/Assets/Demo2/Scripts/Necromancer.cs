@@ -127,7 +127,7 @@ public class Necromancer : MonoBehaviour
         EndTurn();
     }
 
-    private void Action2()
+    public void Action2()
     {
         actionsMenu.SetActive(false);
 
@@ -150,7 +150,7 @@ public class Necromancer : MonoBehaviour
         EndTurn();
     }
 
-    private void Action3()
+    public void Action3()
     {
         actionsMenu.SetActive(false);
         character.DefensiveState = CharacterStates.States.DeathExplosive;
@@ -187,5 +187,21 @@ public class Necromancer : MonoBehaviour
             print("Allies turn");
             charactersPool.AlliesTurn();
         }
+    }
+
+    // Actions for NO Monobehaviours
+    public void FireAction1()
+    {
+        Action1();
+    }
+
+    public void FireAction2()
+    {
+        Action2();
+    }
+
+    public void FireAction3()
+    {
+        Action3();
     }
 }

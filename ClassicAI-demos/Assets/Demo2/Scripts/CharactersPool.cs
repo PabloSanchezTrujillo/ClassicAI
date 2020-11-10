@@ -50,7 +50,8 @@ public class CharactersPool : MonoBehaviour
     {
         foreach(GameObject enemy in enemies) {
             enemy.GetComponent<Character>().CanAttack = true;
-            enemy.GetComponent<MonteCarloTreeSearch>().EnemyChoose();
+            // TODO: Crear el estado de cada turno
+            enemy.GetComponent<MonteCarloTreeSearch>().RunMonteCarloTreeSearch(null, 500);
         }
     }
 
