@@ -175,13 +175,16 @@ public class Knight : MonoBehaviour
 
     private void EndTurn()
     {
+        print("Knigh attacked");
+
         CharactersPool charactersPool = character.GetCharactersPool();
         character.CanAttack = false;
+        //charactersPool.Simulation++;
         charactersPool.Turn++;
 
         if(charactersPool.Turn == 3) {
             print("Enemies turn");
-            charactersPool.EnemiesTurn();
+            StartCoroutine(charactersPool.EnemiesTurn());
         }
         else if(charactersPool.Turn == 5) {
             print("Allies turn");
@@ -189,19 +192,72 @@ public class Knight : MonoBehaviour
         }
     }
 
-    // Actions for NO Monobehaviours
-    public void FireAction1()
+    ///////////// SIMULATION /////////////
+    public IEnumerator SimulatedAction1()
     {
-        StartCoroutine(Action1());
+        character.EnemySelected = null;
+        actionsMenu.SetActive(false);
+
+        if(!character.isEnemy) {
+            enemyToAttackText.SetActive(true);
+            yield return new WaitUntil(() => character.EnemySelected != null);
+            enemyToAttackText.SetActive(false);
+        }
+        else {
+            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
+            int randomEnemy = Random.Range(0, 2);
+            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+        }
+
+        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+            int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
+            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(action1Damage + damageExtra);
+            character.AttackingState = CharacterStates.States.Normal;
+        }
+        else {
+            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(action1Damage);
+        }
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 
-    public void FireAction2()
+    public void SimulatedAction2()
     {
-        Action2();
+        actionsMenu.SetActive(false);
+        character.DefensiveState = CharacterStates.States.Shielded;
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 
-    public void FireAction3()
+    public void SimulatedAction3()
     {
-        Action3();
+        actionsMenu.SetActive(false);
+
+        if(!character.isEnemy) {
+            foreach(GameObject enemy in character.GetCharactersPool().enemies) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                    int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
+                    enemy.GetComponent<Character>().SimulatedGetDamage(action3Damage + damageExtra);
+                    character.AttackingState = CharacterStates.States.Normal;
+                }
+                else {
+                    enemy.GetComponent<Character>().SimulatedGetDamage(action3Damage);
+                }
+            }
+        }
+        else {
+            foreach(GameObject ally in character.GetCharactersPool().allies) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                    int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
+                    ally.GetComponent<Character>().SimulatedGetDamage(action3Damage + damageExtra);
+                    character.AttackingState = CharacterStates.States.Normal;
+                }
+                else {
+                    ally.GetComponent<Character>().SimulatedGetDamage(action3Damage);
+                }
+            }
+        }
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 }

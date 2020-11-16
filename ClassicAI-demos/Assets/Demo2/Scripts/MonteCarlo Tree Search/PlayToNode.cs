@@ -7,12 +7,12 @@ public class PlayToNode
 {
     #region variables
 
-    public Action Play { get; set; }
+    public Play Play { get; set; }
     public MonteCarloTreeNode Node { get; set; }
 
     #endregion variables
 
-    public PlayToNode(Action play, MonteCarloTreeNode node)
+    public PlayToNode(Play play, MonteCarloTreeNode node)
     {
         Play = play;
         Node = node;

@@ -17,7 +17,9 @@ public class MonteCarloTreeSearch : MonoBehaviour
     private Healer healer;
     private Guard guard;
     private Necromancer necromancer;
-    private Dictionary<int, MonteCarloTreeNode> treeNodes;
+    private Dictionary<string, MonteCarloTreeNode> treeNodes;
+    private GameObject[] allCharacters;
+    private int characterIterator;
 
     private enum Winner
     {
@@ -30,34 +32,46 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
     private void Awake()
     {
-        treeNodes = new Dictionary<int, MonteCarloTreeNode>();
-
+        treeNodes = new Dictionary<string, MonteCarloTreeNode>();
+        allCharacters = new GameObject[4];
+        characterIterator = 0;
         character = GetComponent<Character>();
-        switch(character.role) {
-            case Roles.Role.Knight:
-                knight = GetComponent<Knight>();
-                break;
+    }
 
-            case Roles.Role.Healer:
-                healer = GetComponent<Healer>();
-                break;
+    private void Start()
+    {
+        allCharacters[0] = character.GetCharactersPool().enemies[0];
+        allCharacters[1] = character.GetCharactersPool().enemies[1];
+        allCharacters[2] = character.GetCharactersPool().allies[0];
+        allCharacters[3] = character.GetCharactersPool().allies[1];
 
-            case Roles.Role.Guard:
-                guard = GetComponent<Guard>();
-                break;
+        foreach(GameObject character in allCharacters) {
+            switch(character.GetComponent<Character>().role) {
+                case Roles.Role.Knight:
+                    knight = character.GetComponent<Knight>();
+                    break;
 
-            case Roles.Role.Necromancer:
-                necromancer = GetComponent<Necromancer>();
-                break;
+                case Roles.Role.Healer:
+                    healer = character.GetComponent<Healer>();
+                    break;
+
+                case Roles.Role.Guard:
+                    guard = character.GetComponent<Guard>();
+                    break;
+
+                case Roles.Role.Necromancer:
+                    necromancer = character.GetComponent<Necromancer>();
+                    break;
+            }
         }
     }
 
     private void CreateNode(State state)
     {
-        if(!treeNodes.ContainsKey(state.GetHashCode())) {
-            List<Action> unexpandedPlays = LegalPlays(state);
+        if(!treeNodes.ContainsKey(state.GetHash())) {
+            List<Play> unexpandedPlays = LegalPlays(state);
             MonteCarloTreeNode newNode = new MonteCarloTreeNode(null, null, state, unexpandedPlays);
-            treeNodes.Add(state.GetHashCode(), newNode);
+            treeNodes.Add(state.GetHash(), newNode);
         }
     }
 
@@ -65,8 +79,10 @@ public class MonteCarloTreeSearch : MonoBehaviour
     {
         int iterations = 0;
         CreateNode(state);
+        print(character.role + " [Initial State]: " + state.AlliesHealth + " - " + state.EnemiesHealth);
 
         while(iterations < maxIterations) {
+            character.GetCharactersPool().Simulation++;
             MonteCarloTreeNode selectedNode = Select(state);
             Winner winner = DecideWinner(state);
 
@@ -78,19 +94,22 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
             iterations++;
         }
+
+        print("STOP");
     }
 
     private MonteCarloTreeNode Select(State state)
     {
+        print("SELECT");
         MonteCarloTreeNode selectedNode;
-        treeNodes.TryGetValue(state.GetHashCode(), out selectedNode);
+        treeNodes.TryGetValue(state.GetHash(), out selectedNode);
 
         while(selectedNode.IsFullyExpanded() && !selectedNode.IsLeaf()) {
-            List<Action> allPlays = selectedNode.AllPlays(character.role, knight, healer, guard, necromancer);
-            Action bestPlay = null;
+            List<Play> allPlays = selectedNode.AllPlays(character.role, character.GetCharactersPool().Simulation, knight, healer, guard, necromancer);
+            Play bestPlay = null;
             float bestUCB1 = -1000000000;
 
-            foreach(Action play in allPlays) {
+            foreach(Play play in allPlays) {
                 float childUCB1 = selectedNode.ChildNode(play).GetUCB1(UCB1ExploreParam);
 
                 if(childUCB1 > bestUCB1) {
@@ -107,29 +126,36 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
     private MonteCarloTreeNode Expand(MonteCarloTreeNode node)
     {
-        List<Action> unexpandedPlays = node.UnexpandedPlays();
+        print("EXPAND");
+        List<Play> unexpandedPlays = node.UnexpandedPlays();
         int randomIndex = UnityEngine.Random.Range(0, unexpandedPlays.Count);
-        Action selectedPlay = unexpandedPlays[randomIndex];
+        Play selectedPlay = unexpandedPlays[randomIndex];
         State childState = NextState(node.State, selectedPlay);
-        List<Action> childLegalPlays = LegalPlays(childState);
+        List<Play> childLegalPlays = LegalPlays(childState);
         MonteCarloTreeNode childNode = node.Expand(selectedPlay, childState, childLegalPlays);
 
-        treeNodes.Add(childState.GetHashCode(), childNode);
+        treeNodes.Add(childState.GetHash(), childNode);
 
         return childNode;
     }
 
     private Winner Simulate(MonteCarloTreeNode node)
     {
+        print("SIMULATE");
         State actualState = node.State;
         Winner winner = DecideWinner(actualState);
 
         while(winner == Winner.None) {
-            List<Action> legalPlays = LegalPlays(actualState);
+            List<Play> legalPlays = LegalPlays(actualState);
             int randomIndex = UnityEngine.Random.Range(0, legalPlays.Count);
-            Action randomPlay = legalPlays[randomIndex];
+            Play randomPlay = legalPlays[randomIndex];
             actualState = NextState(actualState, randomPlay);
             winner = DecideWinner(actualState);
+
+            characterIterator++;
+            if(characterIterator >= 4) {
+                characterIterator = 0;
+            }
         }
 
         return winner;
@@ -137,6 +163,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
     private void Backpropagate(MonteCarloTreeNode node, Winner winner)
     {
+        print("BACKPROPAGATE");
         while(node != null) {
             node.NumberOfPlays++;
             if(winner == Winner.Allies) { // Flip because each node’s statistics are used for its parent node’s choice, not its own.
@@ -147,21 +174,21 @@ public class MonteCarloTreeSearch : MonoBehaviour
         }
     }
 
-    private Action BestPlay(State state)
+    public Play BestPlay(State state)
     {
         MonteCarloTreeNode node;
-        treeNodes.TryGetValue(state.GetHashCode(), out node);
+        treeNodes.TryGetValue(state.GetHash(), out node);
         CreateNode(state);
 
         if(!node.IsFullyExpanded()) {
             throw new Exception("Not enough information!");
         }
 
-        List<Action> allPlays = node.AllPlays(character.role, knight, healer, guard, necromancer);
-        Action bestPlay = null;
+        List<Play> allPlays = node.AllPlays(character.role, character.GetCharactersPool().Simulation, knight, healer, guard, necromancer);
+        Play bestPlay = null;
         int maxPlays = -1000000000;
 
-        foreach(Action play in allPlays) {
+        foreach(Play play in allPlays) {
             MonteCarloTreeNode childNode = node.ChildNode(play);
 
             if(childNode.NumberOfPlays > maxPlays) {
@@ -174,66 +201,63 @@ public class MonteCarloTreeSearch : MonoBehaviour
     }
 
     // TODO: Revisar las LegalPlays para tener en cuenta el state
-    private List<Action> LegalPlays(State state)
+    private List<Play> LegalPlays(State state)
     {
-        List<Action> legalPlaysList = new List<Action>();
+        List<Play> legalPlaysList = new List<Play>();
+        CharactersPool charactersPool = character.GetCharactersPool();
         Character[] enemies =
         {
-            character.GetCharactersPool().enemies[0].GetComponent<Character>(),
-            character.GetCharactersPool().enemies[1].GetComponent<Character>()
+            charactersPool.enemies[0].GetComponent<Character>(),
+            charactersPool.enemies[1].GetComponent<Character>()
         };
 
-        switch(character.role) {
+        GameObject simCharacter = allCharacters[characterIterator];
+        Roles.Role simCharacterRole = simCharacter.GetComponent<Character>().role;
+
+        switch(simCharacterRole) {
             case Roles.Role.Knight:
-                legalPlaysList.Add(() => StartCoroutine(knight.Action1()));
-                legalPlaysList.Add(() => knight.Action2());
-                legalPlaysList.Add(() => knight.Action3());
+                legalPlaysList.Add(new Play(() => StartCoroutine(knight.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => knight.SimulatedAction2(), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => knight.SimulatedAction3(), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Healer:
-                if(enemies[0].GetHealth() > 0 && enemies[1].GetHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(() => StartCoroutine(healer.Action1()));
-                    legalPlaysList.Add(() => StartCoroutine(healer.Action3()));
+                if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
+                    legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction3()), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
                 }
-                legalPlaysList.Add(() => StartCoroutine(healer.Action2()));
+                legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction2()), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Guard:
-                if(enemies[0].GetHealth() > 0 && enemies[1].GetHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(() => StartCoroutine(guard.Action2()));
-                    legalPlaysList.Add(() => StartCoroutine(guard.Action3()));
+                if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
+                    legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction2()), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction3()), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
                 }
-                legalPlaysList.Add(() => StartCoroutine(guard.Action1()));
+                legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Necromancer:
-                if(enemies[0].GetHealth() <= 0 || enemies[1].GetHealth() <= 0) { // One enemy is dead
-                    legalPlaysList.Add(() => necromancer.Action2());
+                if(enemies[0].GetSimulatedHealth() <= 0 || enemies[1].GetSimulatedHealth() <= 0) { // One enemy is dead
+                    legalPlaysList.Add(new Play(() => necromancer.SimulatedAction2(), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
                 }
-                if(character.GetHealth() <= 30) { // Can be killed in that turn
-                    legalPlaysList.Add(() => necromancer.Action3());
+                if(character.GetSimulatedHealth() <= 30) { // Can be killed in that turn
+                    legalPlaysList.Add(new Play(() => necromancer.SimulatedAction3(), simCharacter, simCharacterRole, "Action3", charactersPool.Turn));
                 }
-                legalPlaysList.Add(() => necromancer.Action1());
+                legalPlaysList.Add(new Play(() => necromancer.SimulatedAction1(), simCharacter, simCharacterRole, "Action1", charactersPool.Turn));
                 break;
         }
 
         return legalPlaysList;
     }
 
-    private State NextState(State actualState, Action play)
+    private State NextState(State actualState, Play play)
     {
-        int alliesHealth = 0;
-        int enemiesHealth = 0;
+        // TODO: Simulate the next state
+        play.Action(); // Runs the play method
+        CharactersPool charactersPool = character.GetCharactersPool();
 
-        play(); // Runs the play method
-        foreach(GameObject ally in character.GetCharactersPool().allies) {
-            alliesHealth += ally.GetComponent<Character>().GetHealth();
-        }
-        foreach(GameObject enemy in character.GetCharactersPool().enemies) {
-            enemiesHealth += enemy.GetComponent<Character>().GetHealth();
-        }
-
-        return new State(alliesHealth, enemiesHealth);
+        return new State(charactersPool.Simulation, charactersPool.allies, charactersPool.enemies);
     }
 
     private Winner DecideWinner(State state)

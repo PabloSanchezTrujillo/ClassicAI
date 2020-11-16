@@ -162,13 +162,16 @@ public class Healer : MonoBehaviour
 
     private void EndTurn()
     {
+        print("Healer attacked");
+
         CharactersPool charactersPool = character.GetCharactersPool();
         character.CanAttack = false;
+        //charactersPool.Simulation++;
         charactersPool.Turn++;
 
         if(charactersPool.Turn == 3) {
             print("Enemies turn");
-            charactersPool.EnemiesTurn();
+            StartCoroutine(charactersPool.EnemiesTurn());
         }
         else if(charactersPool.Turn == 5) {
             print("Allies turn");
@@ -176,19 +179,70 @@ public class Healer : MonoBehaviour
         }
     }
 
-    // Actions for NO Monobehaviours
-    public void FireAction1()
+    ///////////// SIMULATION /////////////
+    public IEnumerator SimulatedAction1()
     {
-        StartCoroutine(Action1());
+        character.AllySelected = null;
+        actionsMenu.SetActive(false);
+
+        if(!character.isEnemy) {
+            allyToHelpText.SetActive(true);
+            yield return new WaitUntil(() => character.AllySelected != null);
+            allyToHelpText.SetActive(false);
+        }
+        else {
+            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
+            int randomAlly = Random.Range(0, 2);
+            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+        }
+        character.AllySelected.GetComponent<Character>().SimulatedHealUp(heals);
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 
-    public void FireAction2()
+    public IEnumerator SimulatedAction2()
     {
-        StartCoroutine(Action2());
+        character.EnemySelected = null;
+        actionsMenu.SetActive(false);
+
+        if(!character.isEnemy) {
+            enemyToAttackText.SetActive(true);
+            yield return new WaitUntil(() => character.EnemySelected != null);
+            enemyToAttackText.SetActive(false);
+        }
+        else {
+            int randomEnemy = Random.Range(0, 2);
+            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+        }
+
+        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+            int damageExtra = Mathf.RoundToInt(damage * 0.3f);
+            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage + damageExtra);
+            character.AttackingState = CharacterStates.States.Normal;
+        }
+        else {
+            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage);
+        }
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 
-    public void FireAction3()
+    public IEnumerator SimulatedAction3()
     {
-        StartCoroutine(Action3());
+        character.AllySelected = null;
+        actionsMenu.SetActive(false);
+
+        if(!character.isEnemy) {
+            allyToHelpText.SetActive(true);
+            yield return new WaitUntil(() => character.AllySelected != null);
+            allyToHelpText.SetActive(false);
+        }
+        else {
+            int randomAlly = Random.Range(0, 2);
+            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+        }
+        character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
+        //EndTurn();
+        //character.GetCharactersPool().Simulation++;
     }
 }

@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Color[] healthColors;
 
     private CharactersPool charactersPool;
+    private int simulatedHealth;
 
     #endregion variables
 
@@ -33,7 +34,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        healthBar.value = healthBar.maxValue = health;
+        healthBar.value = healthBar.maxValue = simulatedHealth = health;
         healthColor.color = healthColors[0];
         healthText.text = health.ToString();
         DefensiveState = CharacterStates.States.Normal;
@@ -76,10 +77,12 @@ public class Character : MonoBehaviour
         switch(DefensiveState) {
             case CharacterStates.States.Normal:
                 health -= damage;
+                simulatedHealth -= damage;
                 break;
 
             case CharacterStates.States.Shielded:
                 health -= Mathf.RoundToInt(damage / 2);
+                simulatedHealth -= Mathf.RoundToInt(damage / 2);
                 DefensiveState = CharacterStates.States.Normal;
                 break;
 
@@ -105,6 +108,7 @@ public class Character : MonoBehaviour
 
             case CharacterStates.States.DeathExplosive:
                 health -= damage;
+                simulatedHealth -= damage;
                 if(health <= 0) {
                     if(GetComponent<Necromancer>() != null) {
                         GetComponent<Necromancer>().DeathExplosion();
@@ -117,6 +121,50 @@ public class Character : MonoBehaviour
         healthBar.value = health;
     }
 
+    public void SimulatedGetDamage(int damage)
+    {
+        switch(DefensiveState) {
+            case CharacterStates.States.Normal:
+                simulatedHealth -= damage;
+                break;
+
+            case CharacterStates.States.Shielded:
+                simulatedHealth -= Mathf.RoundToInt(damage / 2);
+                DefensiveState = CharacterStates.States.Normal;
+                break;
+
+            case CharacterStates.States.Guarded:
+                if(isEnemy) {
+                    foreach(GameObject enemy in charactersPool.enemies) {
+                        if(enemy != this.gameObject) {
+                            int reducedDamage = Mathf.RoundToInt(damage * 0.7f);
+                            enemy.GetComponent<Character>().SimulatedGetDamage(reducedDamage);
+                        }
+                    }
+                }
+                else {
+                    foreach(GameObject ally in charactersPool.allies) {
+                        if(ally != this.gameObject) {
+                            int reducedDamage = Mathf.RoundToInt(damage * 0.7f);
+                            ally.GetComponent<Character>().SimulatedGetDamage(reducedDamage);
+                        }
+                    }
+                }
+                DefensiveState = CharacterStates.States.Normal;
+                break;
+
+            case CharacterStates.States.DeathExplosive:
+                simulatedHealth -= damage;
+                if(simulatedHealth <= 0) {
+                    if(GetComponent<Necromancer>() != null) {
+                        GetComponent<Necromancer>().SimulatedDeathExplosion();
+                    }
+                }
+                DefensiveState = CharacterStates.States.Normal;
+                break;
+        }
+    }
+
     public void HealUp(int heal)
     {
         health += heal;
@@ -124,6 +172,14 @@ public class Character : MonoBehaviour
             health = (int)healthBar.maxValue;
         }
         healthBar.value = health;
+    }
+
+    public void SimulatedHealUp(int heal)
+    {
+        simulatedHealth += heal;
+        if(simulatedHealth > healthBar.maxValue) {
+            simulatedHealth = (int)healthBar.maxValue;
+        }
     }
 
     public CharactersPool GetCharactersPool()
@@ -136,9 +192,24 @@ public class Character : MonoBehaviour
         return health;
     }
 
+    public int GetSimulatedHealth()
+    {
+        return simulatedHealth;
+    }
+
+    public void ResetSimultedHealth()
+    {
+        simulatedHealth = health;
+    }
+
     public void Revive()
     {
         health = Mathf.RoundToInt(healthBar.maxValue / 2);
         healthBar.value = health;
+    }
+
+    public void SimulatedRevive()
+    {
+        simulatedHealth = Mathf.RoundToInt(healthBar.maxValue / 2);
     }
 }

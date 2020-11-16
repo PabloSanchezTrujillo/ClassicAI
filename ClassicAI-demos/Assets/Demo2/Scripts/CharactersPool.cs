@@ -9,6 +9,7 @@ public class CharactersPool : MonoBehaviour
 {
     #region variables
 
+    public int Simulation { get; set; }
     public int Turn { get; set; }
     public GameObject[] allies;
     public GameObject[] enemies;
@@ -23,6 +24,7 @@ public class CharactersPool : MonoBehaviour
     [SerializeField] private GameObject healer;
     [SerializeField] private GameObject guard;
     [SerializeField] private GameObject necromancer;
+    [SerializeField] private int timeBetweenEnemiesAttacks;
 
     private int selection;
     private Vector3 positionUI;
@@ -32,6 +34,7 @@ public class CharactersPool : MonoBehaviour
 
     private void Start()
     {
+        Simulation = 1;
         Turn = 1;
         selection = 0;
         positionUI = new Vector3(0, 0, 0);
@@ -40,18 +43,89 @@ public class CharactersPool : MonoBehaviour
 
     public void AlliesTurn()
     {
+        //GeneralTurn++;
         Turn = 1;
         foreach(GameObject ally in allies) {
             ally.GetComponent<Character>().CanAttack = true;
         }
     }
 
-    public void EnemiesTurn()
+    public IEnumerator EnemiesTurn()
     {
+        //GeneralTurn++;
         foreach(GameObject enemy in enemies) {
             enemy.GetComponent<Character>().CanAttack = true;
-            // TODO: Crear el estado de cada turno
-            enemy.GetComponent<MonteCarloTreeSearch>().RunMonteCarloTreeSearch(null, 500);
+            State state = new State(Simulation, allies, enemies);
+            enemy.GetComponent<MonteCarloTreeSearch>().RunMonteCarloTreeSearch(state, 100);
+            Play bestPlay = enemy.GetComponent<MonteCarloTreeSearch>().BestPlay(state);
+
+            yield return new WaitForSeconds(timeBetweenEnemiesAttacks);
+
+            EnemyAction(bestPlay);
+            ResetSimulatedHealth();
+        }
+    }
+
+    private void EnemyAction(Play bestPlay)
+    {
+        switch(bestPlay.Role) {
+            case Roles.Role.Knight:
+                if(bestPlay.Name == "Action1") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Knight>().Action1());
+                }
+                else if(bestPlay.Name == "Action2") {
+                    bestPlay.GameObject.GetComponent<Knight>().Action2();
+                }
+                else if(bestPlay.Name == "Action3") {
+                    bestPlay.GameObject.GetComponent<Knight>().Action3();
+                }
+                break;
+
+            case Roles.Role.Healer:
+                if(bestPlay.Name == "Action1") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action1());
+                }
+                else if(bestPlay.Name == "Action2") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action2());
+                }
+                else if(bestPlay.Name == "Action3") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action3());
+                }
+                break;
+
+            case Roles.Role.Guard:
+                if(bestPlay.Name == "Action1") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action1());
+                }
+                else if(bestPlay.Name == "Action2") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action2());
+                }
+                else if(bestPlay.Name == "Action3") {
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action3());
+                }
+                break;
+
+            case Roles.Role.Necromancer:
+                if(bestPlay.Name == "Action1") {
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action1();
+                }
+                else if(bestPlay.Name == "Action2") {
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action2();
+                }
+                else if(bestPlay.Name == "Action3") {
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action3();
+                }
+                break;
+        }
+    }
+
+    private void ResetSimulatedHealth()
+    {
+        foreach(GameObject ally in allies) {
+            ally.GetComponent<Character>().ResetSimultedHealth();
+        }
+        foreach(GameObject enemy in enemies) {
+            enemy.GetComponent<Character>().ResetSimultedHealth();
         }
     }
 
