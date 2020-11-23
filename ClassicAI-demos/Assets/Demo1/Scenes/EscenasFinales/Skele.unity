@@ -605,6 +605,36 @@ PrefabInstance:
       propertyPath: sourceInfos.Array.data[2].isFoldout
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944672, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944672, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944674, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944674, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944674, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221205315770944674, guid: 22175a70b8fd62245b7c4135c88662f1,
+        type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7221205316127452432, guid: 22175a70b8fd62245b7c4135c88662f1,
         type: 3}
       propertyPath: healthIcons.Array.size
@@ -755,7 +785,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7221205315779518496, guid: 22175a70b8fd62245b7c4135c88662f1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 22175a70b8fd62245b7c4135c88662f1, type: 3}
 --- !u!4 &121227557 stripped
 Transform:

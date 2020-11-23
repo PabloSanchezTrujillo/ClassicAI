@@ -19,6 +19,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
     private Necromancer necromancer;
     private Dictionary<string, MonteCarloTreeNode> treeNodes;
     private GameObject[] allCharacters;
+    private int enemyPosition;
     private int characterIterator;
 
     private enum Winner
@@ -34,7 +35,6 @@ public class MonteCarloTreeSearch : MonoBehaviour
     {
         treeNodes = new Dictionary<string, MonteCarloTreeNode>();
         allCharacters = new GameObject[4];
-        characterIterator = 0;
         character = GetComponent<Character>();
     }
 
@@ -75,9 +75,10 @@ public class MonteCarloTreeSearch : MonoBehaviour
         }
     }
 
-    public void RunMonteCarloTreeSearch(State state, int maxIterations)
+    public void RunMonteCarloTreeSearch(State state, int maxIterations, int enemyPosition)
     {
         int iterations = 0;
+        this.enemyPosition = enemyPosition;
         CreateNode(state);
         print(character.role + " [Initial State]: " + state.AlliesHealth + " - " + state.EnemiesHealth);
 
@@ -94,8 +95,6 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
             iterations++;
         }
-
-        print("STOP");
     }
 
     private MonteCarloTreeNode Select(State state)
@@ -142,6 +141,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
     private Winner Simulate(MonteCarloTreeNode node)
     {
         print("SIMULATE");
+        characterIterator = enemyPosition;
         State actualState = node.State;
         Winner winner = DecideWinner(actualState);
 
@@ -200,7 +200,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
         return bestPlay;
     }
 
-    // TODO: Revisar las LegalPlays para tener en cuenta el state
+    // TODO: Revisar las Legal Plays teniendo en cuenta el la vida de cada personaje individual
     private List<Play> LegalPlays(State state)
     {
         List<Play> legalPlaysList = new List<Play>();
@@ -216,25 +216,32 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
         switch(simCharacterRole) {
             case Roles.Role.Knight:
-                legalPlaysList.Add(new Play(() => StartCoroutine(knight.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => knight.SimulatedAction1(0), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => knight.SimulatedAction1(1), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
                 legalPlaysList.Add(new Play(() => knight.SimulatedAction2(), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
                 legalPlaysList.Add(new Play(() => knight.SimulatedAction3(), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Healer:
                 if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction3()), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => healer.SimulatedAction1(0), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => healer.SimulatedAction1(1), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => healer.SimulatedAction3(0), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => healer.SimulatedAction3(1), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
                 }
-                legalPlaysList.Add(new Play(() => StartCoroutine(healer.SimulatedAction2()), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => healer.SimulatedAction2(0), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => healer.SimulatedAction2(1), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Guard:
                 if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction2()), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction3()), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => guard.SimulatedAction2(0), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => guard.SimulatedAction2(1), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => guard.SimulatedAction3(0), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
+                    legalPlaysList.Add(new Play(() => guard.SimulatedAction3(1), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
                 }
-                legalPlaysList.Add(new Play(() => StartCoroutine(guard.SimulatedAction1()), simCharacter, simCharacterRole, "Action1", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => guard.SimulatedAction1(0), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+                legalPlaysList.Add(new Play(() => guard.SimulatedAction1(1), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
                 break;
 
             case Roles.Role.Necromancer:

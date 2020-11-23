@@ -86,7 +86,7 @@ public class PlayerActions : MonoBehaviour
 
     public void GetWhite()
     {
-        sprite.color = Color.white;
+        sprite.color = Color.yellow;
         this.enabled = false;
     }
 
@@ -98,7 +98,7 @@ public class PlayerActions : MonoBehaviour
 
             ParticleSystem.MainModule bulletParticleSettings = hasBulletParticles.main;
             bulletParticleSettings.startColor =
-                new ParticleSystem.MinMaxGradient(GameManager.instance.colors[(int)currentColor]);
+            new ParticleSystem.MinMaxGradient(GameManager.instance.colors[(int)currentColor]);
 
             color = GameManager.instance.colors[(int)currentColor];
             color.a = 0.3f;
@@ -315,7 +315,7 @@ public class PlayerActions : MonoBehaviour
 
             ParticleSystem.MainModule bulletParticleSettings = hasBulletParticles.main;
             bulletParticleSettings.startColor =
-                new ParticleSystem.MinMaxGradient(GameManager.instance.colors[colorIndex]);
+             new ParticleSystem.MinMaxGradient(GameManager.instance.colors[colorIndex]);
             ParticleSystem.MainModule reloadParticleSettings = reloadParticles.main;
             Color color = GameManager.instance.colors[colorIndex];
             color.a = 0.3f;

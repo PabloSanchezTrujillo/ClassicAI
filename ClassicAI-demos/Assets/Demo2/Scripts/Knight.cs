@@ -96,7 +96,7 @@ public class Knight : MonoBehaviour
             action3TextDescription.text = action3Description;
 
             action1Button.onClick.RemoveAllListeners();
-            action1Button.onClick.AddListener(() => StartCoroutine(Action1()));
+            action1Button.onClick.AddListener(() => StartCoroutine(Action1(-1)));
             action2Button.onClick.RemoveAllListeners();
             action2Button.onClick.AddListener(Action2);
             action3Button.onClick.RemoveAllListeners();
@@ -104,7 +104,7 @@ public class Knight : MonoBehaviour
         }
     }
 
-    public IEnumerator Action1()
+    public IEnumerator Action1(int index)
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
@@ -115,9 +115,7 @@ public class Knight : MonoBehaviour
             enemyToAttackText.SetActive(false);
         }
         else {
-            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
-            int randomEnemy = Random.Range(0, 2);
-            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+            character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
@@ -193,20 +191,16 @@ public class Knight : MonoBehaviour
     }
 
     ///////////// SIMULATION /////////////
-    public IEnumerator SimulatedAction1()
+    public void SimulatedAction1(int index)
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            enemyToAttackText.SetActive(true);
-            yield return new WaitUntil(() => character.EnemySelected != null);
-            enemyToAttackText.SetActive(false);
+            character.EnemySelected = character.GetCharactersPool().enemies[index];
         }
         else {
-            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
-            int randomEnemy = Random.Range(0, 2);
-            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+            character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {

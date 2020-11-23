@@ -77,12 +77,12 @@ public class Character : MonoBehaviour
         switch(DefensiveState) {
             case CharacterStates.States.Normal:
                 health -= damage;
-                simulatedHealth -= damage;
+                simulatedHealth = health;
                 break;
 
             case CharacterStates.States.Shielded:
                 health -= Mathf.RoundToInt(damage / 2);
-                simulatedHealth -= Mathf.RoundToInt(damage / 2);
+                simulatedHealth = health;
                 DefensiveState = CharacterStates.States.Normal;
                 break;
 
@@ -108,7 +108,7 @@ public class Character : MonoBehaviour
 
             case CharacterStates.States.DeathExplosive:
                 health -= damage;
-                simulatedHealth -= damage;
+                simulatedHealth = health;
                 if(health <= 0) {
                     if(GetComponent<Necromancer>() != null) {
                         GetComponent<Necromancer>().DeathExplosion();

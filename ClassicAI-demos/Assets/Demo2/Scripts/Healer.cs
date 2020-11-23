@@ -86,15 +86,15 @@ public class Healer : MonoBehaviour
             action3TextDescription.text = action3Description;
 
             action1Button.onClick.RemoveAllListeners();
-            action1Button.onClick.AddListener(() => StartCoroutine(Action1()));
+            action1Button.onClick.AddListener(() => StartCoroutine(Action1(-1)));
             action2Button.onClick.RemoveAllListeners();
-            action2Button.onClick.AddListener(() => StartCoroutine(Action2()));
+            action2Button.onClick.AddListener(() => StartCoroutine(Action2(-1)));
             action3Button.onClick.RemoveAllListeners();
-            action3Button.onClick.AddListener(() => StartCoroutine(Action3()));
+            action3Button.onClick.AddListener(() => StartCoroutine(Action3(-1)));
         }
     }
 
-    public IEnumerator Action1()
+    public IEnumerator Action1(int index)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -105,16 +105,14 @@ public class Healer : MonoBehaviour
             allyToHelpText.SetActive(false);
         }
         else {
-            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
-            int randomAlly = Random.Range(0, 2);
-            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+            character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().HealUp(heals);
         Instantiate(healingParticles, character.AllySelected.transform);
         EndTurn();
     }
 
-    public IEnumerator Action2()
+    public IEnumerator Action2(int index)
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
@@ -125,8 +123,7 @@ public class Healer : MonoBehaviour
             enemyToAttackText.SetActive(false);
         }
         else {
-            int randomEnemy = Random.Range(0, 2);
-            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+            character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
@@ -141,7 +138,7 @@ public class Healer : MonoBehaviour
         EndTurn();
     }
 
-    public IEnumerator Action3()
+    public IEnumerator Action3(int index)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
@@ -152,8 +149,7 @@ public class Healer : MonoBehaviour
             allyToHelpText.SetActive(false);
         }
         else {
-            int randomAlly = Random.Range(0, 2);
-            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+            character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
         Instantiate(inspirationParticles, character.AllySelected.transform);
@@ -180,39 +176,32 @@ public class Healer : MonoBehaviour
     }
 
     ///////////// SIMULATION /////////////
-    public IEnumerator SimulatedAction1()
+    public void SimulatedAction1(int index)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            allyToHelpText.SetActive(true);
-            yield return new WaitUntil(() => character.AllySelected != null);
-            allyToHelpText.SetActive(false);
+            character.AllySelected = character.GetCharactersPool().allies[index];
         }
         else {
-            // TODO: Quitar el random poniendo la opción (seleccionar al 0 o al 1) en el MCTS
-            int randomAlly = Random.Range(0, 2);
-            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+            character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().SimulatedHealUp(heals);
         //EndTurn();
         //character.GetCharactersPool().Simulation++;
     }
 
-    public IEnumerator SimulatedAction2()
+    public void SimulatedAction2(int index)
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            enemyToAttackText.SetActive(true);
-            yield return new WaitUntil(() => character.EnemySelected != null);
-            enemyToAttackText.SetActive(false);
+            character.EnemySelected = character.GetCharactersPool().enemies[index];
         }
         else {
-            int randomEnemy = Random.Range(0, 2);
-            character.EnemySelected = character.GetCharactersPool().allies[randomEnemy];
+            character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
@@ -227,19 +216,16 @@ public class Healer : MonoBehaviour
         //character.GetCharactersPool().Simulation++;
     }
 
-    public IEnumerator SimulatedAction3()
+    public void SimulatedAction3(int index)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            allyToHelpText.SetActive(true);
-            yield return new WaitUntil(() => character.AllySelected != null);
-            allyToHelpText.SetActive(false);
+            character.AllySelected = character.GetCharactersPool().allies[index];
         }
         else {
-            int randomAlly = Random.Range(0, 2);
-            character.AllySelected = character.GetCharactersPool().enemies[randomAlly];
+            character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
         //EndTurn();
