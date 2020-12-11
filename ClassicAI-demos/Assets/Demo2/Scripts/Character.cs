@@ -60,6 +60,9 @@ public class Character : MonoBehaviour
 
     public void ClickOnCharacter()
     {
+        if(health <= 0)
+            return;
+
         if(isEnemy) {
             foreach(GameObject ally in charactersPool.allies) {
                 ally.GetComponent<Character>().EnemySelected = this.gameObject;
@@ -111,7 +114,7 @@ public class Character : MonoBehaviour
                 simulatedHealth = health;
                 if(health <= 0) {
                     if(GetComponent<Necromancer>() != null) {
-                        GetComponent<Necromancer>().DeathExplosion();
+                        GetComponent<Necromancer>().DeathExplosion(false);
                     }
                 }
                 DefensiveState = CharacterStates.States.Normal;
@@ -157,7 +160,7 @@ public class Character : MonoBehaviour
                 simulatedHealth -= damage;
                 if(simulatedHealth <= 0) {
                     if(GetComponent<Necromancer>() != null) {
-                        GetComponent<Necromancer>().SimulatedDeathExplosion();
+                        GetComponent<Necromancer>().DeathExplosion(true);
                     }
                 }
                 DefensiveState = CharacterStates.States.Normal;

@@ -15,6 +15,7 @@ public class CharactersPool : MonoBehaviour
     public GameObject[] enemies;
 
     [SerializeField] private Transform[] charactersPosition;
+    [SerializeField] private GameObject difficultySelection;
     [SerializeField] private GameObject selectionMenu;
     [SerializeField] private Button knightButton;
     [SerializeField] private Button healerButton;
@@ -27,6 +28,7 @@ public class CharactersPool : MonoBehaviour
     [SerializeField] private int timeBetweenEnemiesAttacks;
 
     private int selection;
+    private int maxIterations;
     private Vector3 positionUI;
     private Quaternion rotationUI;
 
@@ -58,13 +60,17 @@ public class CharactersPool : MonoBehaviour
         foreach(GameObject enemy in enemies) {
             enemy.GetComponent<Character>().CanAttack = true;
             State state = new State(Simulation, allies, enemies);
-            enemy.GetComponent<MonteCarloTreeSearch>().RunMonteCarloTreeSearch(state, 100, enemyPosition);
-            Play bestPlay = enemy.GetComponent<MonteCarloTreeSearch>().BestPlay(state);
+
+            if(enemy.GetComponent<Character>().GetHealth() > 0) {
+                enemy.GetComponent<MonteCarloTreeSearch>().RunMonteCarloTreeSearch(state, maxIterations, enemyPosition);
+                Play bestPlay = enemy.GetComponent<MonteCarloTreeSearch>().BestPlay(state);
+
+                yield return new WaitForSeconds(timeBetweenEnemiesAttacks);
+
+                EnemyAction(bestPlay);
+            }
+
             enemyPosition++;
-
-            yield return new WaitForSeconds(timeBetweenEnemiesAttacks);
-
-            EnemyAction(bestPlay);
             ResetSimulatedHealth();
         }
     }
@@ -74,70 +80,70 @@ public class CharactersPool : MonoBehaviour
         switch(bestPlay.Role) {
             case Roles.Role.Knight:
                 if(bestPlay.Name == "Action1-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Knight>().Action1(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Knight>().Action1(0, false));
                 }
                 else if(bestPlay.Name == "Action1-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Knight>().Action1(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Knight>().Action1(1, false));
                 }
                 else if(bestPlay.Name == "Action2") {
-                    bestPlay.GameObject.GetComponent<Knight>().Action2();
+                    bestPlay.GameObject.GetComponent<Knight>().Action2(false);
                 }
                 else if(bestPlay.Name == "Action3") {
-                    bestPlay.GameObject.GetComponent<Knight>().Action3();
+                    bestPlay.GameObject.GetComponent<Knight>().Action3(false);
                 }
                 break;
 
             case Roles.Role.Healer:
                 if(bestPlay.Name == "Action1-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action1(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action1(0, false));
                 }
                 else if(bestPlay.Name == "Action1-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action1(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action1(1, false));
                 }
                 else if(bestPlay.Name == "Action2-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action2(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action2(0, false));
                 }
                 else if(bestPlay.Name == "Action2-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action2(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action2(1, false));
                 }
                 else if(bestPlay.Name == "Action3-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action3(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action3(0, false));
                 }
                 else if(bestPlay.Name == "Action3-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action3(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Healer>().Action3(1, false));
                 }
                 break;
 
             case Roles.Role.Guard:
                 if(bestPlay.Name == "Action1-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action1(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action1(0, false));
                 }
                 else if(bestPlay.Name == "Action1-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action1(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action1(1, false));
                 }
                 else if(bestPlay.Name == "Action2-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action2(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action2(0, false));
                 }
                 else if(bestPlay.Name == "Action2-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action2(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action2(1, false));
                 }
                 else if(bestPlay.Name == "Action3-0") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action3(0));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action3(0, false));
                 }
                 else if(bestPlay.Name == "Action3-1") {
-                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action3(1));
+                    StartCoroutine(bestPlay.GameObject.GetComponent<Guard>().Action3(1, false));
                 }
                 break;
 
             case Roles.Role.Necromancer:
                 if(bestPlay.Name == "Action1") {
-                    bestPlay.GameObject.GetComponent<Necromancer>().Action1();
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action1(false);
                 }
                 else if(bestPlay.Name == "Action2") {
-                    bestPlay.GameObject.GetComponent<Necromancer>().Action2();
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action2(false);
                 }
                 else if(bestPlay.Name == "Action3") {
-                    bestPlay.GameObject.GetComponent<Necromancer>().Action3();
+                    bestPlay.GameObject.GetComponent<Necromancer>().Action3(false);
                 }
                 break;
         }
@@ -321,6 +327,39 @@ public class CharactersPool : MonoBehaviour
                     break;
             }
             previousRandom = random;
+        }
+    }
+
+    public void SetMaxIterations(int iterations)
+    {
+        maxIterations = iterations;
+        difficultySelection.SetActive(false);
+        selectionMenu.SetActive(true);
+    }
+
+    public void PassTurn(bool enemiesTurn)
+    {
+        if(enemiesTurn) {
+            int enemiesAlive = 0;
+
+            foreach(GameObject enemy in enemies) {
+                if(enemy.GetComponent<Character>().GetHealth() > 0) {
+                    enemiesAlive++;
+                }
+            }
+
+            Turn += (enemiesAlive == 1) ? 2 : 1;
+        }
+        else {
+            int alliesAlive = 0;
+
+            foreach(GameObject ally in allies) {
+                if(ally.GetComponent<Character>().GetHealth() > 0) {
+                    alliesAlive++;
+                }
+            }
+
+            Turn += (alliesAlive == 1) ? 2 : 1;
         }
     }
 }

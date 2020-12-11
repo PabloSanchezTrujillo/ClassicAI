@@ -75,7 +75,7 @@ public class Guard : MonoBehaviour
 
     public void SelectCharacter()
     {
-        if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack) {
+        if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack && character.GetHealth() > 0) {
             actionsMenu.SetActive(true);
             action1TextName.text = action1Name;
             action1TextDescription.text = action1Description;
@@ -85,23 +85,28 @@ public class Guard : MonoBehaviour
             action3TextDescription.text = action3Description;
 
             action1Button.onClick.RemoveAllListeners();
-            action1Button.onClick.AddListener(() => StartCoroutine(Action1(-1)));
+            action1Button.onClick.AddListener(() => StartCoroutine(Action1(-1, false)));
             action2Button.onClick.RemoveAllListeners();
-            action2Button.onClick.AddListener(() => StartCoroutine(Action2(-1)));
+            action2Button.onClick.AddListener(() => StartCoroutine(Action2(-1, false)));
             action3Button.onClick.RemoveAllListeners();
-            action3Button.onClick.AddListener(() => StartCoroutine(Action3(-1)));
+            action3Button.onClick.AddListener(() => StartCoroutine(Action3(-1, false)));
         }
     }
 
-    public IEnumerator Action1(int index)
+    public IEnumerator Action1(int index, bool simulated)
     {
         character.EnemySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            enemyToAttackText.SetActive(true);
-            yield return new WaitUntil(() => character.EnemySelected != null);
-            enemyToAttackText.SetActive(false);
+            if(simulated) {
+                character.EnemySelected = character.GetCharactersPool().enemies[index];
+            }
+            else {
+                enemyToAttackText.SetActive(true);
+                yield return new WaitUntil(() => character.EnemySelected != null);
+                enemyToAttackText.SetActive(false);
+            }
         }
         else {
             character.EnemySelected = character.GetCharactersPool().allies[index];
@@ -109,50 +114,81 @@ public class Guard : MonoBehaviour
 
         if(character.AttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(damage * 0.3f);
-            character.EnemySelected.GetComponent<Character>().GetDamage(damage + damageExtra);
+            if(simulated) {
+                character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage + damageExtra);
+            }
+            else {
+                character.EnemySelected.GetComponent<Character>().GetDamage(damage + damageExtra);
+            }
             character.AttackingState = CharacterStates.States.Normal;
         }
         else {
-            character.EnemySelected.GetComponent<Character>().GetDamage(damage);
+            if(simulated) {
+                character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage);
+            }
+            else {
+                character.EnemySelected.GetComponent<Character>().GetDamage(damage);
+            }
         }
-        Instantiate(damageParticles, character.EnemySelected.transform);
-        EndTurn();
+
+        if(!simulated) {
+            Instantiate(damageParticles, character.EnemySelected.transform);
+            EndTurn();
+        }
     }
 
-    public IEnumerator Action2(int index)
+    public IEnumerator Action2(int index, bool simulated)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            allyToHelpText.SetActive(true);
-            yield return new WaitUntil(() => character.AllySelected != null);
-            allyToHelpText.SetActive(false);
+            if(simulated) {
+                character.AllySelected = character.GetCharactersPool().allies[index];
+            }
+            else {
+                allyToHelpText.SetActive(true);
+                character.CanAttack = false;
+                yield return new WaitUntil(() => character.AllySelected != null);
+                allyToHelpText.SetActive(false);
+            }
         }
         else {
             character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Shielded;
-        Instantiate(shieldParticles, character.AllySelected.transform);
-        EndTurn();
+
+        if(!simulated) {
+            Instantiate(shieldParticles, character.AllySelected.transform);
+            EndTurn();
+        }
     }
 
-    public IEnumerator Action3(int index)
+    public IEnumerator Action3(int index, bool simulated)
     {
         character.AllySelected = null;
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
-            allyToHelpText.SetActive(true);
-            yield return new WaitUntil(() => character.AllySelected != null);
-            allyToHelpText.SetActive(false);
+            if(simulated) {
+                character.AllySelected = character.GetCharactersPool().allies[index];
+            }
+            else {
+                allyToHelpText.SetActive(true);
+                character.CanAttack = false;
+                yield return new WaitUntil(() => character.AllySelected != null);
+                allyToHelpText.SetActive(false);
+            }
         }
         else {
             character.AllySelected = character.GetCharactersPool().enemies[index];
         }
         character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Guarded;
-        Instantiate(guardedParticles, character.AllySelected.transform);
-        EndTurn();
+
+        if(!simulated) {
+            Instantiate(guardedParticles, character.AllySelected.transform);
+            EndTurn();
+        }
     }
 
     private void EndTurn()
@@ -160,9 +196,8 @@ public class Guard : MonoBehaviour
         print("Guard attacked");
 
         CharactersPool charactersPool = character.GetCharactersPool();
-        character.CanAttack = false;
         //charactersPool.Simulation++;
-        charactersPool.Turn++;
+        charactersPool.PassTurn(character.isEnemy);
 
         if(charactersPool.Turn == 3) {
             print("Enemies turn");
@@ -172,62 +207,5 @@ public class Guard : MonoBehaviour
             print("Allies turn");
             charactersPool.AlliesTurn();
         }
-    }
-
-    ///////////// SIMULATION /////////////
-    public void SimulatedAction1(int index)
-    {
-        character.EnemySelected = null;
-        actionsMenu.SetActive(false);
-
-        if(!character.isEnemy) {
-            character.EnemySelected = character.GetCharactersPool().enemies[index];
-        }
-        else {
-            character.EnemySelected = character.GetCharactersPool().allies[index];
-        }
-
-        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
-            int damageExtra = Mathf.RoundToInt(damage * 0.3f);
-            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage + damageExtra);
-            character.AttackingState = CharacterStates.States.Normal;
-        }
-        else {
-            character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage);
-        }
-        //EndTurn();
-        //character.GetCharactersPool().Simulation++;
-    }
-
-    public void SimulatedAction2(int index)
-    {
-        character.AllySelected = null;
-        actionsMenu.SetActive(false);
-
-        if(!character.isEnemy) {
-            character.AllySelected = character.GetCharactersPool().allies[index];
-        }
-        else {
-            character.AllySelected = character.GetCharactersPool().enemies[index];
-        }
-        character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Shielded;
-        //EndTurn();
-        //character.GetCharactersPool().Simulation++;
-    }
-
-    public void SimulatedAction3(int index)
-    {
-        character.AllySelected = null;
-        actionsMenu.SetActive(false);
-
-        if(!character.isEnemy) {
-            character.AllySelected = character.GetCharactersPool().allies[index];
-        }
-        else {
-            character.AllySelected = character.GetCharactersPool().enemies[index];
-        }
-        character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Guarded;
-        //EndTurn();
-        //character.GetCharactersPool().Simulation++;
     }
 }
