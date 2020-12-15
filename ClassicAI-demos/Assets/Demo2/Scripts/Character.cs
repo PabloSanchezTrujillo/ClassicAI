@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     public bool isEnemy;
 
     [SerializeField] private int health;
+    [SerializeField] private int maxHealth;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Image healthColor;
     [SerializeField] private Text healthText;
@@ -214,5 +215,10 @@ public class Character : MonoBehaviour
     public void SimulatedRevive()
     {
         simulatedHealth = Mathf.RoundToInt(healthBar.maxValue / 2);
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 }

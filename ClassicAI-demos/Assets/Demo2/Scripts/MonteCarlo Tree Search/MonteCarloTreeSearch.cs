@@ -216,46 +216,171 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
         switch(simCharacterRole) {
             case Roles.Role.Knight:
-                legalPlaysList.Add(new Play(() => knight.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
-                legalPlaysList.Add(new Play(() => knight.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
-                legalPlaysList.Add(new Play(() => knight.Action2(true), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
-                legalPlaysList.Add(new Play(() => knight.Action3(true), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
+                legalPlaysList = KnightLegalPlays(simCharacter, simCharacterRole, charactersPool);
                 break;
 
             case Roles.Role.Healer:
-                if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(new Play(() => healer.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => healer.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => healer.Action3(0, true), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => healer.Action3(1, true), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
-                }
-                legalPlaysList.Add(new Play(() => healer.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
-                legalPlaysList.Add(new Play(() => healer.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
+                legalPlaysList = HealerLegalPlays(simCharacter, simCharacterRole, charactersPool);
                 break;
 
             case Roles.Role.Guard:
-                if(enemies[0].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() > 0) { // Both enemies are alive
-                    legalPlaysList.Add(new Play(() => guard.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => guard.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => guard.Action3(0, true), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
-                    legalPlaysList.Add(new Play(() => guard.Action3(1, true), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
-                }
-                legalPlaysList.Add(new Play(() => guard.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
-                legalPlaysList.Add(new Play(() => guard.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
+                legalPlaysList = GuardLegalPlays(simCharacter, simCharacterRole, charactersPool);
                 break;
 
             case Roles.Role.Necromancer:
-                if(enemies[0].GetSimulatedHealth() <= 0 || enemies[1].GetSimulatedHealth() <= 0) { // One enemy is dead
-                    legalPlaysList.Add(new Play(() => necromancer.Action2(true), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
-                }
-                if(character.GetSimulatedHealth() <= 30) { // Can be killed in that turn
-                    legalPlaysList.Add(new Play(() => necromancer.Action3(true), simCharacter, simCharacterRole, "Action3", charactersPool.Turn));
-                }
-                legalPlaysList.Add(new Play(() => necromancer.Action1(true), simCharacter, simCharacterRole, "Action1", charactersPool.Turn));
+                legalPlaysList = NecromancerLegalPlays(simCharacter, simCharacterRole, charactersPool);
                 break;
         }
 
         return legalPlaysList;
+    }
+
+    private List<Play> KnightLegalPlays(GameObject simCharacter, Roles.Role simCharacterRole, CharactersPool charactersPool)
+    {
+        List<Play> knightLegalPlays = new List<Play>();
+
+        // Characters driven by the AI
+        Character[] enemies =
+        {
+            charactersPool.enemies[0].GetComponent<Character>(),
+            charactersPool.enemies[1].GetComponent<Character>()
+        };
+        // Characters driven by the player
+        Character[] allies =
+        {
+            charactersPool.allies[0].GetComponent<Character>(),
+            charactersPool.allies[1].GetComponent<Character>()
+        };
+
+        // Legal plays constraints
+        if(allies[0].GetSimulatedHealth() > 0) { // Ally 0 is alive
+            knightLegalPlays.Add(new Play(() => knight.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+        }
+        if(allies[1].GetSimulatedHealth() > 0) { // Ally 1 is alive
+            knightLegalPlays.Add(new Play(() => knight.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
+        }
+        if(allies[0].GetSimulatedHealth() > 0 && allies[1].GetSimulatedHealth() > 0) { // Both allies are alive
+            knightLegalPlays.Add(new Play(() => knight.Action3(true), simCharacter, simCharacterRole, "Action3", charactersPool.Simulation));
+        }
+        knightLegalPlays.Add(new Play(() => knight.Action2(true), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+
+        return knightLegalPlays;
+    }
+
+    private List<Play> HealerLegalPlays(GameObject simCharacter, Roles.Role simCharacterRole, CharactersPool charactersPool)
+    {
+        List<Play> healerLegalPlays = new List<Play>();
+
+        // Characters driven by the AI
+        Character[] enemies =
+        {
+            charactersPool.enemies[0].GetComponent<Character>(),
+            charactersPool.enemies[1].GetComponent<Character>()
+        };
+        // Characters driven by the player
+        Character[] allies =
+        {
+            charactersPool.allies[0].GetComponent<Character>(),
+            charactersPool.allies[1].GetComponent<Character>()
+        };
+
+        // Legal plays constraints
+        if(enemies[0].GetSimulatedHealth() > 0 && enemies[0].GetSimulatedHealth() < enemies[0].GetMaxHealth()) { // Enemy 0 is alive but not full health
+            healerLegalPlays.Add(new Play(() => healer.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+        }
+        if(enemies[1].GetSimulatedHealth() > 0 && enemies[1].GetSimulatedHealth() < enemies[1].GetMaxHealth()) { // Enemy 1 is alive
+            healerLegalPlays.Add(new Play(() => healer.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
+        }
+        if(allies[0].GetSimulatedHealth() > 0) { // Ally 0 is allive
+            healerLegalPlays.Add(new Play(() => healer.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
+        }
+        if(allies[1].GetSimulatedHealth() > 0) { // Ally 1 is alive
+            healerLegalPlays.Add(new Play(() => healer.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
+        }
+        if(enemies[0].GetSimulatedHealth() > 0) { // Enemy 0 is alive
+            healerLegalPlays.Add(new Play(() => healer.Action3(0, true), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
+        }
+        if(enemies[1].GetSimulatedHealth() > 0) { // Enemy 1 is alive
+            healerLegalPlays.Add(new Play(() => healer.Action3(1, true), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
+        }
+
+        return healerLegalPlays;
+    }
+
+    private List<Play> GuardLegalPlays(GameObject simCharacter, Roles.Role simCharacterRole, CharactersPool charactersPool)
+    {
+        List<Play> guardLegalPlays = new List<Play>();
+
+        // Characters driven by the AI
+        Character[] enemies =
+        {
+            charactersPool.enemies[0].GetComponent<Character>(),
+            charactersPool.enemies[1].GetComponent<Character>()
+        };
+        // Characters driven by the player
+        Character[] allies =
+        {
+            charactersPool.allies[0].GetComponent<Character>(),
+            charactersPool.allies[1].GetComponent<Character>()
+        };
+
+        // Legal plays constraints
+        if(allies[0].GetSimulatedHealth() > 0
+            && enemies[0].GetSimulatedHealth() > enemies[0].GetMaxHealth() / 2
+            && enemies[1].GetSimulatedHealth() > enemies[1].GetMaxHealth() / 2) { // Ally 0 is alive and the enemies have more than half of their health
+            guardLegalPlays.Add(new Play(() => guard.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
+        }
+        if(allies[1].GetSimulatedHealth() > 0
+            && enemies[0].GetSimulatedHealth() > enemies[0].GetMaxHealth() / 2
+            && enemies[1].GetSimulatedHealth() > enemies[1].GetMaxHealth() / 2) { // Ally 1 is alive and the enemies have more than half of their health
+            guardLegalPlays.Add(new Play(() => guard.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
+        }
+        if(enemies[0].GetSimulatedHealth() < enemies[0].GetMaxHealth() / 2) { // Enemy 0 has half of its health
+            guardLegalPlays.Add(new Play(() => guard.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
+        }
+        if(enemies[1].GetSimulatedHealth() < enemies[1].GetMaxHealth() / 2) { // Enemy 1 has hallf of its health
+            guardLegalPlays.Add(new Play(() => guard.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
+        }
+        if(character.GetSimulatedHealth() > enemies[0].GetSimulatedHealth()) { // The guard has more health than the enemy protected (guard is enemy 1)
+            guardLegalPlays.Add(new Play(() => guard.Action3(0, true), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
+        }
+        if(character.GetSimulatedHealth() > enemies[1].GetSimulatedHealth()) { // The guard has more health than the enemy protected (guard is enemy 0)
+            guardLegalPlays.Add(new Play(() => guard.Action3(1, true), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
+        }
+
+        return guardLegalPlays;
+    }
+
+    private List<Play> NecromancerLegalPlays(GameObject simCharacter, Roles.Role simCharacterRole, CharactersPool charactersPool)
+    {
+        List<Play> necromancerLegalPlays = new List<Play>();
+
+        // Characters driven by the AI
+        Character[] enemies =
+        {
+            charactersPool.enemies[0].GetComponent<Character>(),
+            charactersPool.enemies[1].GetComponent<Character>()
+        };
+        // Characters driven by the player
+        Character[] allies =
+        {
+            charactersPool.allies[0].GetComponent<Character>(),
+            charactersPool.allies[1].GetComponent<Character>()
+        };
+
+        // Legal plays constraints
+        if(enemies[0].GetSimulatedHealth() <= 0 && character.GetSimulatedHealth() > 0) { // Enemy 0 is dead (Necromancer is enemy 1)
+            necromancerLegalPlays.Add(new Play(() => necromancer.Action2(true), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+        }
+        if(enemies[1].GetSimulatedHealth() <= 0 && character.GetSimulatedHealth() > 0) { // Enemy 1 is dead (Necromancer is enemy 0)
+            necromancerLegalPlays.Add(new Play(() => necromancer.Action2(true), simCharacter, simCharacterRole, "Action2", charactersPool.Simulation));
+        }
+        if(character.GetSimulatedHealth() <= 30) { // Can be killed in that turn
+            necromancerLegalPlays.Add(new Play(() => necromancer.Action3(true), simCharacter, simCharacterRole, "Action3", charactersPool.Turn));
+        }
+        necromancerLegalPlays.Add(new Play(() => necromancer.Action1(true), simCharacter, simCharacterRole, "Action1", charactersPool.Turn));
+
+        return necromancerLegalPlays;
     }
 
     private State NextState(State actualState, Play play)

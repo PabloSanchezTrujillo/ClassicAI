@@ -1394,7 +1394,7 @@ GameObject:
   - component: {fileID: 378807781}
   m_Layer: 9
   m_Name: BossRoot
-  m_TagString: Damage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3146,7 +3146,7 @@ PrefabInstance:
     - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}
       propertyPath: nextScene
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}

@@ -1752,6 +1752,7 @@ MonoBehaviour:
   role: 2
   isEnemy: 0
   health: 350
+  maxHealth: 350
   healthBar: {fileID: 99830882}
   healthColor: {fileID: 197862420}
   healthText: {fileID: 87201519}

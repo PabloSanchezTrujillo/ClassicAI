@@ -110,32 +110,6 @@ public class MonteCarloTreeNode
     {
         List<Play> allPlays = new List<Play>();
 
-        /*switch(role) {
-            case Roles.Role.Knight:
-                allPlays.Add(new Play(() => knight.FireSimulatedAction1(), role, turn));
-                allPlays.Add(new Play(() => knight.FireSimulatedAction2(), role, turn));
-                allPlays.Add(new Play(() => knight.FireSimulatedAction3(), role, turn));
-                break;
-
-            case Roles.Role.Healer:
-                allPlays.Add(new Play(() => healer.FireSimulatedAction1(), role, turn));
-                allPlays.Add(new Play(() => healer.FireSimulatedAction2(), role, turn));
-                allPlays.Add(new Play(() => healer.FireSimulatedAction3(), role, turn));
-                break;
-
-            case Roles.Role.Guard:
-                allPlays.Add(new Play(() => guard.FireSimulatedAction1(), role, turn));
-                allPlays.Add(new Play(() => guard.FireSimulatedAction2(), role, turn));
-                allPlays.Add(new Play(() => guard.FireSimulatedAction3(), role, turn));
-                break;
-
-            case Roles.Role.Necromancer:
-                allPlays.Add(new Play(() => necromancer.FireSimulatedAction1(), role, turn));
-                allPlays.Add(new Play(() => necromancer.FireSimulatedAction2(), role, turn));
-                allPlays.Add(new Play(() => necromancer.FireSimulatedAction3(), role, turn));
-                break;
-        }*/
-
         foreach(PlayToNode child in children.Values) {
             allPlays.Add(child.Play);
         }

@@ -38,6 +38,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] private Boss boss;
     [SerializeField] private Transform centerPoint;
     [SerializeField] private float safeZone;
+    [SerializeField] private float dodgeAngle;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip getDamageClip;
@@ -276,36 +277,61 @@ public class PlayerActions : MonoBehaviour
     private void CalculateDodge()
     {
         Vector2 direction = (AttackingObject.transform.position - transform.position).normalized;
+        Vector2 dodgeDirection = Vector2.zero;
         float randomValue = -1;
 
         if(Task.current.isStarting) {
             randomValue = Random.value;
         }
 
-        if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y)) { // Comes from LEFT or RIGHT
-            if(randomValue != -1) {
+        /*
+        // OLD VERSION
+        if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y)) { // Object comes from LEFT or RIGHT
+            /*if(randomValue != -1) { // First dodge
                 direction.y = (Random.value > 0.5) ? 0.7f : -0.7f;
                 savedDirectionY = direction.y;
             }
             else {
                 direction.y = savedDirectionY;
             }
-            //direction.y -= 0.7f;
         }
-        else { // Comes from TOP or BOTTOM
-            if(randomValue != -1) {
+        else { // Object comes from TOP or BOTTOM
+            /*if(randomValue != -1) { // First dodge
                 direction.x = (Random.value > 0.5) ? 0.7f : -0.7f;
                 savedDirectionX = direction.x;
             }
             else {
                 direction.x = savedDirectionX;
             }
-            //direction.x += 0.7f;
+        }
+        */
+
+        // NEW VERSION
+        if(direction.y > 0) { // Object comes from TOP
+            if(direction.x > 0) { // Object comes from TOP-RIGHT
+                print("Top-Right");
+                //(a-sin(x),b-cos(x))
+                dodgeDirection = new Vector2(direction.x - Mathf.Sin(-dodgeAngle), direction.y - Mathf.Cos(-dodgeAngle));
+            }
+            else { // Object comes from TOP-LEFT
+                print("Top-Left");
+                dodgeDirection = new Vector2(direction.x - Mathf.Sin(dodgeAngle), direction.y - Mathf.Cos(dodgeAngle));
+            }
+        }
+        else { // Object comes from BOTTOM
+            if(direction.x > 0) { // Object comes from BOTTOM-RIGHT
+                print("Bottom-Right");
+                dodgeDirection = new Vector2(direction.x - Mathf.Sin(-dodgeAngle), direction.y - Mathf.Cos(-dodgeAngle));
+            }
+            else { // Object comes from BOTTOM-LEFT
+                print("Bottom-Left");
+                dodgeDirection = new Vector2(direction.x - Mathf.Sin(dodgeAngle), direction.y - Mathf.Cos(dodgeAngle));
+            }
         }
 
         //print("Random value: " + randomValue);
-        //print("Direction: " + (-direction));
-        playerMovement.MovementVector = -direction;
+        //print("Direction: " + (direction));
+        playerMovement.MovementVector = -dodgeDirection;
     }
 
     private void Tint(int colorIndex)

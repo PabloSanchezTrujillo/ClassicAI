@@ -75,9 +75,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: -0.62}
   serializedVersion: 2
-  m_Radius: 1.7
+  m_Radius: 1.58
 --- !u!114 &8415594523022037300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7221205316127452438}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ca775175fca79843812280486cad9e7, type: 3}
   m_Name: 
@@ -469,19 +469,24 @@ MonoBehaviour:
   bullet: {fileID: 8359305705823986028, guid: ecf8cf7b57d4c3e4bbed29c6feb3167a, type: 3}
   damagedAnimation: {fileID: 7400000, guid: 4683ed4a59e65b043a073aa2ab38a2b2, type: 2}
   mainCameraShake: {fileID: 0}
-  currentHealth: 0
+  currentHealth: 99
   healthIcons:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentColor: 0
-  maxColorIndex: 1
+  - {fileID: 0}
+  - {fileID: 0}
+  currentColor: 1
+  maxColorIndex: 3
   destroyParticles: {fileID: 7221205315821689786}
   reloadParticles: {fileID: 7221205315770944676}
   reloadSubParticles: {fileID: 7221205315770944674}
   hasBulletParticles: {fileID: 7419362861041251593}
   circleCollider: {fileID: 2523214140751903347}
   boss: {fileID: 0}
+  centerPoint: {fileID: 0}
+  safeZone: 4
+  dodgeAngle: 45
   getDamageClip: {fileID: 8300000, guid: 76079bcca631a76438f1c912b749f720, type: 3}
   shootClip: {fileID: 8300000, guid: 3c0c40b70ca41d246be9b581c0615ed2, type: 3}
   reloadClip: {fileID: 8300000, guid: 82761a766b1c5314eb0d71a041198094, type: 3}
@@ -587,6 +592,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
       propertyPath: lengthInSec
       value: 0.3
@@ -594,6 +607,22 @@ PrefabInstance:
     - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
       propertyPath: lengthInSec
