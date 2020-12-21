@@ -13,7 +13,10 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject tile;
     [SerializeField] private float tileSize;
 
+    private int rows;
+    private int columns;
     private TilesGroup tilesGroup;
+    private Tile[,] tiles;
 
     #endregion variables
 
@@ -25,13 +28,14 @@ public class LevelGenerator : MonoBehaviour
     public void GenerateGrid()
     {
         generationPanel.SetActive(false);
-        int rows = int.Parse(rowsInput.text);
-        int columns = int.Parse(columnsInput.text);
+        rows = int.Parse(rowsInput.text);
+        columns = int.Parse(columnsInput.text);
+        tiles = new Tile[rows, columns];
 
         for(int i = 0; i < columns; i++) {
             for(int j = 0; j < rows; j++) {
                 GameObject tileObject = Instantiate(tile, transform);
-                tileObject.GetComponent<Tile>().CreateTile(RoadTypes.RoadType.Road, Tile.CardinalPoints.South, Tile.CardinalPoints.North, tilesGroup);
+                tiles[j, i] = tileObject.GetComponent<Tile>();
 
                 float posX = i * tileSize;
                 float posZ = j * -tileSize;
@@ -43,5 +47,18 @@ public class LevelGenerator : MonoBehaviour
         float gridWidth = columns * tileSize;
         float gridHeight = rows * tileSize;
         transform.position = new Vector3(-gridWidth / 2 + tileSize / 2, 0, gridHeight / 2 - tileSize / 2);
+
+        CreateLevel();
+    }
+
+    private void CreateLevel()
+    {
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < columns; col++) {
+                if(row == 0 && col == 0) {
+                    tiles[row, col].CreateTile(RoadTypes.RoadType.Turn, Tile.CardinalPoints.East/*(Tile.CardinalPoints)Random.Range(1, 5)*/, tilesGroup);
+                }
+            }
+        }
     }
 }
