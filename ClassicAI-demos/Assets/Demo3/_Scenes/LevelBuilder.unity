@@ -514,7 +514,6 @@ GameObject:
   m_Component:
   - component: {fileID: 175320726}
   - component: {fileID: 175320725}
-  - component: {fileID: 175320727}
   m_Layer: 0
   m_Name: Level generator
   m_TagString: Untagged
@@ -539,32 +538,6 @@ MonoBehaviour:
   generationPanel: {fileID: 1965209235}
   tile: {fileID: 5086167292622058087, guid: 11d2f01e4bfee644187964d3e62325d0, type: 3}
   tileSize: 1
---- !u!4 &175320726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175320724}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &175320727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175320724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d3b7dc414969a54a86c09fde652fdcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   crossroadCrosswalk: {fileID: 6089975024461917799, guid: 09d2eeb1b8eb65a4ab4c5882c84f83e5,
     type: 3}
   crossroad: {fileID: 4606003270992464356, guid: 79e9ababc5fee2f45a9f7f83d0af54f7,
@@ -580,6 +553,20 @@ MonoBehaviour:
   roundabout: {fileID: 6831894695573281404, guid: d1f1ead64fa4fe24ea008c403d089268,
     type: 3}
   turn: {fileID: 5208817648462004418, guid: 365eeedad0200a74baf61c376ed9785b, type: 3}
+--- !u!4 &175320726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175320724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218182833
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,8 +2676,8 @@ Camera:
   m_GameObject: {fileID: 1891780615}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3, g: 0.5, b: 0.7, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2705,7 +2692,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 30
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

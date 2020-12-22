@@ -6,6 +6,8 @@ public class Tile : MonoBehaviour
 {
     #region variables
 
+    public bool IsEmpty { get; set; } = true;
+
     public enum CardinalPoints
     {
         None,
@@ -23,13 +25,14 @@ public class Tile : MonoBehaviour
 
     #endregion variables
 
-    public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection, TilesGroup tilesGroup)
+    public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection)
     {
         this.roadType = roadType;
         this.entryDirection = entryDirection;
 
-        tilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
+        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
         CreatePiece(tileObject);
+        IsEmpty = false;
     }
 
     private void CreatePiece(GameObject tileObject)
@@ -220,8 +223,20 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public CardinalPoints[] GetAllExits()
+    public List<CardinalPoints> GetAllExits()
     {
-        return new CardinalPoints[] { exitDirection_1, exitDirection_2, exitDirection_3 };
+        List<CardinalPoints> exits = new List<CardinalPoints>();
+
+        if(exitDirection_1 != CardinalPoints.None) {
+            exits.Add(exitDirection_1);
+        }
+        if(exitDirection_2 != CardinalPoints.None) {
+            exits.Add(exitDirection_2);
+        }
+        if(exitDirection_3 != CardinalPoints.None) {
+            exits.Add(exitDirection_3);
+        }
+
+        return exits;
     }
 }

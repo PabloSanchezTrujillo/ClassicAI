@@ -2,26 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TilesGroup : MonoBehaviour
+public static class TilesGroup
 {
     #region variables
 
-    public Dictionary<RoadTypes.RoadType, GameObject> TileGroup { get; set; }
-
-    [SerializeField] private GameObject crossroadCrosswalk;
-    [SerializeField] private GameObject crossroad;
-    [SerializeField] private GameObject intersectionCrosswalk;
-    [SerializeField] private GameObject intersection;
-    [SerializeField] private GameObject roadEnd;
-    [SerializeField] private GameObject roadCrosswalk;
-    [SerializeField] private GameObject road;
-    [SerializeField] private GameObject roundabout;
-    [SerializeField] private GameObject turn;
+    public static Dictionary<RoadTypes.RoadType, GameObject> TileGroup { get; set; }
 
     #endregion variables
 
     // Start is called before the first frame update
-    private void Start()
+    public static void CreateGroup(GameObject crossroadCrosswalk, GameObject crossroad, GameObject intersectionCrosswalk, GameObject intersection,
+        GameObject roadEnd, GameObject roadCrosswalk, GameObject road, GameObject roundabout, GameObject turn)
     {
         TileGroup = new Dictionary<RoadTypes.RoadType, GameObject>();
 
@@ -32,7 +23,7 @@ public class TilesGroup : MonoBehaviour
         TileGroup.Add(RoadTypes.RoadType.RoadEnd, roadEnd);
         TileGroup.Add(RoadTypes.RoadType.RoadCrosswalk, roadCrosswalk);
         TileGroup.Add(RoadTypes.RoadType.Road, road);
-        TileGroup.Add(RoadTypes.RoadType.Roundabout, roundabout);
+        //TileGroup.Add(RoadTypes.RoadType.Roundabout, roundabout);
         TileGroup.Add(RoadTypes.RoadType.Turn, turn);
     }
 }

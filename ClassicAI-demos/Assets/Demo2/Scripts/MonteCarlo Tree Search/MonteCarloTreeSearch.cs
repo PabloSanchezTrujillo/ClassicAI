@@ -200,7 +200,6 @@ public class MonteCarloTreeSearch : MonoBehaviour
         return bestPlay;
     }
 
-    // TODO: Revisar las Legal Plays teniendo en cuenta el la vida de cada personaje individual
     private List<Play> LegalPlays(State state)
     {
         List<Play> legalPlaysList = new List<Play>();
@@ -385,7 +384,6 @@ public class MonteCarloTreeSearch : MonoBehaviour
 
     private State NextState(State actualState, Play play)
     {
-        // TODO: Simulate the next state
         play.Action(); // Runs the play method
         CharactersPool charactersPool = character.GetCharactersPool();
 
