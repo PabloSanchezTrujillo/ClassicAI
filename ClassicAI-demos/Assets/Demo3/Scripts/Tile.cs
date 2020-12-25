@@ -25,17 +25,33 @@ public class Tile : MonoBehaviour
 
     #endregion variables
 
-    public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection)
+    public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection, bool simulate)
     {
         this.roadType = roadType;
         this.entryDirection = entryDirection;
+        exitDirection_1 = CardinalPoints.None;
+        exitDirection_2 = CardinalPoints.None;
+        exitDirection_3 = CardinalPoints.None;
 
         TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
-        CreatePiece(tileObject);
-        IsEmpty = false;
+        CreatePiece(tileObject, simulate);
+        IsEmpty = simulate;
     }
 
-    private void CreatePiece(GameObject tileObject)
+    public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection, CardinalPoints exitDirection, bool simulate)
+    {
+        this.roadType = roadType;
+        this.entryDirection = entryDirection;
+        exitDirection_1 = exitDirection;
+        exitDirection_2 = CardinalPoints.None;
+        exitDirection_3 = CardinalPoints.None;
+
+        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
+        CreatePiece(tileObject, simulate);
+        IsEmpty = simulate;
+    }
+
+    private void CreatePiece(GameObject tileObject, bool simulate)
     {
         switch(roadType) {
             case RoadTypes.RoadType.Crossroad:
@@ -71,7 +87,9 @@ public class Tile : MonoBehaviour
                 break;
         }
 
-        Instantiate(tileObject, transform);
+        if(!simulate) {
+            Instantiate(tileObject, transform);
+        }
     }
 
     private void AdjustCrossroad()
