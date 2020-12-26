@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Demo1/Scenes/EscenasFinales/Angel.unity
     guid: e3c2d525e605ea24c826845a348df0d8
+  - enabled: 1
+    path: Assets/Demo2/_Scenes/CombatScene.unity
+    guid: 294d89ca95f62c743b6f7851eb308ab2
+  - enabled: 1
+    path: Assets/Demo3/_Scenes/LevelBuilder.unity
+    guid: c30cc50b563fbbc4e8ca8c875d92e5c5
   m_configObjects: {}

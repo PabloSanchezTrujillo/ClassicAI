@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     #region variables
 
     public bool IsEmpty { get; set; } = true;
+    public bool HasCrosswalk { get; set; }
 
     public enum CardinalPoints
     {
@@ -55,34 +56,42 @@ public class Tile : MonoBehaviour
     {
         switch(roadType) {
             case RoadTypes.RoadType.Crossroad:
+                HasCrosswalk = false;
                 AdjustCrossroad();
                 break;
 
             case RoadTypes.RoadType.CrossroadCrosswalk:
+                HasCrosswalk = true;
                 AdjustCrossroad();
                 break;
 
             case RoadTypes.RoadType.Intersection:
+                HasCrosswalk = false;
                 AdjustIntersection();
                 break;
 
             case RoadTypes.RoadType.IntersectionCrosswalk:
+                HasCrosswalk = true;
                 AdjustIntersection();
                 break;
 
             case RoadTypes.RoadType.RoadEnd:
+                HasCrosswalk = false;
                 AdjustRoadEnd();
                 break;
 
             case RoadTypes.RoadType.Road:
+                HasCrosswalk = false;
                 AdjustRoad();
                 break;
 
             case RoadTypes.RoadType.RoadCrosswalk:
+                HasCrosswalk = true;
                 AdjustRoad();
                 break;
 
             case RoadTypes.RoadType.Turn:
+                HasCrosswalk = false;
                 AdjustTurn();
                 break;
         }

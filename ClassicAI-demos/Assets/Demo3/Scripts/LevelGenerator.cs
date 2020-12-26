@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private InputField rowsInput;
     [SerializeField] private InputField columnsInput;
     [SerializeField] private InputField iterationsInput;
+    [SerializeField] private Slider crosswalkDensitySlider;
     [SerializeField] private GameObject generationPanel;
     [SerializeField] private GameObject tile;
     [SerializeField] private float tileSize;
@@ -28,6 +29,7 @@ public class LevelGenerator : MonoBehaviour
 
     private int rows;
     private int columns;
+    private int crosswalkDensity;
     private int iterations;
     private Tile[,] tiles;
     private Tile.CardinalPoints turnExit;
@@ -37,6 +39,7 @@ public class LevelGenerator : MonoBehaviour
     private void Awake()
     {
         TilesGroup.CreateGroup(crossroadCrosswalk, crossroad, intersectionCrosswalk, intersection, roadEnd, roadCrosswalk, road, roundabout, turn);
+        crosswalkDensity = 1;
     }
 
     public void GenerateGrid()
@@ -91,6 +94,14 @@ public class LevelGenerator : MonoBehaviour
 
                         if(possibleRoadTypes.Count != 0) {
                             RoadTypes.RoadType roadTypeSelected = possibleRoadTypes[Random.Range(0, possibleRoadTypes.Count)];
+                            RoadTypes.RoadType[] roadTypes = CheckCrosswalkRules(row, col, roadTypeSelected);
+
+                            if(roadTypes.Length == 1) {
+                                roadTypeSelected = roadTypes[0];
+                            }
+                            else {
+                                roadTypeSelected = roadTypes[Random.Range(0, roadTypes.Length)];
+                            }
 
                             if(roadTypeSelected == RoadTypes.RoadType.Turn) {
                                 tiles[row, col].CreateTile(roadTypeSelected, entryDirection, turnExit, false);
@@ -295,5 +306,70 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return possibleRoadTypes;
+    }
+
+    public void ChangeCrosswalkDensity()
+    {
+        crosswalkDensity = (int)crosswalkDensitySlider.value;
+    }
+
+    private RoadTypes.RoadType[] CheckCrosswalkRules(int row, int column, RoadTypes.RoadType roadType)
+    {
+        bool canCrosswalk = true;
+
+        if(roadType == RoadTypes.RoadType.Turn) {
+            return new RoadTypes.RoadType[] { RoadTypes.RoadType.Turn };
+        }
+        else if(roadType == RoadTypes.RoadType.RoadEnd) {
+            return new RoadTypes.RoadType[] { RoadTypes.RoadType.RoadEnd };
+        }
+
+        // Checks that it is not the first row
+        if(row > 0) {
+            canCrosswalk = (!tiles[row - 1, column].HasCrosswalk && canCrosswalk) ? true : false;
+        }
+
+        // Checks that it is not the last row
+        if(row != (rows - 1)) {
+            canCrosswalk = (!tiles[row + 1, column].HasCrosswalk && canCrosswalk) ? true : false;
+        }
+
+        // Checks that it is not the first column
+        if(column > 0) {
+            canCrosswalk = (!tiles[row, column - 1].HasCrosswalk && canCrosswalk) ? true : false;
+        }
+
+        // Checks that it is not the last column
+        if(column != (columns - 1)) {
+            canCrosswalk = (!tiles[row, column + 1].HasCrosswalk && canCrosswalk) ? true : false;
+        }
+
+        switch(roadType) {
+            case RoadTypes.RoadType.Crossroad:
+                if(canCrosswalk) {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Crossroad, RoadTypes.RoadType.CrossroadCrosswalk };
+                }
+                else {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Crossroad };
+                }
+
+            case RoadTypes.RoadType.Intersection:
+                if(canCrosswalk) {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Intersection, RoadTypes.RoadType.IntersectionCrosswalk };
+                }
+                else {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Intersection };
+                }
+
+            case RoadTypes.RoadType.Road:
+                if(canCrosswalk) {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Road, RoadTypes.RoadType.RoadCrosswalk };
+                }
+                else {
+                    return new RoadTypes.RoadType[] { RoadTypes.RoadType.Road };
+                }
+        }
+
+        return null;
     }
 }
