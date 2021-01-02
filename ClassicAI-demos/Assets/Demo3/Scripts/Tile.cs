@@ -250,6 +250,11 @@ public class Tile : MonoBehaviour
         }
     }
 
+    public CardinalPoints GetEntryDirection()
+    {
+        return entryDirection;
+    }
+
     public List<CardinalPoints> GetAllExits()
     {
         List<CardinalPoints> exits = new List<CardinalPoints>();

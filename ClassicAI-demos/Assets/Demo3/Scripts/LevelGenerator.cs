@@ -82,7 +82,7 @@ public class LevelGenerator : MonoBehaviour
             for(int col = 0; col < columns; col++) {
                 // First tile
                 if(row == 0 && col == 0 && tiles[0, 0].IsEmpty) {
-                    tiles[row, col].CreateTile(RoadTypes.RoadType.Intersection, (Tile.CardinalPoints)Random.Range(1, 5), false);
+                    tiles[row, col].CreateTile(RoadTypes.RoadType.Crossroad, Tile.CardinalPoints.North, false);
                 }
                 else if(tiles[row, col].IsEmpty) {
                     List<Tile.CardinalPoints> possibleEntries = CheckRoadEntryRules(row, col);
@@ -90,6 +90,7 @@ public class LevelGenerator : MonoBehaviour
                         Tile.CardinalPoints entryDirection = possibleEntries[Random.Range(0, possibleEntries.Count)];
 
                         List<RoadTypes.RoadType> possibleRoadTypes = new List<RoadTypes.RoadType>();
+                        turnExit = Tile.CardinalPoints.None;
                         possibleRoadTypes = CheckRoadExitRules(row, col, entryDirection);
 
                         if(possibleRoadTypes.Count != 0) {
@@ -100,7 +101,7 @@ public class LevelGenerator : MonoBehaviour
                                 roadTypeSelected = roadTypes[0];
                             }
                             else {
-                                roadTypeSelected = roadTypes[Random.Range(0, roadTypes.Length)];
+                                roadTypeSelected = SelectCrosswalk(roadTypes);
                             }
 
                             if(roadTypeSelected == RoadTypes.RoadType.Turn) {
@@ -114,6 +115,25 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private RoadTypes.RoadType SelectCrosswalk(RoadTypes.RoadType[] roadTypes)
+    {
+        switch(crosswalkDensity) {
+            // Low density
+            case 0:
+                return (Random.value < 0.25) ? roadTypes[1] : roadTypes[0];
+
+            // Medium density
+            case 1:
+                return (Random.value < 0.5) ? roadTypes[1] : roadTypes[0];
+
+            // High density
+            case 2:
+                return (Random.value < 0.75) ? roadTypes[1] : roadTypes[0];
+        }
+
+        return roadTypes[0];
     }
 
     private List<Tile.CardinalPoints> CheckRoadEntryRules(int row, int column)
@@ -157,10 +177,6 @@ public class LevelGenerator : MonoBehaviour
 
     private List<RoadTypes.RoadType> CheckRoadExitRules(int row, int column, Tile.CardinalPoints entryCardinalPoint)
     {
-        // Comprobar las salidas de mi tile con TODAS las salidas de las tiles de alrededor
-        // y también comprobar que la entrada de mi tile coincide con alguna de las salidas de alrededor
-        // Descartar aquellas RoadTypes que no coincidan
-
         List<RoadTypes.RoadType> possibleRoadTypes = new List<RoadTypes.RoadType>();
         RoadTypes.RoadType[] roadTypes = { RoadTypes.RoadType.Crossroad, RoadTypes.RoadType.Intersection, RoadTypes.RoadType.Road, RoadTypes.RoadType.RoadEnd, RoadTypes.RoadType.Turn };
 
@@ -177,16 +193,23 @@ public class LevelGenerator : MonoBehaviour
                         roadTypePermitted = true;
 
                         if(roadType == RoadTypes.RoadType.Turn) {
-                            if(column - 1 < 0) {
-                                turnExit = Tile.CardinalPoints.East;
-                            }
-                            else {
-                                if(tiles[row, column - 1].GetAllExits().Contains(Tile.CardinalPoints.East)) {
+                            try {
+                                if(tiles[row, column - 1].GetAllExits().Contains(Tile.CardinalPoints.East)
+                                    || tiles[row, column - 1].GetEntryDirection() == Tile.CardinalPoints.East
+                                    || tiles[row, column - 1].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.West;
                                 }
-                                else {
+                                else if(tiles[row, column + 1].GetAllExits().Contains(Tile.CardinalPoints.West)
+                                    || tiles[row, column + 1].GetEntryDirection() == Tile.CardinalPoints.West
+                                    || tiles[row, column + 1].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.East;
                                 }
+                                /*else {
+                                    roadTypePermitted = false;
+                                }*/
+                            }
+                            catch {
+                                //roadTypePermitted = false;
                             }
                         }
                     }
@@ -210,16 +233,23 @@ public class LevelGenerator : MonoBehaviour
                         roadTypePermitted = true;
 
                         if(roadType == RoadTypes.RoadType.Turn) {
-                            if(column - 1 < 0) {
-                                turnExit = Tile.CardinalPoints.East;
-                            }
-                            else {
-                                if(tiles[row, column - 1].GetAllExits().Contains(Tile.CardinalPoints.East)) {
+                            try {
+                                if(tiles[row, column - 1].GetAllExits().Contains(Tile.CardinalPoints.East)
+                                    || tiles[row, column - 1].GetEntryDirection() == Tile.CardinalPoints.East
+                                    || tiles[row, column - 1].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.West;
                                 }
-                                else {
+                                else if(tiles[row, column + 1].GetAllExits().Contains(Tile.CardinalPoints.West)
+                                    || tiles[row, column + 1].GetEntryDirection() == Tile.CardinalPoints.West
+                                    || tiles[row, column + 1].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.East;
                                 }
+                                /*else {
+                                    roadTypePermitted = false;
+                                }*/
+                            }
+                            catch {
+                                //roadTypePermitted = false;
                             }
                         }
                     }
@@ -243,16 +273,23 @@ public class LevelGenerator : MonoBehaviour
                         roadTypePermitted = true;
 
                         if(roadType == RoadTypes.RoadType.Turn) {
-                            if(row - 1 < 0) {
-                                turnExit = Tile.CardinalPoints.South;
-                            }
-                            else {
-                                if(tiles[row - 1, column].GetAllExits().Contains(Tile.CardinalPoints.South)) {
+                            try {
+                                if(tiles[row - 1, column].GetAllExits().Contains(Tile.CardinalPoints.South)
+                                    || tiles[row - 1, column].GetEntryDirection() == Tile.CardinalPoints.South
+                                    || tiles[row - 1, column].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.North;
                                 }
-                                else {
+                                else if(tiles[row + 1, column].GetAllExits().Contains(Tile.CardinalPoints.North)
+                                    || tiles[row + 1, column].GetEntryDirection() == Tile.CardinalPoints.North
+                                    || tiles[row + 1, column].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.South;
                                 }
+                                /*else {
+                                    roadTypePermitted = false;
+                                }*/
+                            }
+                            catch {
+                                //roadTypePermitted = false;
                             }
                         }
                     }
@@ -276,16 +313,23 @@ public class LevelGenerator : MonoBehaviour
                         roadTypePermitted = true;
 
                         if(roadType == RoadTypes.RoadType.Turn) {
-                            if(row - 1 < 0) {
-                                turnExit = Tile.CardinalPoints.South;
-                            }
-                            else {
-                                if(tiles[row - 1, column].GetAllExits().Contains(Tile.CardinalPoints.South)) {
+                            try {
+                                if(tiles[row - 1, column].GetAllExits().Contains(Tile.CardinalPoints.South)
+                                    || tiles[row - 1, column].GetEntryDirection() == Tile.CardinalPoints.South
+                                    || tiles[row - 1, column].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.North;
                                 }
-                                else {
+                                else if(tiles[row + 1, column].GetAllExits().Contains(Tile.CardinalPoints.North)
+                                    || tiles[row + 1, column].GetEntryDirection() == Tile.CardinalPoints.North
+                                    || tiles[row + 1, column].IsEmpty) {
                                     turnExit = Tile.CardinalPoints.South;
                                 }
+                                /*else {
+                                    roadTypePermitted = false;
+                                }*/
+                            }
+                            catch {
+                                //roadTypePermitted = false;
                             }
                         }
                     }
@@ -300,8 +344,15 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
+            if(roadType == RoadTypes.RoadType.Turn && turnExit == Tile.CardinalPoints.None) {
+                roadTypePermitted = false;
+            }
+
             if(roadTypePermitted) {
                 possibleRoadTypes.Add(roadType);
+
+                if(possibleRoadTypes.Contains(RoadTypes.RoadType.Turn)) {
+                }
             }
         }
 
