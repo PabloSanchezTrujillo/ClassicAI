@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ( 'n' para pasar al siguiente nivel)
+  m_text: ( 'n' to pass to the next level)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7032a71c67ea8f842baad42f0a18a853, type: 2}
   m_sharedMaterial: {fileID: 1155933936438907344, guid: 7032a71c67ea8f842baad42f0a18a853,
@@ -134,10 +134,10 @@ MonoBehaviour:
   m_margin: {x: -728.4028, y: 0, z: -727.7097, w: -146.53809}
   m_textInfo:
     textComponent: {fileID: 629602126346637817}
-    characterCount: 36
+    characterCount: 32
     spriteCount: 0
-    spaceCount: 6
-    wordCount: 6
+    spaceCount: 7
+    wordCount: 7
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Presiona 'r' para reintentar
+  m_text: Press 'r' to retry
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7032a71c67ea8f842baad42f0a18a853, type: 2}
   m_sharedMaterial: {fileID: 1155933936438907344, guid: 7032a71c67ea8f842baad42f0a18a853,
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_margin: {x: -728.4028, y: 0, z: -727.7097, w: -146.53809}
   m_textInfo:
     textComponent: {fileID: 6176293605859501605}
-    characterCount: 28
+    characterCount: 18
     spriteCount: 0
     spaceCount: 3
     wordCount: 4
@@ -570,7 +570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DUELO PERDIDO
+  m_text: LOST DUEL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7032a71c67ea8f842baad42f0a18a853, type: 2}
   m_sharedMaterial: {fileID: 1155933936438907344, guid: 7032a71c67ea8f842baad42f0a18a853,
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 211.35
+  m_fontSize: 238.9
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_margin: {x: -728.4028, y: 0, z: -756.5731, w: -231.21179}
   m_textInfo:
     textComponent: {fileID: 6176293606485632795}
-    characterCount: 13
+    characterCount: 9
     spriteCount: 0
     spaceCount: 1
     wordCount: 2

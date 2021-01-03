@@ -152,22 +152,21 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    [Task]
-    private void DummyTask()
-    {
-        print("Dummy task");
-        Task.current.Succeed();
-    }
-
+    /// <summary>
+    /// Behaviour tree task - Goes through all the colors until matching the boss color
+    /// </summary>
     [Task]
     private void SameColor()
     {
+        // If an attack is coming cancels the action
         if(AttackIncoming) {
             Task.current.Fail();
         }
 
+        // Disables the player movement during the color changing
         playerMovement.MovementVector = Vector2.zero;
 
+        // Changes color until matching the boss color
         if(currentColor == boss.GetCurrentColor()) {
             Task.current.Succeed();
         }
@@ -176,6 +175,9 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes to the next color
+    /// </summary>
     private void ChangeColor()
     {
         hasBulletParticles.Stop();
@@ -192,9 +194,13 @@ public class PlayerActions : MonoBehaviour
         Task.current.Succeed();
     }
 
+    /// <summary>
+    /// Behaviour tree task - Reloads the spaceship bullet
+    /// </summary>
     [Task]
     private void Reload()
     {
+        // If an attack is coming, cancels the action
         if(AttackIncoming) {
             reloadParticles.Stop();
             reloadParticles.Clear();
@@ -204,10 +210,12 @@ public class PlayerActions : MonoBehaviour
             bulletReloaded = false;
             Task.current.Fail();
         }
+
         if(hasBullet) {
             Task.current.Succeed();
         }
 
+        // Starts the reloading process when entering in this task
         if(Task.current.isStarting) {
             audioSource.clip = reloadClip;
             audioSource.Play();
@@ -220,6 +228,9 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Behaviour tree task - Fires the bullet
+    /// </summary>
     [Task]
     private void Fire()
     {
@@ -227,12 +238,14 @@ public class PlayerActions : MonoBehaviour
             Task.current.Succeed();
         }
 
+        // Fires the bullet when entering in this task
         if(Task.current.isStarting) {
             hasBulletParticles.Stop();
             hasBulletParticles.Clear();
             audioSource.clip = shootClip;
             audioSource.Play();
 
+            // Checks that the spaceship is not in white color
             if(currentColor >= 0) {
                 GameObject bulletObject =
                     Instantiate(bullet, bulletSpawner.transform.position, bulletSpawner.transform.rotation);
@@ -247,26 +260,34 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Behaviour tree task - Dodge danger action
+    /// </summary>
     [Task]
     private void Dodge()
     {
         CalculateDodge();
 
+        // The task succeeds when there are no more attacks incoming
         if(!AttackIncoming) {
             Task.current.Succeed();
         }
     }
 
+    /// <summary>
+    /// Behaviour tree task - Returns the spaceship to the center of the room after dodging an attack
+    /// </summary>
     [Task]
     private void ReturnToCenter()
     {
+        // Cancels the action if an attack is coming
         if(AttackIncoming) {
             Task.current.Fail();
-            //print("FAIL");
         }
+
+        // Completes the action when the spaceship reaches the safe zone
         if(Vector2.Distance(centerPoint.position, transform.position) < safeZone) {
             Task.current.Succeed();
-            //print("SUCEED");
         }
 
         print("Distancia: " + Vector2.Distance(centerPoint.position, transform.position));
@@ -274,9 +295,12 @@ public class PlayerActions : MonoBehaviour
         playerMovement.MovementVector = direction;
     }
 
+    /// <summary>
+    /// Calculates how to dodge the danger
+    /// </summary>
     private void CalculateDodge()
     {
-        Vector2 direction = (AttackingObject.transform.position - transform.position).normalized;
+        Vector2 direction = (AttackingObject.transform.position - transform.position).normalized; // Direction where the danger is coming from
         Vector2 dodgeDirection = Vector2.zero;
         float randomValue = -1;
 
@@ -310,7 +334,7 @@ public class PlayerActions : MonoBehaviour
         if(direction.y > 0) { // Object comes from TOP
             if(direction.x > 0) { // Object comes from TOP-RIGHT
                 print("Top-Right");
-                //(a-sin(x),b-cos(x))
+                // Dodging formula -> (x-sin(a), y-cos(a))
                 dodgeDirection = new Vector2(direction.x - Mathf.Sin(-dodgeAngle), direction.y - Mathf.Cos(-dodgeAngle));
             }
             else { // Object comes from TOP-LEFT
@@ -334,11 +358,15 @@ public class PlayerActions : MonoBehaviour
         playerMovement.MovementVector = -dodgeDirection;
     }
 
+    /// <summary>
+    /// Tints the spaceship with the new color
+    /// </summary>
     private void Tint(int colorIndex)
     {
         if(colorIndex < 4) {
-            sprite.color = GameManager.instance.colors[colorIndex];
+            sprite.color = GameManager.instance.colors[colorIndex]; // New selected color
 
+            // Changing the color to all the spacechip particles
             ParticleSystem.MainModule bulletParticleSettings = hasBulletParticles.main;
             bulletParticleSettings.startColor =
              new ParticleSystem.MinMaxGradient(GameManager.instance.colors[colorIndex]);
@@ -351,6 +379,9 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reactivates the movement after the reloading action
+    /// </summary>
     private void ReactivateMovement()
     {
         playerMovement.enabled = true;
@@ -358,6 +389,9 @@ public class PlayerActions : MonoBehaviour
         reloading = false;
     }
 
+    /// <summary>
+    /// Finishes the reloading action
+    /// </summary>
     private void ReloadFinished()
     {
         hasBulletParticles.Play();
@@ -365,16 +399,21 @@ public class PlayerActions : MonoBehaviour
         hasBullet = true;
     }
 
+    /// <summary>
+    /// The spaceship receives damage
+    /// </summary>
     public void GetDamage()
     {
-        circleCollider.enabled = false;
-        mainCameraShake.ShakeOnce(magnitude, roughness, fadeInTime, fadeOutTime);
+        // Decreases the spaceship lives
+        circleCollider.enabled = false; // Disables the spaceship collider so it can have a brief inmortality time after each hit
+        mainCameraShake.ShakeOnce(magnitude, roughness, fadeInTime, fadeOutTime); // Camera shake for each hit
         rigidbody.velocity = Vector2.zero;
         currentHealth--;
         if(currentHealth < 0)
             currentHealth = 0;
         healthIcons[currentHealth].SetActive(false);
 
+        // When reaching 0 health the spaceship gets destroyed
         if(currentHealth == 0) {
             audioSource.Stop();
             audioSource.clip = lastHitClip;
@@ -394,6 +433,9 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unlocks the next color when passing to the next level
+    /// </summary>
     public void PassToNextLevel()
     {
         maxColorIndex++;
@@ -401,6 +443,9 @@ public class PlayerActions : MonoBehaviour
         Tint(maxColorIndex);
     }
 
+    /// <summary>
+    /// Activates the inmortality mode in the spaceship but it cannot move
+    /// </summary>
     public void InmortalityMode()
     {
         playerMovement.enabled = false;

@@ -27,7 +27,6 @@ public class FSM_Demon : MonoBehaviour
         attacking = false;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         playerPosition = GameManager.instance.player.transform.position;
@@ -47,6 +46,9 @@ public class FSM_Demon : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the boss state back to the Idle state after some seconds
+    /// </summary>
     private IEnumerator BackToIdle()
     {
         yield return new WaitForSeconds(timeBetweenAttacks);
@@ -54,6 +56,9 @@ public class FSM_Demon : MonoBehaviour
         animator.SetTrigger("backIdle");
     }
 
+    /// <summary>
+    /// Idle state, enables the next attack
+    /// </summary>
     [StateEnterMethod("Base.Idle")]
     public void EnterIdle()
     {
@@ -63,27 +68,39 @@ public class FSM_Demon : MonoBehaviour
         attacking = false;
     }
 
+    /// <summary>
+    /// Tridents attack state
+    /// </summary>
     [StateEnterMethod("Base.Tridents attack")]
     public void EnterTridentsAttack()
     {
-        attacking = true;
+        attacking = true; // Disables any other attack until this one is finished
         StartCoroutine(demonBehaviour.TridentAttack());
+
         StartCoroutine(BackToIdle());
     }
 
+    /// <summary>
+    /// Balls attack state
+    /// </summary>
     [StateEnterMethod("Base.Balls attack")]
     public void EnterBallsAttack()
     {
-        attacking = true;
+        attacking = true; // Disables any other attack until this one is finished
         StartCoroutine(demonBehaviour.DeathBallAttack());
+
         StartCoroutine(BackToIdle());
     }
 
+    /// <summary>
+    /// V attack state
+    /// </summary>
     [StateEnterMethod("Base.V attack")]
     public void EnterVAttack()
     {
-        attacking = true;
+        attacking = true; // Disables any other attack until this one is finished
         StartCoroutine(demonBehaviour.VBulletAttack());
+
         StartCoroutine(BackToIdle());
     }
 }
