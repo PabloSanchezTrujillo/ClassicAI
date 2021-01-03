@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4982031429928494206}
   - component: {fileID: 4982031429928494202}
   - component: {fileID: 7342592829241989977}
+  - component: {fileID: 7787832458061500372}
+  - component: {fileID: 1118650015}
   m_Layer: 5
   m_Name: LevelLoader
   m_TagString: Untagged
@@ -61,7 +63,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4982031429928494207
 MonoBehaviour:
@@ -126,15 +128,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01afa678ffb18b24eabd63b9d8fd3eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: 0
-  preTransitionWaitTime: 0
-  fadeInDuration: 1
-  fadeOutDuration: 1
-  dialogueDuration: 2
-  textFadeInDuration: 1
-  textFadeOutDuration: 1
-  beforeTextFadeInWaitTime: 0.3
-  afterTextFadeOutWaitTime: 0.3
+  nextScene: 2
+  preTransitionWaitTime: 1
+  fadeinDuration: 0.3
+  fadeoutDuration: 0.3
+  dialogueDuration: 6
+  textFadeinDuration: 0.3
+  textFadeoutDuration: 0.3
+  beforeTextFadeinWaitTime: 0
+  afterTextFadeoutWaitTime: 0
+--- !u!114 &7787832458061500372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4982031429928494205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443fa6e66474c444c8a9f3e2bbe27ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1118650015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4982031429928494205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d631d41877638c4fb50d7a8a11ef4c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 0.3
+  showTime: 4
+  texts:
+  - "\"Esta vida es mi vida, y m\xE1s que vida es un calvario\""
+  - "\"No me hable m\xE1s del cielo, que yo conozco el infierno\""
+  text: {fileID: 8915499761902118153}
+  counter: 0
 --- !u!1 &4982031431154332630
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,23 +300,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dd6c827a44af1634ca4c3c4056f74d80, type: 3}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 69d0a24e029c7aa4aa94c92907b9213d, type: 3}
+    m_FontSize: 65
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 240
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\"A morir, que la muerte es un d\xEDa\""

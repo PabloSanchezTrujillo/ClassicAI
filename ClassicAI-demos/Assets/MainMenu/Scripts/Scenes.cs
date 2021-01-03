@@ -11,6 +11,7 @@ public class Scenes : MonoBehaviour
         Demo1_Hole,
         Demo1_Angel,
         Demo2_Combat,
-        Demo3_LevelGenerator
+        Demo3_LevelGenerator,
+        MainMenu
     }
 }

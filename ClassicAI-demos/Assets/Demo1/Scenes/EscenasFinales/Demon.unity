@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2878,11 +2878,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4982031429928494200, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4982031429928494201, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2988,109 +2983,13 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4982031429928494201, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982031429928494201, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982031429928494201, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982031429928494202, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4982031429928494205, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
-    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: nextScene
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: preTransitionWaitTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: textCrossfadeDuration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: transitionDialogueTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: dialogueDuration
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_Text
-      value: "\"A morir, que la muerte es un d\xEDa\""
-      objectReference: {fileID: 0}
-    - target: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 69d0a24e029c7aa4aa94c92907b9213d,
-        type: 3}
-    - target: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-        type: 3}
-      propertyPath: m_FontData.m_MaxSize
-      value: 240
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b04a5a46ff0994298d74e4c90f837a, type: 3}
---- !u!1 &1118650014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4982031429928494205, guid: 39b04a5a46ff0994298d74e4c90f837a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1118650013}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1118650015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118650014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d631d41877638c4fb50d7a8a11ef4c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeTime: 0.3
-  showTime: 4
-  texts:
-  - "\"Esta vida es mi vida, y m\xE1s que vida es un calvario\""
-  - "\"No me hable m\xE1s del cielo, que yo conozco el infierno\""
-  text: {fileID: 2085546355}
-  counter: 0
 --- !u!1 &1124890882 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8432073998469720286, guid: 4b819edd83464f34987f89c7c1e642ae,
@@ -5329,18 +5228,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6176293606239777456}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2085546355 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8915499761902118153, guid: 39b04a5a46ff0994298d74e4c90f837a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1118650013}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2098962154 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7771112513504857120, guid: 3453e07420fd5de428463b31b5d7b314,
@@ -5793,16 +5680,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1561096175}
     m_Modifications:
-    - target: {fileID: 819193335631069152, guid: fe2c5b3a9565a054195f482a3967c6df,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6176293605297100038, guid: fe2c5b3a9565a054195f482a3967c6df,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6176293606419600551, guid: fe2c5b3a9565a054195f482a3967c6df,
         type: 3}
       propertyPath: m_Name
@@ -5918,8 +5795,7 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 819193335631069152, guid: fe2c5b3a9565a054195f482a3967c6df, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2c5b3a9565a054195f482a3967c6df, type: 3}
 --- !u!1001 &6990886437335232998
 PrefabInstance:

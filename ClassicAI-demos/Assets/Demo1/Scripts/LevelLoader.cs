@@ -72,7 +72,7 @@ public class LevelLoader : MonoBehaviour
         textArea = GetComponentInChildren<UnityEngine.UI.Text>();
 
         GameEventSystem.instance.loadNextLevel += LoadNextLevel;
-        
+
         //Fade out
         textArea.canvasRenderer.SetAlpha(0f);
         canvasGroup.alpha = 1;
@@ -81,27 +81,25 @@ public class LevelLoader : MonoBehaviour
 
     private void Update()
     {
-        if (fadingIn)
-        {
-            if (canvasGroup.alpha < 1.0f)
-            {
+        if(Input.GetKey(KeyCode.Escape)) {
+            GetComponent<LoadLevel>().LoadMainMenu();
+        }
+
+        if(fadingIn) {
+            if(canvasGroup.alpha < 1.0f) {
                 canvasGroup.alpha += Time.deltaTime / fadeinDuration;
             }
-            else
-            {
+            else {
                 fadingIn = false;
                 canvasGroup.alpha = 1f;
             }
         }
 
-        if (fadingOut)
-        {
-            if (canvasGroup.alpha > 0.0f)
-            {
+        if(fadingOut) {
+            if(canvasGroup.alpha > 0.0f) {
                 canvasGroup.alpha -= Time.deltaTime / fadeoutDuration;
             }
-            else
-            {
+            else {
                 fadingOut = false;
                 canvasGroup.alpha = 0f;
             }
