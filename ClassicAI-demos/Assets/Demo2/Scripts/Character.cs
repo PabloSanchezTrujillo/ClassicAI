@@ -126,6 +126,9 @@ public class Character : MonoBehaviour
                 break;
         }
 
+        if(health < 0) {
+            health = 0;
+        }
         healthBar.value = health;
     }
 
