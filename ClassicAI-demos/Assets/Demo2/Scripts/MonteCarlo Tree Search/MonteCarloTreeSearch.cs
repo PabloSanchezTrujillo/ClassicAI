@@ -334,16 +334,20 @@ public class MonteCarloTreeSearch : MonoBehaviour
             && enemies[1].GetSimulatedHealth() > enemies[1].GetMaxHealth() / 2) { // Ally 1 is alive and the enemies have more than half of their health
             guardLegalPlays.Add(new Play(() => guard.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
         }
-        if(enemies[0].GetSimulatedHealth() < enemies[0].GetMaxHealth() / 2) { // Enemy 0 has half of its health
+        if(enemies[0].GetSimulatedHealth() < enemies[0].GetMaxHealth() / 2
+            && enemies[0].GetSimulatedHealth() > 0) { // Enemy 0 has half of its health and is alive
             guardLegalPlays.Add(new Play(() => guard.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
         }
-        if(enemies[1].GetSimulatedHealth() < enemies[1].GetMaxHealth() / 2) { // Enemy 1 has hallf of its health
+        if(enemies[1].GetSimulatedHealth() < enemies[1].GetMaxHealth() / 2
+            && enemies[1].GetSimulatedHealth() > 0) { // Enemy 1 has half of its health and is alive
             guardLegalPlays.Add(new Play(() => guard.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
         }
-        if(character.GetSimulatedHealth() > enemies[0].GetSimulatedHealth()) { // The guard has more health than the enemy protected (guard is enemy 1)
+        if(character.GetSimulatedHealth() > enemies[0].GetSimulatedHealth()
+            && enemies[0].GetSimulatedHealth() > 0) { // The guard has more health than the enemy protected (guard is enemy 1)
             guardLegalPlays.Add(new Play(() => guard.Action3(0, true), simCharacter, simCharacterRole, "Action3-0", charactersPool.Simulation));
         }
-        if(character.GetSimulatedHealth() > enemies[1].GetSimulatedHealth()) { // The guard has more health than the enemy protected (guard is enemy 0)
+        if(character.GetSimulatedHealth() > enemies[1].GetSimulatedHealth()
+            && enemies[1].GetSimulatedHealth() > 0) { // The guard has more health than the enemy protected (guard is enemy 0)
             guardLegalPlays.Add(new Play(() => guard.Action3(1, true), simCharacter, simCharacterRole, "Action3-1", charactersPool.Simulation));
         }
 

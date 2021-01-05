@@ -100,15 +100,16 @@ public class Necromancer : MonoBehaviour
 
         if(!character.isEnemy) {
             foreach(GameObject enemy in character.GetCharactersPool().enemies) {
-                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
                     int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
                     if(simulated) {
                         enemy.GetComponent<Character>().SimulatedGetDamage(action1Damage + damageExtra);
+                        character.SimulatedAttackingState = CharacterStates.States.Normal;
                     }
                     else {
                         enemy.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
+                        character.AttackingState = CharacterStates.States.Normal;
                     }
-                    character.AttackingState = CharacterStates.States.Normal;
                 }
                 else {
                     if(simulated) {
@@ -126,15 +127,16 @@ public class Necromancer : MonoBehaviour
         }
         else {
             foreach(GameObject ally in character.GetCharactersPool().allies) {
-                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
                     int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
                     if(simulated) {
                         ally.GetComponent<Character>().SimulatedGetDamage(action1Damage + damageExtra);
+                        character.SimulatedAttackingState = CharacterStates.States.Normal;
                     }
                     else {
                         ally.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
+                        character.AttackingState = CharacterStates.States.Normal;
                     }
-                    character.AttackingState = CharacterStates.States.Normal;
                 }
                 else {
                     if(simulated) {
@@ -199,10 +201,13 @@ public class Necromancer : MonoBehaviour
     public void Action3(bool simulated)
     {
         actionsMenu.SetActive(false);
-        character.DefensiveState = CharacterStates.States.DeathExplosive;
 
         if(!simulated) {
+            character.DefensiveState = CharacterStates.States.DeathExplosive;
             EndTurn();
+        }
+        else {
+            character.DefensiveState = CharacterStates.States.DeathExplosive;
         }
     }
 

@@ -146,15 +146,16 @@ public class Healer : MonoBehaviour
             character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
-        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+        if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(damage * 0.3f);
             if(simulated) {
                 character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(damage + damageExtra);
+                character.SimulatedAttackingState = CharacterStates.States.Normal;
             }
             else {
                 character.EnemySelected.GetComponent<Character>().GetDamage(damage + damageExtra);
+                character.AttackingState = CharacterStates.States.Normal;
             }
-            character.AttackingState = CharacterStates.States.Normal;
         }
         else {
             if(simulated) {
@@ -179,18 +180,20 @@ public class Healer : MonoBehaviour
         if(!character.isEnemy) {
             if(simulated) {
                 character.AllySelected = character.GetCharactersPool().allies[index];
+                character.AllySelected.GetComponent<Character>().SimulatedAttackingState = CharacterStates.States.DamageBuffed;
             }
             else {
                 allyToHelpText.SetActive(true);
                 character.CanAttack = false;
                 yield return new WaitUntil(() => character.AllySelected != null);
                 allyToHelpText.SetActive(false);
+                character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
             }
         }
         else {
             character.AllySelected = character.GetCharactersPool().enemies[index];
+            character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
         }
-        character.AllySelected.GetComponent<Character>().AttackingState = CharacterStates.States.DamageBuffed;
 
         if(!simulated) {
             Instantiate(inspirationParticles, character.AllySelected.transform);
@@ -203,7 +206,7 @@ public class Healer : MonoBehaviour
         print("Healer attacked");
 
         CharactersPool charactersPool = character.GetCharactersPool();
-
+        character.CanAttack = false;
         //charactersPool.Simulation++;
         charactersPool.PassTurn(character.isEnemy);
 

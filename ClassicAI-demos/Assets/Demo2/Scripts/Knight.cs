@@ -123,15 +123,16 @@ public class Knight : MonoBehaviour
             character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
-        if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+        if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
             if(simulated) {
                 character.EnemySelected.GetComponent<Character>().SimulatedGetDamage(action1Damage + damageExtra);
+                character.SimulatedAttackingState = CharacterStates.States.Normal;
             }
             else {
                 character.EnemySelected.GetComponent<Character>().GetDamage(action1Damage + damageExtra);
+                character.AttackingState = CharacterStates.States.Normal;
             }
-            character.AttackingState = CharacterStates.States.Normal;
         }
         else {
             if(simulated) {
@@ -151,11 +152,14 @@ public class Knight : MonoBehaviour
     public void Action2(bool simulated)
     {
         actionsMenu.SetActive(false);
-        character.DefensiveState = CharacterStates.States.Shielded;
 
         if(!simulated) {
+            character.DefensiveState = CharacterStates.States.Shielded;
             Instantiate(shieldParticles, transform);
             EndTurn();
+        }
+        else {
+            character.SimulatedDefensiveState = CharacterStates.States.Shielded;
         }
     }
 
@@ -165,15 +169,16 @@ public class Knight : MonoBehaviour
 
         if(!character.isEnemy) {
             foreach(GameObject enemy in character.GetCharactersPool().enemies) {
-                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
                     int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
                     if(simulated) {
                         enemy.GetComponent<Character>().SimulatedGetDamage(action3Damage + damageExtra);
+                        character.SimulatedAttackingState = CharacterStates.States.Normal;
                     }
                     else {
                         enemy.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
+                        character.AttackingState = CharacterStates.States.Normal;
                     }
-                    character.AttackingState = CharacterStates.States.Normal;
                 }
                 else {
                     if(simulated) {
@@ -191,15 +196,16 @@ public class Knight : MonoBehaviour
         }
         else {
             foreach(GameObject ally in character.GetCharactersPool().allies) {
-                if(character.AttackingState == CharacterStates.States.DamageBuffed) {
+                if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
                     int damageExtra = Mathf.RoundToInt(action3Damage * 0.3f);
                     if(simulated) {
                         ally.GetComponent<Character>().SimulatedGetDamage(action3Damage + damageExtra);
+                        character.SimulatedAttackingState = CharacterStates.States.Normal;
                     }
                     else {
                         ally.GetComponent<Character>().GetDamage(action3Damage + damageExtra);
+                        character.AttackingState = CharacterStates.States.Normal;
                     }
-                    character.AttackingState = CharacterStates.States.Normal;
                 }
                 else {
                     if(simulated) {

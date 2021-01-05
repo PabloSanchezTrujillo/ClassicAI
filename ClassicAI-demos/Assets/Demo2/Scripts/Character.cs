@@ -10,7 +10,9 @@ public class Character : MonoBehaviour
     public GameObject EnemySelected { get; set; }
     public GameObject AllySelected { get; set; }
     public CharacterStates.States DefensiveState { get; set; }
+    public CharacterStates.States SimulatedDefensiveState { get; set; }
     public CharacterStates.States AttackingState { get; set; }
+    public CharacterStates.States SimulatedAttackingState { get; set; }
     public bool CanAttack { get; set; }
     public Roles.Role role;
     public bool isEnemy;
@@ -39,7 +41,9 @@ public class Character : MonoBehaviour
         healthColor.color = healthColors[0];
         healthText.text = health.ToString();
         DefensiveState = CharacterStates.States.Normal;
+        SimulatedDefensiveState = CharacterStates.States.Normal;
         AttackingState = CharacterStates.States.Normal;
+        SimulatedAttackingState = CharacterStates.States.Normal;
         CanAttack = true;
     }
 
@@ -127,14 +131,14 @@ public class Character : MonoBehaviour
 
     public void SimulatedGetDamage(int damage)
     {
-        switch(DefensiveState) {
+        switch(SimulatedDefensiveState) {
             case CharacterStates.States.Normal:
                 simulatedHealth -= damage;
                 break;
 
             case CharacterStates.States.Shielded:
                 simulatedHealth -= Mathf.RoundToInt(damage / 2);
-                DefensiveState = CharacterStates.States.Normal;
+                SimulatedDefensiveState = CharacterStates.States.Normal;
                 break;
 
             case CharacterStates.States.Guarded:
@@ -154,7 +158,7 @@ public class Character : MonoBehaviour
                         }
                     }
                 }
-                DefensiveState = CharacterStates.States.Normal;
+                SimulatedDefensiveState = CharacterStates.States.Normal;
                 break;
 
             case CharacterStates.States.DeathExplosive:
@@ -164,7 +168,7 @@ public class Character : MonoBehaviour
                         GetComponent<Necromancer>().DeathExplosion(true);
                     }
                 }
-                DefensiveState = CharacterStates.States.Normal;
+                SimulatedDefensiveState = CharacterStates.States.Normal;
                 break;
         }
     }

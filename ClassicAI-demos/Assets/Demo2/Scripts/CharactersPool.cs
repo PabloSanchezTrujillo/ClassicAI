@@ -16,6 +16,8 @@ public class CharactersPool : MonoBehaviour
 
     [SerializeField] private Transform[] charactersPosition;
     [SerializeField] private GameObject difficultySelection;
+    [SerializeField] private GameObject victorySign;
+    [SerializeField] private GameObject defeatSign;
     [SerializeField] private GameObject selectionMenu;
     [SerializeField] private Button knightButton;
     [SerializeField] private Button healerButton;
@@ -361,5 +363,29 @@ public class CharactersPool : MonoBehaviour
 
             Turn += (alliesAlive == 1) ? 2 : 1;
         }
+
+        CheckEndGame();
+    }
+
+    private void CheckEndGame()
+    {
+        int alliesAlive = 0;
+        int enemiesAlive = 0;
+
+        foreach(GameObject ally in allies) {
+            if(ally.GetComponent<Character>().GetHealth() > 0) {
+                alliesAlive++;
+            }
+        }
+        foreach(GameObject enemy in enemies) {
+            if(enemy.GetComponent<Character>().GetHealth() > 0) {
+                enemiesAlive++;
+            }
+        }
+
+        if(alliesAlive == 0)
+            defeatSign.SetActive(true);
+        if(enemiesAlive == 0)
+            victorySign.SetActive(true);
     }
 }
