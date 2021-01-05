@@ -79,6 +79,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
     {
         int iterations = 0;
         this.enemyPosition = enemyPosition;
+        characterIterator = enemyPosition;
         CreateNode(state);
         print(character.role + " [Initial State]: " + state.AlliesHealth + " - " + state.EnemiesHealth);
 
