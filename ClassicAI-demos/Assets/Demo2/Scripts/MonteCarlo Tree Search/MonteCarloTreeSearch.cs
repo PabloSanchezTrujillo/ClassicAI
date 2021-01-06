@@ -149,7 +149,13 @@ public class MonteCarloTreeSearch : MonoBehaviour
         while(winner == Winner.None) {
             List<Play> legalPlays = LegalPlays(actualState);
             int randomIndex = UnityEngine.Random.Range(0, legalPlays.Count);
-            Play randomPlay = legalPlays[randomIndex];
+            Play randomPlay = null;
+            if(randomIndex < legalPlays.Count) {
+                randomPlay = legalPlays[randomIndex];
+            }
+            else {
+                print("RandomIndex out of range: " + randomIndex);
+            }
             actualState = NextState(actualState, randomPlay);
             winner = DecideWinner(actualState);
 
@@ -310,6 +316,7 @@ public class MonteCarloTreeSearch : MonoBehaviour
     private List<Play> GuardLegalPlays(GameObject simCharacter, Roles.Role simCharacterRole, CharactersPool charactersPool)
     {
         List<Play> guardLegalPlays = new List<Play>();
+        bool allyNeedsHelp = false;
 
         // Characters driven by the AI
         Character[] enemies =
@@ -325,23 +332,23 @@ public class MonteCarloTreeSearch : MonoBehaviour
         };
 
         // Legal plays constraints
+        if(enemies[0].GetSimulatedHealth() > 0
+            && enemies[0].GetSimulatedHealth() <= enemies[0].GetMaxHealth() / 2) { // Enemy 0 has half of its health and is alive
+            guardLegalPlays.Add(new Play(() => guard.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
+            allyNeedsHelp = true;
+        }
+        if(enemies[1].GetSimulatedHealth() > 0
+            && enemies[1].GetSimulatedHealth() <= enemies[1].GetMaxHealth() / 2) { // Enemy 1 has half of its health and is alive
+            guardLegalPlays.Add(new Play(() => guard.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
+            allyNeedsHelp = true;
+        }
         if(allies[0].GetSimulatedHealth() > 0
-            && enemies[0].GetSimulatedHealth() > enemies[0].GetMaxHealth() / 2
-            && enemies[1].GetSimulatedHealth() > enemies[1].GetMaxHealth() / 2) { // Ally 0 is alive and the enemies have more than half of their health
+            && !allyNeedsHelp) { // Ally 0 is alive and the enemies have more than half of their health
             guardLegalPlays.Add(new Play(() => guard.Action1(0, true), simCharacter, simCharacterRole, "Action1-0", charactersPool.Simulation));
         }
         if(allies[1].GetSimulatedHealth() > 0
-            && enemies[0].GetSimulatedHealth() > enemies[0].GetMaxHealth() / 2
-            && enemies[1].GetSimulatedHealth() > enemies[1].GetMaxHealth() / 2) { // Ally 1 is alive and the enemies have more than half of their health
+            && !allyNeedsHelp) { // Ally 1 is alive and the enemies have more than half of their health
             guardLegalPlays.Add(new Play(() => guard.Action1(1, true), simCharacter, simCharacterRole, "Action1-1", charactersPool.Simulation));
-        }
-        if(enemies[0].GetSimulatedHealth() < enemies[0].GetMaxHealth() / 2
-            && enemies[0].GetSimulatedHealth() > 0) { // Enemy 0 has half of its health and is alive
-            guardLegalPlays.Add(new Play(() => guard.Action2(0, true), simCharacter, simCharacterRole, "Action2-0", charactersPool.Simulation));
-        }
-        if(enemies[1].GetSimulatedHealth() < enemies[1].GetMaxHealth() / 2
-            && enemies[1].GetSimulatedHealth() > 0) { // Enemy 1 has half of its health and is alive
-            guardLegalPlays.Add(new Play(() => guard.Action2(1, true), simCharacter, simCharacterRole, "Action2-1", charactersPool.Simulation));
         }
         if(character.GetSimulatedHealth() > enemies[0].GetSimulatedHealth()
             && enemies[0].GetSimulatedHealth() > 0) { // The guard has more health than the enemy protected (guard is enemy 1)

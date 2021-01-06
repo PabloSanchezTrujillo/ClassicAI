@@ -21,6 +21,13 @@ public class MonteCarloTreeNode
 
     #endregion variables
 
+    /// <summary>
+    /// Monte Carlo Tree node constructor
+    /// </summary>
+    /// <param name="parent">Parent node</param>
+    /// <param name="play">Node's play</param>
+    /// <param name="state">Actual state of the game</param>
+    /// <param name="unexpandedPlays">List of possibles unexpanded plays</param>
     public MonteCarloTreeNode(MonteCarloTreeNode parent, Play play, State state, List<Play> unexpandedPlays)
     {
         Parent = parent;
@@ -35,6 +42,9 @@ public class MonteCarloTreeNode
         }
     }
 
+    /// <summary>
+    /// List of the children plays not expanded yet
+    /// </summary>
     public List<Play> UnexpandedPlays()
     {
         List<Play> unexpandedPlays = new List<Play>();
@@ -48,6 +58,11 @@ public class MonteCarloTreeNode
         return unexpandedPlays;
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="play"></param>
+    /// <returns></returns>
     public MonteCarloTreeNode ChildNode(Play play)
     {
         PlayToNode child;
