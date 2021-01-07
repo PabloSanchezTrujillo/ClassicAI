@@ -47,6 +47,9 @@ public class Necromancer : MonoBehaviour
 
     #endregion variables
 
+    /// <summary>
+    /// Gets all the components related to the actions menu UI
+    /// </summary>
     private void Awake()
     {
         character = GetComponent<Character>();
@@ -63,6 +66,9 @@ public class Necromancer : MonoBehaviour
         action3Button = action3.GetComponent<Button>();
     }
 
+    /// <summary>
+    /// Search for the different actions UI objects
+    /// </summary>
     private void FindObjects()
     {
         GameObject actionsUI = GameObject.FindGameObjectWithTag("ActionsMenu");
@@ -74,9 +80,14 @@ public class Necromancer : MonoBehaviour
         action3 = actionsMenu.transform.GetChild(2).gameObject;
     }
 
+    /// <summary>
+    /// Selects the character when clicked, sets the actions menu texts and button listeners
+    /// </summary>
     public void SelectCharacter()
     {
+        // Selects the character only if it is not an enemy, it is the player's turn, the character can attack and is alive
         if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack && character.GetHealth() > 0) {
+            // Sets the action menu texts
             actionsMenu.SetActive(true);
             action1TextName.text = action1Name;
             action1TextDescription.text = action1Description;
@@ -85,6 +96,7 @@ public class Necromancer : MonoBehaviour
             action3TextName.text = action3Name;
             action3TextDescription.text = action3Description;
 
+            // Sets the action buttons listeners
             action1Button.onClick.RemoveAllListeners();
             action1Button.onClick.AddListener(() => Action1(false));
             action2Button.onClick.RemoveAllListeners();
@@ -94,12 +106,17 @@ public class Necromancer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Executes the first necromancer action (attacks both enemies)
+    /// </summary>
+    /// <param name="simulated">Is simulated or not</param>
     public void Action1(bool simulated)
     {
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
             foreach(GameObject enemy in character.GetCharactersPool().enemies) {
+                // If the attack is buffed, deals more damage
                 if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
                     int damageExtra = Mathf.RoundToInt(action1Damage * 0.3f);
                     if(simulated) {
@@ -120,6 +137,7 @@ public class Necromancer : MonoBehaviour
                     }
                 }
 
+                // If it is not simulated instantiates particles in both enemies
                 if(!simulated) {
                     Instantiate(magicalDamage, enemy.transform);
                 }
@@ -147,22 +165,29 @@ public class Necromancer : MonoBehaviour
                     }
                 }
 
+                // If it is not simulated instantiated particles in both allies
                 if(!simulated) {
                     Instantiate(magicalDamage, ally.transform);
                 }
             }
         }
 
+        // If it is not simulated ends turn
         if(!simulated) {
             EndTurn();
         }
     }
 
+    /// <summary>
+    /// Executes the second necromancer action (Revive)
+    /// </summary>
+    /// <param name="simulated"></param>
     public void Action2(bool simulated)
     {
         actionsMenu.SetActive(false);
 
         if(!character.isEnemy) {
+            // Iterates through all the allies to check wich one is dead and revive it
             foreach(GameObject ally in character.GetCharactersPool().allies) {
                 if(simulated) {
                     if(ally.GetComponent<Character>().GetSimulatedHealth() <= 0) {
@@ -178,6 +203,7 @@ public class Necromancer : MonoBehaviour
             }
         }
         else {
+            // Iterates through all the enemies to check wich one is dead and revive it
             foreach(GameObject enemy in character.GetCharactersPool().enemies) {
                 if(simulated) {
                     if(enemy.GetComponent<Character>().GetSimulatedHealth() <= 0) {
@@ -193,17 +219,23 @@ public class Necromancer : MonoBehaviour
             }
         }
 
+        // If it is not simulated ends the turn
         if(!simulated) {
             EndTurn();
         }
     }
 
+    /// <summary>
+    /// Executes the third necromancer action (Sets the death explosion)
+    /// </summary>
+    /// <param name="simulated"></param>
     public void Action3(bool simulated)
     {
         actionsMenu.SetActive(false);
 
         if(!simulated) {
             character.DefensiveState = CharacterStates.States.DeathExplosive;
+            // If it is not simulated end the turn
             EndTurn();
         }
         else {
@@ -211,9 +243,14 @@ public class Necromancer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Triggers the death explosion if gets killed in that turn
+    /// </summary>
+    /// <param name="simulated"></param>
     public void DeathExplosion(bool simulated)
     {
         if(!character.isEnemy) {
+            // Attacks both enemies
             foreach(GameObject enemy in character.GetCharactersPool().enemies) {
                 if(simulated) {
                     enemy.GetComponent<Character>().SimulatedGetDamage(action3Damage);
@@ -225,6 +262,7 @@ public class Necromancer : MonoBehaviour
             }
         }
         else {
+            // Attacks both allies
             foreach(GameObject ally in character.GetCharactersPool().allies) {
                 if(simulated) {
                     ally.GetComponent<Character>().SimulatedGetDamage(action3Damage);
@@ -237,20 +275,23 @@ public class Necromancer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ends the turn
+    /// </summary>
     private void EndTurn()
     {
         print("Necromancer attacked");
 
         CharactersPool charactersPool = character.GetCharactersPool();
-        character.CanAttack = false;
+        character.CanAttack = false; // Disables the character to attack
         //charactersPool.Simulation++;
         charactersPool.PassTurn(character.isEnemy);
 
-        if(charactersPool.Turn == 3) {
+        if(charactersPool.Turn == 3) { // Passes the turn to the enemies
             print("Enemies turn");
             StartCoroutine(charactersPool.EnemiesTurn());
         }
-        else if(charactersPool.Turn == 5) {
+        else if(charactersPool.Turn == 5) { // Passes the turn to the allies
             print("Allies turn");
             charactersPool.AlliesTurn();
         }

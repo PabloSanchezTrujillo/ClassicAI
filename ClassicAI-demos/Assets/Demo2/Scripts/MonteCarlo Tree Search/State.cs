@@ -11,7 +11,7 @@ public class State
     public int AlliesHealth { get; set; }
     public int EnemiesHealth { get; set; }
 
-    private int simulation;
+    private readonly int simulation;
 
     #endregion variables
 
@@ -31,15 +31,8 @@ public class State
         }
     }
 
-    public void UpdateState(int alliesHealth, int enemiesHealth)
-    {
-        AlliesHealth = alliesHealth;
-        EnemiesHealth = enemiesHealth;
-    }
-
     public string GetHash()
     {
-        CharactersPool charactersPool = Allies[0].GetComponent<Character>().GetCharactersPool();
         return "(" + simulation + ") " +
             Allies[0].name + "+" + Allies[1].name + "=" + AlliesHealth.ToString() +
             " - " + Enemies[0].name + "+" + Enemies[1].name + "=" + EnemiesHealth.ToString();

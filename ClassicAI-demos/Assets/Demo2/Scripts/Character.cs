@@ -47,24 +47,31 @@ public class Character : MonoBehaviour
         CanAttack = true;
     }
 
+    /// <summary>
+    /// Updates the visual health bar
+    /// </summary>
     public void UpdateHealth()
     {
         //healthBar.value = health;
         healthText.text = health.ToString();
 
-        if(health >= (healthBar.maxValue * 0.5)) {
+        if(health >= (healthBar.maxValue * 0.5)) { // Color green for health above 50%
             healthColor.color = healthColors[0];
         }
-        else if(health > (healthBar.maxValue * 0.15) && health < (healthBar.maxValue * 0.5)) {
+        else if(health > (healthBar.maxValue * 0.15) && health < (healthBar.maxValue * 0.5)) { // Color orange for health between 15% and 50%
             healthColor.color = healthColors[1];
         }
-        else {
+        else { // Red color for health under 15%
             healthColor.color = healthColors[2];
         }
     }
 
+    /// <summary>
+    /// Selects the clicked character
+    /// </summary>
     public void ClickOnCharacter()
     {
+        // Selects the character only if it is alive
         if(health <= 0)
             return;
 
@@ -80,21 +87,25 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Character receives damage function
+    /// </summary>
+    /// <param name="damage">Amount of damaged received</param>
     public void GetDamage(int damage)
     {
         switch(DefensiveState) {
-            case CharacterStates.States.Normal:
+            case CharacterStates.States.Normal: // Takes all teh damage
                 health -= damage;
                 simulatedHealth = health;
                 break;
 
-            case CharacterStates.States.Shielded:
+            case CharacterStates.States.Shielded: // Takes half of the damage
                 health -= Mathf.RoundToInt(damage / 2);
                 simulatedHealth = health;
                 DefensiveState = CharacterStates.States.Normal;
                 break;
 
-            case CharacterStates.States.Guarded:
+            case CharacterStates.States.Guarded: // The guarded character receives no damage and the guardian takes 70% of the damage
                 if(isEnemy) {
                     foreach(GameObject enemy in charactersPool.enemies) {
                         if(enemy != this.gameObject) {
@@ -114,7 +125,7 @@ public class Character : MonoBehaviour
                 DefensiveState = CharacterStates.States.Normal;
                 break;
 
-            case CharacterStates.States.DeathExplosive:
+            case CharacterStates.States.DeathExplosive: // If the damage kills it, damage its enemies with an explosion
                 health -= damage;
                 simulatedHealth = health;
                 if(health <= 0) {
@@ -132,19 +143,23 @@ public class Character : MonoBehaviour
         healthBar.value = health;
     }
 
+    /// <summary>
+    /// Simulates the damage for the simulation phase of the Monte Carlo Tree Search
+    /// </summary>
+    /// <param name="damage"></param>
     public void SimulatedGetDamage(int damage)
     {
         switch(SimulatedDefensiveState) {
-            case CharacterStates.States.Normal:
+            case CharacterStates.States.Normal: // Takes all the damage
                 simulatedHealth -= damage;
                 break;
 
-            case CharacterStates.States.Shielded:
+            case CharacterStates.States.Shielded: // Takes half of the damage
                 simulatedHealth -= Mathf.RoundToInt(damage / 2);
                 SimulatedDefensiveState = CharacterStates.States.Normal;
                 break;
 
-            case CharacterStates.States.Guarded:
+            case CharacterStates.States.Guarded: // The guarded character receives no damage and the guardian takes 70% of the damage
                 if(isEnemy) {
                     foreach(GameObject enemy in charactersPool.enemies) {
                         if(enemy != this.gameObject) {
@@ -164,7 +179,7 @@ public class Character : MonoBehaviour
                 SimulatedDefensiveState = CharacterStates.States.Normal;
                 break;
 
-            case CharacterStates.States.DeathExplosive:
+            case CharacterStates.States.DeathExplosive: // If the damage kills it, damage its enemies with an explosion
                 simulatedHealth -= damage;
                 if(simulatedHealth <= 0) {
                     if(GetComponent<Necromancer>() != null) {
@@ -176,54 +191,83 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Character gets healed
+    /// </summary>
+    /// <param name="heal">Amount of health to heal</param>
     public void HealUp(int heal)
     {
         health += heal;
-        if(health > healthBar.maxValue) {
+        if(health > healthBar.maxValue) { // The health cannot exceed the maximum value of the health bar
             health = (int)healthBar.maxValue;
         }
         healthBar.value = health;
     }
 
+    /// <summary>
+    /// Characters gets simulated healed
+    /// </summary>
+    /// <param name="heal">Amount of simulated health to heal</param>
     public void SimulatedHealUp(int heal)
     {
         simulatedHealth += heal;
-        if(simulatedHealth > healthBar.maxValue) {
+        if(simulatedHealth > healthBar.maxValue) { // The simulated health cannot exceed the maximun value of the health bar
             simulatedHealth = (int)healthBar.maxValue;
         }
     }
 
+    /// <summary>
+    /// Returns the character pool
+    /// </summary>
     public CharactersPool GetCharactersPool()
     {
         return charactersPool;
     }
 
+    /// <summary>
+    /// Returns the actual character health
+    /// </summary>
     public int GetHealth()
     {
         return health;
     }
 
+    /// <summary>
+    /// Return the actual simulated health
+    /// </summary>
     public int GetSimulatedHealth()
     {
         return simulatedHealth;
     }
 
+    /// <summary>
+    /// Resets the simulated health with the real health value
+    /// </summary>
     public void ResetSimultedHealth()
     {
         simulatedHealth = health;
     }
 
+    /// <summary>
+    /// Revives a character with half of its health
+    /// </summary>
     public void Revive()
     {
         health = Mathf.RoundToInt(healthBar.maxValue / 2);
         healthBar.value = health;
     }
 
+    /// <summary>
+    /// Simulates the revival of a character
+    /// </summary>
     public void SimulatedRevive()
     {
         simulatedHealth = Mathf.RoundToInt(healthBar.maxValue / 2);
     }
 
+    /// <summary>
+    /// Return the maximun health of the character
+    /// </summary>
     public int GetMaxHealth()
     {
         return maxHealth;

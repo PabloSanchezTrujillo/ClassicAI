@@ -46,6 +46,9 @@ public class Guard : MonoBehaviour
 
     #endregion variables
 
+    /// <summary>
+    /// Gets all the components related to the actions menu UI
+    /// </summary>
     private void Awake()
     {
         character = GetComponent<Character>();
@@ -62,6 +65,9 @@ public class Guard : MonoBehaviour
         action3Button = action3.GetComponent<Button>();
     }
 
+    /// <summary>
+    /// Search for the different actions UI objects
+    /// </summary>
     private void FindObjects()
     {
         GameObject actionsUI = GameObject.FindGameObjectWithTag("ActionsMenu");
@@ -73,9 +79,14 @@ public class Guard : MonoBehaviour
         action3 = actionsMenu.transform.GetChild(2).gameObject;
     }
 
+    /// <summary>
+    /// Selects the character when clicked, sets the actions menu texts and button listeners
+    /// </summary>
     public void SelectCharacter()
     {
+        // Selects the character only if it is not an enemy, it is the player's turn, the character can attack and is alive
         if(!character.isEnemy && character.GetCharactersPool().Turn < 3 && character.CanAttack && character.GetHealth() > 0) {
+            // Sets the action menu texts
             actionsMenu.SetActive(true);
             action1TextName.text = action1Name;
             action1TextDescription.text = action1Description;
@@ -84,6 +95,7 @@ public class Guard : MonoBehaviour
             action3TextName.text = action3Name;
             action3TextDescription.text = action3Description;
 
+            // Sets the action buttons listeners
             action1Button.onClick.RemoveAllListeners();
             action1Button.onClick.AddListener(() => StartCoroutine(Action1(-1, false)));
             action2Button.onClick.RemoveAllListeners();
@@ -93,6 +105,11 @@ public class Guard : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Executes the first guard action (Attack an enemy)
+    /// </summary>
+    /// <param name="index">Index of the enemy attacked</param>
+    /// <param name="simulated">Is simulated or not</param>
     public IEnumerator Action1(int index, bool simulated)
     {
         character.EnemySelected = null;
@@ -104,7 +121,7 @@ public class Guard : MonoBehaviour
             }
             else {
                 enemyToAttackText.SetActive(true);
-                yield return new WaitUntil(() => character.EnemySelected != null);
+                yield return new WaitUntil(() => character.EnemySelected != null); // Waits until the player selects an enemy
                 enemyToAttackText.SetActive(false);
             }
         }
@@ -112,6 +129,7 @@ public class Guard : MonoBehaviour
             character.EnemySelected = character.GetCharactersPool().allies[index];
         }
 
+        // If the character has the damage buffed deals more damage
         if(character.AttackingState == CharacterStates.States.DamageBuffed || character.SimulatedAttackingState == CharacterStates.States.DamageBuffed) {
             int damageExtra = Mathf.RoundToInt(damage * 0.3f);
             if(simulated) {
@@ -132,12 +150,19 @@ public class Guard : MonoBehaviour
             }
         }
 
+        // If it is not simulated, instantiates the particles and ends the turn
         if(!simulated) {
             Instantiate(damageParticles, character.EnemySelected.transform);
             EndTurn();
         }
     }
 
+    /// <summary>
+    /// Executes the second guard action (Guard)
+    /// </summary>
+    /// <param name="index">Index of the ally to guard</param>
+    /// <param name="simulated">Is simulated or not</param>
+    /// <returns></returns>
     public IEnumerator Action2(int index, bool simulated)
     {
         character.AllySelected = null;
@@ -151,7 +176,7 @@ public class Guard : MonoBehaviour
             else {
                 allyToHelpText.SetActive(true);
                 character.CanAttack = false;
-                yield return new WaitUntil(() => character.AllySelected != null);
+                yield return new WaitUntil(() => character.AllySelected != null); // Waits until the player selects an ally
                 allyToHelpText.SetActive(false);
                 character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Shielded;
             }
@@ -161,12 +186,19 @@ public class Guard : MonoBehaviour
             character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Shielded;
         }
 
+        // If it is not simulated, instantiates the particles and ends the turn
         if(!simulated) {
             Instantiate(shieldParticles, character.AllySelected.transform);
             EndTurn();
         }
     }
 
+    /// <summary>
+    /// Executes the third guard action (Bodyguard)
+    /// </summary>
+    /// <param name="index">Index of the character to protect</param>
+    /// <param name="simulated">Is simulated or not</param>
+    /// <returns></returns>
     public IEnumerator Action3(int index, bool simulated)
     {
         character.AllySelected = null;
@@ -180,7 +212,7 @@ public class Guard : MonoBehaviour
             else {
                 allyToHelpText.SetActive(true);
                 character.CanAttack = false;
-                yield return new WaitUntil(() => character.AllySelected != null);
+                yield return new WaitUntil(() => character.AllySelected != null); // Waits until the player selects an ally
                 allyToHelpText.SetActive(false);
                 character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Guarded;
             }
@@ -190,26 +222,30 @@ public class Guard : MonoBehaviour
             character.AllySelected.GetComponent<Character>().DefensiveState = CharacterStates.States.Guarded;
         }
 
+        // If it is not simulated, instantiates the particles and ends the turn
         if(!simulated) {
             Instantiate(guardedParticles, character.AllySelected.transform);
             EndTurn();
         }
     }
 
+    /// <summary>
+    /// Ends the turn
+    /// </summary>
     private void EndTurn()
     {
         print("Guard attacked");
 
         CharactersPool charactersPool = character.GetCharactersPool();
-        character.CanAttack = false;
+        character.CanAttack = false; // Disabled the character to attack
         //charactersPool.Simulation++;
         charactersPool.PassTurn(character.isEnemy);
 
-        if(charactersPool.Turn == 3) {
+        if(charactersPool.Turn == 3) { // Passes the turn to the enemies
             print("Enemies turn");
             StartCoroutine(charactersPool.EnemiesTurn());
         }
-        else if(charactersPool.Turn == 5) {
+        else if(charactersPool.Turn == 5) { // Passes the turn to the allies
             print("Allies turn");
             charactersPool.AlliesTurn();
         }

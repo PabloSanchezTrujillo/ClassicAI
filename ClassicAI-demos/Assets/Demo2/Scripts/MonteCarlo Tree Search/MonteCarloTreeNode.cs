@@ -59,10 +59,9 @@ public class MonteCarloTreeNode
     }
 
     /// <summary>
-    ///
+    /// Gets the node of the child that contains the play
     /// </summary>
-    /// <param name="play"></param>
-    /// <returns></returns>
+    /// <param name="play">The play to search the child node</param>
     public MonteCarloTreeNode ChildNode(Play play)
     {
         PlayToNode child;
@@ -78,6 +77,10 @@ public class MonteCarloTreeNode
         return child.Node;
     }
 
+    /// <summary>
+    /// Returns the UCB parameter based on the exploration parameter
+    /// </summary>
+    /// <param name="explorationParam">Exploration parameter to calculate the UCB</param>
     public float GetUCB1(float explorationParam)
     {
         float param1 = NumberOfWins / NumberOfPlays;
@@ -87,6 +90,12 @@ public class MonteCarloTreeNode
         return UCB1;
     }
 
+    /// <summary>
+    /// Expands the node to get a new child with a specific play
+    /// </summary>
+    /// <param name="play">The new play of the child node</param>
+    /// <param name="childState">The updated state of the child node</param>
+    /// <param name="unexpandedPlays">The list of possibles next plays for the child node</param>
     public MonteCarloTreeNode Expand(Play play, State childState, List<Play> unexpandedPlays)
     {
         if(!children.ContainsKey(play.GetHash())) {
@@ -100,11 +109,10 @@ public class MonteCarloTreeNode
         return childNode;
     }
 
-    public Dictionary<string, PlayToNode> GetChildren()
-    {
-        return children;
-    }
-
+    /// <summary>
+    /// Checks if the node has expanded all its possibles children
+    /// </summary>
+    /// <returns></returns>
     public bool IsFullyExpanded()
     {
         foreach(PlayToNode child in children.Values) {
@@ -116,12 +124,19 @@ public class MonteCarloTreeNode
         return true;
     }
 
+    /// <summary>
+    /// Checks if the node is a leaf node or not
+    /// </summary>
+    /// <returns></returns>
     public bool IsLeaf()
     {
         return (children.Count == 0) ? true : false;
     }
 
-    public List<Play> AllPlays(Roles.Role role, int turn, Knight knight, Healer healer, Guard guard, Necromancer necromancer)
+    /// <summary>
+    /// Gets all the plays to get to its children
+    /// </summary>
+    public List<Play> AllPlays()
     {
         List<Play> allPlays = new List<Play>();
 
