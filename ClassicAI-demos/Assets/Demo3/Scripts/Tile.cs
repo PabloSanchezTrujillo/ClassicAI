@@ -26,6 +26,12 @@ public class Tile : MonoBehaviour
 
     #endregion variables
 
+    /// <summary>
+    /// Tile constructor for all the road types but the turns
+    /// </summary>
+    /// <param name="roadType">Road type contained in the tile</param>
+    /// <param name="entryDirection">Entry direction of the road</param>
+    /// <param name="simulate">Is the tile being simulated or not</param>
     public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection, bool simulate)
     {
         this.roadType = roadType;
@@ -34,11 +40,18 @@ public class Tile : MonoBehaviour
         exitDirection_2 = CardinalPoints.None;
         exitDirection_3 = CardinalPoints.None;
 
-        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
+        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject); // Gets the instantiable object of the road type
         CreatePiece(tileObject, simulate);
         IsEmpty = simulate;
     }
 
+    /// <summary>
+    /// Tile constructor for the turns
+    /// </summary>
+    /// <param name="roadType">Road type contained in the tile</param>
+    /// <param name="entryDirection">Entry direction of the road</param>
+    /// <param name="exitDirection">Exit direction of the road</param>
+    /// <param name="simulate">Is the tile being simulated?</param>
     public void CreateTile(RoadTypes.RoadType roadType, CardinalPoints entryDirection, CardinalPoints exitDirection, bool simulate)
     {
         this.roadType = roadType;
@@ -47,11 +60,16 @@ public class Tile : MonoBehaviour
         exitDirection_2 = CardinalPoints.None;
         exitDirection_3 = CardinalPoints.None;
 
-        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject);
+        TilesGroup.TileGroup.TryGetValue(roadType, out GameObject tileObject); // Gets the instantiable object of the road type
         CreatePiece(tileObject, simulate);
         IsEmpty = simulate;
     }
 
+    /// <summary>
+    /// Creates the object of the tile
+    /// </summary>
+    /// <param name="tileObject">Instantiable road object</param>
+    /// <param name="simulate">Is the tile being simulated?</param>
     private void CreatePiece(GameObject tileObject, bool simulate)
     {
         switch(roadType) {
@@ -96,11 +114,15 @@ public class Tile : MonoBehaviour
                 break;
         }
 
+        // If the tile is not being simulated instantiates the road object on the tile
         if(!simulate) {
             Instantiate(tileObject, transform);
         }
     }
 
+    /// <summary>
+    /// Adjust the exits of the crossroad object depending on the entry direction
+    /// </summary>
     private void AdjustCrossroad()
     {
         switch(entryDirection) {
@@ -130,6 +152,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adjust the rotation and exits of the intersection object depending on the entry direction
+    /// </summary>
     private void AdjustIntersection()
     {
         switch(entryDirection) {
@@ -159,6 +184,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adjust the rotation and exits of the road end object depending on the entry direction
+    /// </summary>
     private void AdjustRoadEnd()
     {
         switch(entryDirection) {
@@ -184,6 +212,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adjust the rotation and exits of the road object depending on the entry direction
+    /// </summary>
     private void AdjustRoad()
     {
         switch(entryDirection) {
@@ -209,6 +240,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adjust the roation of the turn depending on the entry direction and the exit direction
+    /// </summary>
     private void AdjustTurn()
     {
         switch(entryDirection) {
@@ -250,11 +284,17 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the entry direction of the tile
+    /// </summary>
     public CardinalPoints GetEntryDirection()
     {
         return entryDirection;
     }
 
+    /// <summary>
+    /// Returns all possible exits of the tile
+    /// </summary>
     public List<CardinalPoints> GetAllExits()
     {
         List<CardinalPoints> exits = new List<CardinalPoints>();

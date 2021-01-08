@@ -10,7 +10,9 @@ public static class TilesGroup
 
     #endregion variables
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Creates the game object dictionary for the different road types
+    /// </summary>
     public static void CreateGroup(GameObject crossroadCrosswalk, GameObject crossroad, GameObject intersectionCrosswalk, GameObject intersection,
         GameObject roadEnd, GameObject roadCrosswalk, GameObject road, GameObject roundabout, GameObject turn)
     {

@@ -13,8 +13,6 @@ public class RoadTypes
         RoadEnd,
         RoadCrosswalk,
         Road,
-
-        //Roundabout,
         Turn
     }
 }
