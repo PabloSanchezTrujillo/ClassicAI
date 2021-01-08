@@ -2559,7 +2559,7 @@ PrefabInstance:
     - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}
       propertyPath: nextScene
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
         type: 3}
@@ -3604,7 +3604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 13
+  maxHealth: 8
   hits: 0
   healthText: {fileID: 0}
   isDebug: 0

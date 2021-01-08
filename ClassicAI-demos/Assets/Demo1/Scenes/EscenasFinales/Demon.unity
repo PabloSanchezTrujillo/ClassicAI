@@ -2988,6 +2988,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 7342592829241989977, guid: 39b04a5a46ff0994298d74e4c90f837a,
+        type: 3}
+      propertyPath: nextScene
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b04a5a46ff0994298d74e4c90f837a, type: 3}
 --- !u!1 &1124890882 stripped
@@ -5575,7 +5580,7 @@ PrefabInstance:
     - target: {fileID: 5440261820341022199, guid: ad6f1e24ae0b71041ab6dd68b670bbbc,
         type: 3}
       propertyPath: maxHealth
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5570376837466450472, guid: ad6f1e24ae0b71041ab6dd68b670bbbc,
         type: 3}

@@ -6,12 +6,12 @@ public class Scenes : MonoBehaviour
 {
     public enum Scene
     {
+        MainMenu,
         Demo1_Sekele,
         Demo1_Demon,
         Demo1_Hole,
         Demo1_Angel,
         Demo2_Combat,
         Demo3_LevelGenerator,
-        MainMenu
     }
 }

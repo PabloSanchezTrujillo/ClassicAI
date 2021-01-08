@@ -244,7 +244,7 @@ MonoBehaviour:
   strengthOfShaking: 5
   rangeOfShaking: 5
   speedOfShaking: 0.2
-  movementSpeed: 3000
+  movementSpeed: 4500
   timeToShoot: 3
   shootingParticles: {fileID: 4499841494368491319}
 --- !u!1001 &4499841494350017059
